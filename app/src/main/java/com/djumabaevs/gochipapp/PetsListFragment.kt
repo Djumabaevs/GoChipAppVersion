@@ -1,6 +1,7 @@
 package com.djumabaevs.gochipapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,16 +9,15 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apollographql.apollo.coroutines.await
+import com.apollographql.apollo.exception.ApolloException
 import com.djumabaevs.gochipapp.databinding.FragmentPetsListBinding
+import kotlinx.coroutines.channels.Channel
 
 
 class PetsListFragment : Fragment() {
 
     private lateinit var binding: FragmentPetsListBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,8 +36,23 @@ class PetsListFragment : Fragment() {
         binding.petsRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.petsRecycler.adapter = adapter
 
+        val channel = Channel<Unit>(Channel.CONFLATED)
+
+        channel.trySend(Unit)
+        adapter.onEndOfListReached = {
+            channel.trySend(Unit)
+        }
+
+
+
         lifecycleScope.launchWhenResumed {
-            val response = apolloClient(requireContext()).query(GetPetQuery()).await()
+            for (item in channel) {
+                val response = try {
+                    apolloClient(requireContext()).query(GetPetQuery()).await()
+                } catch (e: ApolloException) {
+                    Log.d("LaunchList", "Failure", e)
+                    return@launchWhenResumed
+                }
 
             val newPets = response.data?.pets
 
@@ -48,6 +63,8 @@ class PetsListFragment : Fragment() {
             }
 
         }
+            adapter.onEndOfListReached = null
+            channel.close()
     }
 
 
