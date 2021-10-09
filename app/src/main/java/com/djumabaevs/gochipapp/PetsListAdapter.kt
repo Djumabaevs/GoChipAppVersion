@@ -29,4 +29,6 @@ class PetsListAdapter(
         return pets.size
     }
 
+    var onEndOfListReached: (() -> Unit)? = null
+
 }

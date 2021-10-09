@@ -54,18 +54,18 @@ class PetsListFragment : Fragment() {
                     return@launchWhenResumed
                 }
 
-            val newPets = response.data?.pets
+                val newPets = response.data?.pets
 
-            if (newPets != null) {
-                pets.addAll(newPets)
-                adapter.notifyDataSetChanged()
+                if (newPets != null) {
+                    pets.addAll(newPets)
+                    adapter.notifyDataSetChanged()
+
+                }
 
             }
-
-        }
             adapter.onEndOfListReached = null
             channel.close()
+        }
+
     }
-
-
 }
