@@ -1,0 +1,47 @@
+
+query getPet($pet_uid: uuid){
+    pets(where:{pet_uid:{_eq: $pet_uid}}){
+        pet_uid,
+        pet_name,
+        pet_photo,
+        status,
+        pets_type{
+            pet_type_name
+        }
+        cats{
+            cats_breed{
+                breed_name
+            }
+            colour,
+            gender,
+            weight
+        }
+        dogs{
+            dogs_breed {
+                breed_name
+            }
+            colour,
+            gender,
+            weight
+        }
+        pets_devices{
+            from_time
+            to_time
+            device{
+                device_uid
+                devices_type{
+                    device_type_id
+                    device_type_name
+                }
+            }
+        }
+        city_licenses{
+            city_license_uid
+            effective_from
+            effective_to
+            license_type{
+                license_type_name
+            }
+        }
+    }
+}
