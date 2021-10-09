@@ -19,8 +19,8 @@ fun apolloClient(context: Context): ApolloClient {
         .build()
 
     instance = ApolloClient.builder()
-        .serverUrl("https://apollo-fullstack-tutorial.herokuapp.com/graphql")
-        .subscriptionTransportFactory(WebSocketSubscriptionTransport.Factory("wss://apollo-fullstack-tutorial.herokuapp.com/graphql", okHttpClient))
+        .serverUrl("https://gochip-external-new.wcvie.at/v1/graphql")
+        .subscriptionTransportFactory(WebSocketSubscriptionTransport.Factory("wss://gochip-external-new.wcvie.at/v1/graphql", okHttpClient))
         .okHttpClient(okHttpClient)
         .build()
 
@@ -30,7 +30,7 @@ fun apolloClient(context: Context): ApolloClient {
 private class AuthorizationInterceptor(val context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request().newBuilder()
-            .addHeader("Authorization", User.getToken(context) ?: "")
+         //   .addHeader("Authorization", User.getToken(context) ?: "")
             .build()
 
         return chain.proceed(request)

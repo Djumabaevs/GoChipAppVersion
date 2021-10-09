@@ -1,0 +1,31 @@
+query getAllPets($orderType: order_by, $where:pets_bool_exp) {
+    pets(order_by:[{pet_name: $orderType}], where: $where) {
+        pet_uid,
+        pet_name,
+        status,
+        pets_type{
+            pet_type_name
+        }
+        cats{
+            cats_breed{
+                breed_name
+            }
+            colour,
+            gender,
+            weight
+        }
+        dogs{
+            dogs_breed {
+                breed_name
+            }
+            colour,
+            gender,
+            weight
+        }
+    }
+    persons_pets{
+        person{
+            person_name
+        }
+    }
+}

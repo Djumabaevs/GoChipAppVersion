@@ -12,24 +12,8 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.coroutines.await
 import com.djumabaevs.gochipapp.databinding.FragmentApolloBinding
 
-//import com.djumabaevs.gochipapp.databinding.ApolloFragmentBinding
-
- val apolloClient = ApolloClient.builder()
-    .serverUrl("https://gochip-external-new.wcvie.at/v1/graphql")
-    .build()
-
-//        try {
-//            val response = apolloClient.query(GetPetQuery()).await()
-//            // handle response and return it
-//        } catch (e: Exception) {
-//            // handle error and return response
-//        }
-
 class ApolloFragment : Fragment() {
 
-    val apolloClient = ApolloClient.builder()
-        .serverUrl("https://gochip-external-new.wcvie.at/v1/graphql")
-        .build()
 
     private lateinit var binding: FragmentApolloBinding
 
@@ -51,11 +35,13 @@ class ApolloFragment : Fragment() {
 
         lifecycleScope.launchWhenResumed {
 
+           val response = apolloClient(requireContext()).query(GetPetQuery()).await()
 
 //            Log.d("PetInfo", "Success ${response.data}")
 
             val pet = response.data?.pets
-            binding.petName.text = pe
+
+          //  binding.petName.text = pet.pet_name.toString()
 
 
         }
