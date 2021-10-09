@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import com.apollographql.apollo.coroutines.await
 import com.djumabaevs.gochipapp.databinding.FragmentPetsListBinding
 
 
@@ -23,6 +25,23 @@ private lateinit var binding: FragmentPetsListBinding
     ): View {
         binding = FragmentPetsListBinding.inflate(inflater)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launchWhenResumed {
+
+            val response = apolloClient(requireContext()).query(GetPetQuery()).await()
+
+//            Log.d("PetInfo", "Success ${response.data}")
+
+            val pet = response.data?.pets
+
+            //  binding.petName.text = pet.pet_name.toString()
+
+
+        }
     }
 
 

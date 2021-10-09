@@ -33,17 +33,6 @@ class ApolloFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launchWhenResumed {
 
-           val response = apolloClient(requireContext()).query(GetPetQuery()).await()
-
-//            Log.d("PetInfo", "Success ${response.data}")
-
-            val pet = response.data?.pets
-
-          //  binding.petName.text = pet.pet_name.toString()
-
-
-        }
     }
 }
