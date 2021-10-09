@@ -3,7 +3,9 @@ package com.djumabaevs.gochipapp
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.djumabaevs.gochipapp.databinding.FragmentPetsListBinding
+import com.djumabaevs.gochipapp.databinding.PetItemBinding
 
 class PetsListAdapter(
     private val pets: List<GetPetQuery.Pet>
@@ -18,7 +20,9 @@ class PetsListAdapter(
 
     override fun onBindViewHolder(holder: PetsListAdapter.ViewHolder, position: Int) {
         val pet = pets[position]
-        holde = pet.pet_name ?: ""
+        holder.binding.petNames.text = pet.pet_name ?: ""
+        holder.binding.petBreeds.text = pet.pets_type.toString()
+        holder.binding.petPhotos.load(pet.pet_photo)
     }
 
     override fun getItemCount(): Int {

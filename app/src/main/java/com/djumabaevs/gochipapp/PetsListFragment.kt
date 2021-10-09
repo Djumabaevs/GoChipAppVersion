@@ -6,13 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.apollographql.apollo.coroutines.await
 import com.djumabaevs.gochipapp.databinding.FragmentPetsListBinding
 
 
 class PetsListFragment : Fragment() {
 
-private lateinit var binding: FragmentPetsListBinding
+    private lateinit var binding: FragmentPetsListBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -30,16 +31,21 @@ private lateinit var binding: FragmentPetsListBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launchWhenResumed {
+        val pets = mutableListOf<GetPetQuery.Pet>()
+        val adapter = PetsListAdapter(pets)
+        binding.petsRecycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.petsRecycler.adapter = adapter
 
+        lifecycleScope.launchWhenResumed {
             val response = apolloClient(requireContext()).query(GetPetQuery()).await()
 
-//            Log.d("PetInfo", "Success ${response.data}")
+            val newPets = response.data?.pets
 
-            val pet = response.data?.pets
+            if (newPets != null) {
+                pets.addAll(newPets)
+                adapter.notifyDataSetChanged()
 
-            //  binding.petName.text = pet.pet_name.toString()
-
+            }
 
         }
     }
