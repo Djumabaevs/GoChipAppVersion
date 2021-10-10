@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.abhishek.navigationdrawerwithbottom.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:name="com.djumabaevs.gochipapp.HomeFragment"
+        android:label="home"
         tools:layout="@layout/fragment_home">
 
         <action
@@ -16,27 +16,15 @@
             app:destination="@id/nav_home" />
     </fragment>
 
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.abhishek.navigationdrawerwithbottom.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.abhishek.navigationdrawerwithbottom.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+
+
 
     <fragment
         android:id="@+id/nav_dashboard"
-        android:name="com.abhishek.navigationdrawerwithbottom.ui.dashboard.DashboardFragment"
-        android:label="@string/menu_dashboard"
+        android:name="com.djumabaevs.gochipapp.DashboardFragment"
+        android:label="dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
-    <fragment
-        android:id="@+id/nav_notifications"
-        android:name="com.abhishek.navigationdrawerwithbottom.ui.notifications.NotificationsFragment"
-        android:label="@string/menu_notifications"
-        tools:layout="@layout/fragment_notifications" />
+
 </navigation>

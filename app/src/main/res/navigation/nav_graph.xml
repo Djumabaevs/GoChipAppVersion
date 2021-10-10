@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/pets_list_fragment">
+    app:startDestination="@id/nav_home">
 
     <fragment
         android:id="@+id/pets_list_fragment"
@@ -11,6 +11,20 @@
         tools:layout="@layout/fragment_pets_list">
 
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.djumabaevs.gochipapp.HomeFragment"
+        android:label="home"
+        tools:layout="@layout/fragment_home">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_dashboard"
+        android:name="com.djumabaevs.gochipapp.DashboardFragment"
+        android:label="dashboard"
+        tools:layout="@layout/fragment_dashboard" />
 
 
 
