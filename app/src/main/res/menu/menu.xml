@@ -7,18 +7,18 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/security"
-            android:title="home" />
+            android:title="Home" />
 
 
         <item
-            android:id="@+id/nav_dashboard"
+            android:id="@+id/nav_devices"
             android:icon="@drawable/security"
-            android:title="dashboard" />
+            android:title="Devices" />
 
         <item
-            android:id="@+id/nav_pets"
+            android:id="@+id/pets_list_fragment"
             android:icon="@drawable/security"
-            android:title="pets" />
+            android:title="Pets" />
 
 
     </group>

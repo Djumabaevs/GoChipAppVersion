@@ -8,6 +8,7 @@
     <fragment
         android:id="@+id/pets_list_fragment"
         android:name="com.djumabaevs.gochipapp.PetsListFragment"
+        android:label="Pets"
         tools:layout="@layout/fragment_pets_list">
 
     </fragment>
@@ -15,16 +16,16 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.djumabaevs.gochipapp.HomeFragment"
-        android:label="home"
+        android:label="Home"
         tools:layout="@layout/fragment_home">
 
     </fragment>
 
     <fragment
-        android:id="@+id/nav_dashboard"
-        android:name="com.djumabaevs.gochipapp.DashboardFragment"
-        android:label="dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/nav_devices"
+        android:name="com.djumabaevs.gochipapp.DevicesFragment"
+        android:label="Devices"
+        tools:layout="@layout/fragment_devices" />
 
 
 

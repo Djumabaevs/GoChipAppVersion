@@ -37,6 +37,8 @@ class PetsListFragment : Fragment() {
         binding.petsRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.petsRecycler.adapter = adapter
 
+        binding.progressBar.visibility = View.VISIBLE
+
         val channel = Channel<Unit>(Channel.CONFLATED)
 
         channel.trySend(Unit)
@@ -56,7 +58,11 @@ class PetsListFragment : Fragment() {
                     return@launchWhenResumed
                 }
 
+                binding.progressBar.visibility = View.GONE
+
                 val newPets = response.data?.pets?.filterNotNull()
+
+
 
                 if (newPets != null) {
                     pets.addAll(newPets)
