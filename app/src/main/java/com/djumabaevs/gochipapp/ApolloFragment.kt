@@ -11,7 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.coroutines.await
 import com.djumabaevs.gochipapp.databinding.FragmentApolloBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ApolloFragment : Fragment() {
 
 

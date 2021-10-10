@@ -12,9 +12,10 @@ import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.await
 import com.apollographql.apollo.exception.ApolloException
 import com.djumabaevs.gochipapp.databinding.FragmentPetsListBinding
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 
-
+@HiltViewModel
 class PetsListFragment : Fragment() {
 
     private lateinit var binding: FragmentPetsListBinding
