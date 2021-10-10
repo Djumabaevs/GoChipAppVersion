@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.await
 import com.apollographql.apollo.exception.ApolloException
 import com.djumabaevs.gochipapp.databinding.FragmentPetsListBinding
@@ -46,21 +47,23 @@ class PetsListFragment : Fragment() {
 
 
         lifecycleScope.launchWhenResumed {
+            var petUid: String? = null
             for (item in channel) {
                 val response = try {
-                    apolloClient(requireContext()).query(GetPetQuery()).await()
+                    apolloClient(requireContext()).query(GetPetQuery(pet_uid = Input.fromNullable(petUid))).await()
                 } catch (e: ApolloException) {
                     Log.d("LaunchList", "Failure", e)
                     return@launchWhenResumed
                 }
 
-                val newPets = response.data?.pets
+                val newPets = response.data?.pets?.filterNotNull()
 
                 if (newPets != null) {
                     pets.addAll(newPets)
                     adapter.notifyDataSetChanged()
-
                 }
+            //    petUid = response.data?.pets?.get(0)?.pet_uid.toString()
+
 
             }
             adapter.onEndOfListReached = null
