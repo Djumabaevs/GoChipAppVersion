@@ -15,6 +15,11 @@
             android:icon="@drawable/security"
             android:title="dashboard" />
 
+        <item
+            android:id="@+id/nav_pets"
+            android:icon="@drawable/security"
+            android:title="pets" />
+
 
     </group>
 </menu>
