@@ -26,13 +26,13 @@ class PetsListAdapter(
     override fun onBindViewHolder(holder: PetsListAdapter.ViewHolder, position: Int) {
         val pet = pets[position]
 
-        holder.binding.petNames.text = pet.pet_name ?: ""
-        holder.binding.petBreeds.text = pet.pets_type.pet_type_name
+        holder.binding.petNameTxt.text = pet.pet_name ?: ""
+        holder.binding.petBreedTxt.text = pet.pets_type.pet_type_name
        // holder.binding.petDogs.text = pet.cats[position].colour
-        holder.binding.petPhotos.load(pet.pet_photo) {
+        holder.binding.imageView.load(pet.pet_photo) {
             placeholder(R.drawable.ic_launcher_background)
         }
-        Glide.with(holder.itemView).load(pet.pet_photo).into(holder.binding.petPhotos)
+        Glide.with(holder.itemView).load(pet.pet_photo).into(holder.binding.imageView)
 
         Log.d("Pet", "onBindViewHolder: ${pet.pet_photo} ")
         if (position == pets.size - 1) {
