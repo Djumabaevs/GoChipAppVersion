@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil .load
 import coil.loadAny
+import com.bumptech.glide.Glide
 import com.djumabaevs.gochipapp.databinding.FragmentPetsListBinding
 import com.djumabaevs.gochipapp.databinding.PetItemBinding
 
@@ -24,12 +25,15 @@ class PetsListAdapter(
 
     override fun onBindViewHolder(holder: PetsListAdapter.ViewHolder, position: Int) {
         val pet = pets[position]
+
         holder.binding.petNames.text = pet.pet_name ?: ""
         holder.binding.petBreeds.text = pet.pets_type.pet_type_name
-     //   holder.binding.petDogs.text = pet.dogs[position].colour
+       // holder.binding.petDogs.text = pet.cats[position].colour
         holder.binding.petPhotos.load(pet.pet_photo) {
             placeholder(R.drawable.ic_launcher_background)
         }
+        Glide.with(holder.itemView).load(pet.pet_photo).into(holder.binding.petPhotos)
+
         Log.d("Pet", "onBindViewHolder: ${pet.pet_photo} ")
         if (position == pets.size - 1) {
             onEndOfListReached?.invoke()
