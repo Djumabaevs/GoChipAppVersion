@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
+
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
