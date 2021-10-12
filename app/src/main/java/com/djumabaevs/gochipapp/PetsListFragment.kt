@@ -56,7 +56,7 @@ class PetsListFragment : Fragment() {
                 val response = try {
                     apolloClient(requireContext()).query(GetPetQuery(pet_uid = Input.fromNullable(petUid))).await()
                 } catch (e: ApolloException) {
-                    Log.d("LaunchList", "Failure", e)
+                    Log.d("PetsListGoChip", "Failure", e)
                     return@launchWhenResumed
                 }
 

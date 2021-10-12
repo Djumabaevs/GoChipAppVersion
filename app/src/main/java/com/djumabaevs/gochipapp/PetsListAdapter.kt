@@ -1,9 +1,11 @@
 package com.djumabaevs.gochipapp
 
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import coil .load
 import coil.loadAny
 import com.bumptech.glide.Glide
@@ -13,6 +15,7 @@ import com.djumabaevs.gochipapp.databinding.PetItemBinding
 class PetsListAdapter(
     private val pets: List<GetPetQuery.Pet>,
 ) : RecyclerView.Adapter<PetsListAdapter.ViewHolder>() {
+
 
     class ViewHolder(val binding: PetItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -26,18 +29,19 @@ class PetsListAdapter(
     override fun onBindViewHolder(holder: PetsListAdapter.ViewHolder, position: Int) {
         val pet = pets[position]
 
-        holder.binding.petNameTxt.text = pet.pet_name ?: ""
-        holder.binding.petBreedTxt.text = pet.pets_type.pet_type_name
-       // holder.binding.petDogs.text = pet.cats[position].colour
-        holder.binding.imageView.load(pet.pet_photo) {
-            placeholder(R.drawable.ic_launcher_background)
-        }
-        Glide.with(holder.itemView).load(pet.pet_photo).into(holder.binding.imageView)
+        holder.binding.petNameTxt.text = pet.pet_name ?: "def"
+        holder.binding.petColorTxt.text = pet.cats.firstOrNull()?.colour ?: pet.dogs.firstOrNull()?.colour ?: "def"
+        holder.binding.petWeightTxt.text = (pet.cats.firstOrNull()?.weight ?: pet.dogs.firstOrNull()?.weight ?: "def").toString()
+        holder.binding.petBreedTxt.text = (pet.cats.firstOrNull()?.cats_breed?.breed_name ?: pet.dogs.firstOrNull()?.dogs_breed?.breed_name ?: "def").toString()
+        holder.binding.petTypeTxt.text = pet.cats.firstOrNull()?.gender ?: pet.dogs.firstOrNull()?.gender ?: "def"
+ //       holder.binding.petView.load(pet.pet_photo?.substringAfter(",") ?: "")
 
-        Log.d("Pet", "onBindViewHolder: ${pet.pet_photo} ")
-        if (position == pets.size - 1) {
-            onEndOfListReached?.invoke()
-        }
+        val imageByteArray = Base64.decode(pet.pet_photo?.substringAfter(",") ?: "", Base64.DEFAULT)
+        val context = holder.itemView.context
+        val petImage = holder.binding.petView
+        Glide.with(context).load(imageByteArray).circleCrop().into(petImage)
+
+
 
     }
 
