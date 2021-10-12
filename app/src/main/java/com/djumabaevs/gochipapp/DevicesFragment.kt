@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import dagger.hilt.android.AndroidEntryPoint
 import android.bluetooth.BluetoothManager
 import androidx.appcompat.app.AppCompatActivity
+import com.djumabaevs.gochipapp.databinding.FragmentDevicesBinding
 import com.vincentmasselis.rxbluetoothkotlin.rxScan
 import com.vincentmasselis.rxuikotlin.disposeOnState
 import com.vincentmasselis.rxuikotlin.utils.ActivityState
@@ -22,20 +23,16 @@ import com.vincentmasselis.rxuikotlin.postForUI
 class DevicesFragment : Fragment() {
 
     private lateinit var devicesViewModel: DevicesViewModel
+    private lateinit var binding: FragmentDevicesBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentDevicesBinding.inflate(inflater, container, false)
+
         devicesViewModel =
             ViewModelProviders.of(this).get(DevicesViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_devices, container, false)
-        val textView: TextView = root.findViewById(R.id.text_devices)
         devicesViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+            binding.textDevices.text = it
         })
-
 
         (getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager)
             .rxScan()
@@ -43,10 +40,17 @@ class DevicesFragment : Fragment() {
                 applicationContext
             }
             .disposeOnState(ActivityState.DESTROY, this)
-        return root
+
+        return binding.root
+    }
+
     }
 
     fun setMessage(message: String) {
         postForUI {  = message }
     }
-}
+
+
+
+
+
