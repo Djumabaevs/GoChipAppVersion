@@ -1,5 +1,7 @@
 package com.djumabaevs.gochipapp
 
+import android.bluetooth.BluetoothManager
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import com.google.android.material.navigation.NavigationView
@@ -11,13 +13,19 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.vincentmasselis.rxbluetoothkotlin.rxScan
+import com.vincentmasselis.rxuikotlin.utils.ActivityState
 import dagger.hilt.android.AndroidEntryPoint
+import com.vincentmasselis.rxuikotlin.disposeOnState
+
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +44,15 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navBottomView.setupWithNavController(navController)
+
+//        (ContextCompat.getSystemService(BLUETOOTH_SERVICE) as BluetoothManager)
+//            .rxScan()
+//            .subscribe {
+//                applicationContext
+//            }
+//            .disposeOnState(ActivityState.DESTROY, this)
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

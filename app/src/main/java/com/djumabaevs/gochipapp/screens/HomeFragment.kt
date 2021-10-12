@@ -1,4 +1,4 @@
-package com.djumabaevs.gochipapp
+package com.djumabaevs.gochipapp.screens
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import dagger.hilt.android.AndroidEntryPoint
+import com.djumabaevs.gochipapp.R
 
 
 class HomeFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.djumabaevs.gochipapp
+package com.djumabaevs.gochipapp.apollo
 
 import android.content.Context
 import com.apollographql.apollo.ApolloClient

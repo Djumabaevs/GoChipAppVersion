@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/pets_list_fragment"
-        android:name="com.djumabaevs.gochipapp.PetsListFragment"
+        android:name="com.djumabaevs.gochipapp.pets.PetsListFragment"
         android:label="Pets"
         tools:layout="@layout/fragment_pets_list">
 
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.djumabaevs.gochipapp.HomeFragment"
+        android:name="com.djumabaevs.gochipapp.screens.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
 
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/nav_devices"
-        android:name="com.djumabaevs.gochipapp.DevicesFragment"
+        android:name="com.djumabaevs.gochipapp.screens.DevicesFragment"
         android:label="Devices"
         tools:layout="@layout/fragment_devices" />
 

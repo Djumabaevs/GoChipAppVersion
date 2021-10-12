@@ -1,4 +1,4 @@
-package com.djumabaevs.gochipapp
+package com.djumabaevs.gochipapp.apollo
 
 import android.annotation.SuppressLint
 import android.os.Bundle

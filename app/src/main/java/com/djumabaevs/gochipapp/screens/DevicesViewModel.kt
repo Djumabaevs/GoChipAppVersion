@@ -1,4 +1,4 @@
-package com.djumabaevs.gochipapp
+package com.djumabaevs.gochipapp.screens
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,10 +7,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : ViewModel() {
+class DevicesViewModel @Inject constructor() : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "Home"
+        value = "Devices"
     }
     val text: LiveData<String> = _text
 }

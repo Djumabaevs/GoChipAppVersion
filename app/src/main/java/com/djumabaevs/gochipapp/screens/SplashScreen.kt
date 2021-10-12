@@ -1,4 +1,4 @@
-package com.djumabaevs.gochipapp
+package com.djumabaevs.gochipapp.screens
 
 
 import android.content.Intent
@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import dagger.hilt.android.AndroidEntryPoint
+import com.djumabaevs.gochipapp.MainActivity
+import com.djumabaevs.gochipapp.R
 
 
 @Suppress("DEPRECATION")

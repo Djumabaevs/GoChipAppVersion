@@ -1,15 +1,11 @@
-package com.djumabaevs.gochipapp
+package com.djumabaevs.gochipapp.pets
 
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import coil .load
-import coil.loadAny
 import com.bumptech.glide.Glide
-import com.djumabaevs.gochipapp.databinding.FragmentPetsListBinding
+import com.djumabaevs.gochipapp.GetPetQuery
 import com.djumabaevs.gochipapp.databinding.PetItemBinding
 
 class PetsListAdapter(
@@ -26,7 +22,7 @@ class PetsListAdapter(
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: PetsListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pet = pets[position]
 
         holder.binding.petNameTxt.text = pet.pet_name ?: "def"

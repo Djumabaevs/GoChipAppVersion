@@ -1,4 +1,4 @@
-package com.djumabaevs.gochipapp
+package com.djumabaevs.gochipapp.pets
 
 import android.os.Bundle
 import android.util.Log
@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.await
 import com.apollographql.apollo.exception.ApolloException
+import com.djumabaevs.gochipapp.GetPetQuery
+import com.djumabaevs.gochipapp.apolloClient
 import com.djumabaevs.gochipapp.databinding.FragmentPetsListBinding
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 
 
