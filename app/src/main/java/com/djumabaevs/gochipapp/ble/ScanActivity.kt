@@ -53,3 +53,25 @@ class ScanActivity : AppCompatActivity() {
                 }
             }
             .disposeOnState(ActivityState.DESTROY, this)
+
+        scan_recycler_view.layoutManager = LinearLayoutManager(this)
+        scan_recycler_view.adapter = ScanResultAdapter(layoutInflater, scan_recycler_view)
+
+        start_scan_button.clicks()
+            .subscribe { startScan() }
+            .disposeOnState(ActivityState.DESTROY, this)
+
+        stop_scan_button.clicks()
+            .subscribe {
+                scanDisp?.dispose()
+                currentState.onNext(States.NotScanning)
+            }
+            .disposeOnState(ActivityState.DESTROY, this)
+    }
+
+    override fun onDestroy() {
+        scan_recycler_view.adapter = null
+        super.onDestroy()
+    }
+
+
