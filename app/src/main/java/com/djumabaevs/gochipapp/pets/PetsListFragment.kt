@@ -12,7 +12,7 @@ import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.await
 import com.apollographql.apollo.exception.ApolloException
 import com.djumabaevs.gochipapp.GetPetQuery
-import com.djumabaevs.gochipapp.apolloClient
+import com.djumabaevs.gochipapp.apollo.apolloClient
 import com.djumabaevs.gochipapp.databinding.FragmentPetsListBinding
 import kotlinx.coroutines.channels.Channel
 
