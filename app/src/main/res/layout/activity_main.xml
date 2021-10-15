@@ -20,7 +20,16 @@ tools:openDrawer="start">
     android:layout_gravity="start"
     android:fitsSystemWindows="true"
     app:headerLayout="@layout/nav_header_main"
-    app:menu="@menu/menu" />
+    app:menu="@menu/menu" >
+
+    <Button
+        android:id="@+id/buttonBLE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="260dp"
+        android:layout_marginLeft="20dp"
+        android:text="Scan  BLE" />
+</com.google.android.material.navigation.NavigationView>
 
  <!--   <fragment
         android:id="@+id/nav_host_fragment"
