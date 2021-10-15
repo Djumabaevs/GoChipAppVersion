@@ -112,9 +112,6 @@ class MainActivity : AppCompatActivity() {
                 }
             )
             .disposeOnState(ActivityState.DESTROY, this)
-
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -127,5 +124,21 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    override fun onDestroy() {
+        (states.value as? States.Connected)?.gatt?.source?.disconnect()
+        super.onDestroy()
+        super.onDestroy()
+    }
 
+    private sealed class States {
+        object Connecting : States()
+        class Connected(val gatt: RxBluetoothGatt) : States()
+    }
+
+    companion object {
+        fun intent(context: Context, device: BluetoothDevice): Intent = Intent(context, DeviceActivity::class.java)
+            .putExtra(DEVICE_EXTRA, device)
+
+        private const val DEVICE_EXTRA = "DEVICE_EXTRA"
+    }
 }
