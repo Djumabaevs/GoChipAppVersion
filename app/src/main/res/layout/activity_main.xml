@@ -8,10 +8,10 @@ android:layout_height="match_parent"
 android:fitsSystemWindows="true"
 tools:openDrawer="start">
 
-<include
-    layout="@layout/app_bar_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    <include
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 <com.google.android.material.navigation.NavigationView
     android:id="@+id/nav_view"
@@ -29,6 +29,17 @@ tools:openDrawer="start">
         android:layout_marginTop="260dp"
         android:layout_marginLeft="20dp"
         android:text="Scan  BLE" />
+
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/scan_results_recycler_view"-->
+<!--        android:layout_width="250dp"-->
+<!--        android:layout_height="350dp"-->
+<!--        android:layout_marginTop="300dp"-->
+<!--        tools:listitem="@layout/row_scan_result"-->
+<!--        />-->
+
+
 </com.google.android.material.navigation.NavigationView>
 
  <!--   <fragment
@@ -38,5 +49,6 @@ tools:openDrawer="start">
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />-->
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -36,6 +36,8 @@ import com.vincentmasselis.rxbluetoothkotlin.rxScan
 import com.vincentmasselis.rxuikotlin.utils.ActivityState
 import dagger.hilt.android.AndroidEntryPoint
 import com.vincentmasselis.rxuikotlin.disposeOnState
+import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.alert
 
 private const val ENABLE_BLUETOOTH_REQUEST_CODE = 1
 private const val LOCATION_PERMISSION_REQUEST_CODE = 2
@@ -57,9 +59,28 @@ class MainActivity : AppCompatActivity() {
 
     private val scanCallback = object : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult) {
-            with(result.device) {
-                Log.i("ScanCallback","Found BLE device! Name: ${name ?: "Unnamed"}, address: $address")
+            val indexQuery = scanResults.indexOfFirst { it.device.address == result.device.address }
+            if (indexQuery != -1) { // A scan result already exists with the same address
+                scanResults[indexQuery] = result
+                scanResultAdapter.notifyItemChanged(indexQuery)
+            } else {
+                with(result.device) {
+                    Log.i("ScanCallback", "Found BLE device! Name: ${name ?: "Unnamed"}, address: $address")
+                }
+                scanResults.add(result)
+                scanResultAdapter.notifyItemInserted(scanResults.size - 1)
             }
+        }
+
+        override fun onScanFailed(errorCode: Int) {
+            Log.e("ScanCallback", "onScanFailed: code $errorCode")
+        }
+    }
+
+    private val scanResults = mutableListOf<ScanResult>()
+    private val scanResultAdapter: ScanResultAdapter by lazy {
+        ScanResultAdapter(scanResults) {
+            // TODO: Implement
         }
     }
 
@@ -69,6 +90,7 @@ class MainActivity : AppCompatActivity() {
 //      //  ParcelUuid.fromString(ENVIRONMENTAL_SERVICE_UUID.toString())
 //        ParcelUuid.fromString("Redmi")
 //    ).build()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,25 +109,33 @@ class MainActivity : AppCompatActivity() {
         navBottomView.setupWithNavController(navController)
 
         val buttonBle: Button = findViewById(R.id.buttonBLE)
+
         buttonBle.setOnClickListener {
-            val builder = AlertDialog.Builder(this@MainActivity)
-            builder.setTitle("Location permission required")
-            builder.setMessage("Starting from Android M (6.0), the system requires apps to be granted " +
-                    "location access in order to scan for BLE devices.")
-            builder.setPositiveButton("OK"){dialog, which ->
-                requestPermission(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    LOCATION_PERMISSION_REQUEST_CODE
-                )
+
+            if (isScanning) {
+                stopBleScan()
+            } else {
+                startBleScan()
             }
-            builder.setNegativeButton("No"){dialog,which ->
-                Toast.makeText(applicationContext,"You are not agree.",Toast.LENGTH_SHORT).show()
-            }
-            builder.setNeutralButton("Cancel"){_,_ ->
-                Toast.makeText(applicationContext,"You cancelled the dialog.",Toast.LENGTH_SHORT).show()
-            }
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
+//
+//            val builder = AlertDialog.Builder(this@MainActivity)
+//            builder.setTitle("Location permission required")
+//            builder.setMessage("Starting from Android M (6.0), the system requires apps to be granted " +
+//                    "location access in order to scan for BLE devices.")
+//            builder.setPositiveButton("OK"){dialog, which ->
+//                requestPermission(
+//                    Manifest.permission.ACCESS_FINE_LOCATION,
+//                    LOCATION_PERMISSION_REQUEST_CODE
+//                )
+//            }
+//            builder.setNegativeButton("No"){dialog,which ->
+//                Toast.makeText(applicationContext,"You are not agree.",Toast.LENGTH_SHORT).show()
+//            }
+//            builder.setNeutralButton("Cancel"){_,_ ->
+//                Toast.makeText(applicationContext,"You cancelled the dialog.",Toast.LENGTH_SHORT).show()
+//            }
+//            val dialog: AlertDialog = builder.create()
+//            dialog.show()
         }
     }
 
@@ -115,8 +145,26 @@ class MainActivity : AppCompatActivity() {
             requestLocationPermission()
         }
         else {
+            scanResults.clear()
+            scanResultAdapter.notifyDataSetChanged()
             bleScanner.startScan(null, scanSettings, scanCallback)
+            isScanning = true
         }
+    }
+
+
+    private var isScanning = false
+        set(value) {
+            field = value
+            runOnUiThread {
+                val buttonBle: Button = findViewById(R.id.buttonBLE)
+                buttonBle.text = if (value) "Stop Scan" else "Start Scan"
+            }
+        }
+
+    private fun stopBleScan() {
+        bleScanner.stopScan(scanCallback)
+        isScanning = false
     }
 
     private fun requestLocationPermission() {
@@ -124,18 +172,18 @@ class MainActivity : AppCompatActivity() {
             return
         }
         runOnUiThread {
-//            alert {
-//                title = "Location permission required"
-//                message = "Starting from Android M (6.0), the system requires apps to be granted " +
-//                        "location access in order to scan for BLE devices."
-//                isCancelable = false
-//                positiveButton(android.R.string.ok) {
-//                    requestPermission(
-//                        Manifest.permission.ACCESS_FINE_LOCATION,
-//                        LOCATION_PERMISSION_REQUEST_CODE
-//                    )
-//                }
-//            }.show()
+            alert {
+                title = "Location permission required"
+                message = "Starting from Android M (6.0), the system requires apps to be granted " +
+                        "location access in order to scan for BLE devices."
+                isCancelable = false
+                positiveButton(android.R.string.ok) {
+                    requestPermission(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        LOCATION_PERMISSION_REQUEST_CODE
+                    )
+                }
+            }.show()
         }
     }
 
