@@ -74,4 +74,52 @@ class ScanActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CODE_ENABLE_LOCATION -> if (resultCode == Activity.RESULT_OK) startScan()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PERMISSION_CODE_FINE_LOCATION -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) startScan()
+        }
+    }
+
+    private var scanDisp: Disposable? = null
+    private fun startScan() {
+        currentState.onNext(States.StartingScan)
+        scanDisp = (getSystemService(BLUETOOTH_SERVICE) as BluetoothManager)
+            .rxScan(flushEvery = 1L to TimeUnit.SECONDS)
+            .doOnNext { currentState.onNext(States.Scanning) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                (scan_recycler_view.adapter as ScanResultAdapter).append(it)
+            }, {
+                currentState.onNext(States.NotScanning)
+                when (it) {
+                    is DeviceDoesNotSupportBluetooth -> AlertDialog.Builder(this).setMessage("The current device doesn't support bluetooth le").show()
+                    is NeedLocationPermission -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), PERMISSION_CODE_FINE_LOCATION)
+                    is BluetoothIsTurnedOff -> AlertDialog.Builder(this).setMessage("Bluetooth is turned off").show()
+                    is LocationServiceDisabled -> startActivityForResult(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), REQUEST_CODE_ENABLE_LOCATION)
+                    else -> AlertDialog.Builder(this).setMessage("Error occurred: $it").show()
+                }
+            })
+            .disposeOnState(ActivityState.PAUSE, this)
+    }
+
+    private sealed class States {
+        object NotScanning : States()
+        object StartingScan : States()
+        object Scanning : States()
+    }
+
+    companion object {
+        private const val PERMISSION_CODE_FINE_LOCATION = 1
+        private const val REQUEST_CODE_ENABLE_LOCATION = 2
+    }
+}
 
