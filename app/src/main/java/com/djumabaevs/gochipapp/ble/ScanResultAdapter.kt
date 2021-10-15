@@ -1,5 +1,11 @@
 package com.djumabaevs.gochipapp.ble
 
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import no.nordicsemi.android.support.v18.scanner.ScanResult
+
 class ScanResultAdapter(private val inflater: LayoutInflater, private val recyclerView: RecyclerView) : RecyclerView.Adapter<ScanResultViewHolder>(), View.OnClickListener {
 
     private val scanResults = mutableListOf<ScanResult>()
