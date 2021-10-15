@@ -5,8 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import no.nordicsemi.android.support.v18.scanner.ScanResult
+import com.djumabaevs.gochipapp.R
 
-class ScanResultAdapter(private val inflater: LayoutInflater, private val recyclerView: RecyclerView) : RecyclerView.Adapter<ScanResultViewHolder>(), View.OnClickListener {
+class ScanResultAdapter(private val inflater: LayoutInflater, private val recyclerView: RecyclerView)
+    : RecyclerView.Adapter<ScanResultViewHolder>(), View.OnClickListener {
 
     private val scanResults = mutableListOf<ScanResult>()
 
@@ -43,6 +45,6 @@ class ScanResultAdapter(private val inflater: LayoutInflater, private val recycl
     }
 
     override fun onClick(view: View) {
-        recyclerView.context.startActivity(DeviceActivity.intent(recyclerView.context, scanResults[recyclerView.getChildAdapterPosition(view)].device))
+    //    recyclerView.context.startActivity(DeviceActivity.intent(recyclerView.context, scanResults[recyclerView.getChildAdapterPosition(view)].device))
     }
 }

@@ -20,6 +20,12 @@ buildscript {
 
 //apply(plugin = "com.apollographql.apollo3")
 
+ext {
+    versionCode = "$System.env.BITRISE_BUILD_NUMBER"
+    groupId = 'com.vincentmasselis.rxbluetoothkotlin'
+    libVersion = "3.0.0"
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

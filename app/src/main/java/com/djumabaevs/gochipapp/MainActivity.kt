@@ -1,7 +1,9 @@
 package com.djumabaevs.gochipapp
 
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import com.google.android.material.navigation.NavigationView
@@ -20,15 +22,16 @@ import com.vincentmasselis.rxuikotlin.utils.ActivityState
 import dagger.hilt.android.AndroidEntryPoint
 import com.vincentmasselis.rxuikotlin.disposeOnState
 
-
+private const val ENABLE_BLUETOOTH_REQUEST_CODE = 1
 
 class MainActivity : AppCompatActivity() {
 
+    private val bluetoothAdapter: BluetoothAdapter by lazy {
+        val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        bluetoothManager.adapter
+    }
+
     private lateinit var appBarConfiguration: AppBarConfiguration
-
-    private val device by lazy { intent.getParcelableExtra<BluetoothDevice>(DEVICE_EXTRA) }
-
-    private val states = BehaviorSubject.createDefault<States>(States.Connecting)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,73 +48,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navBottomView.setupWithNavController(navController)
-
-
-        //Scan BLE
-        states
-            .distinctUntilChanged()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                @Suppress("UNUSED_VARIABLE") val ignoreMe = when (it) {
-                    States.Connecting -> {
-                        connecting_group.visibility = View.VISIBLE
-                        connected_group.visibility = View.GONE
-                    }
-                    is States.Connected -> {
-                        connecting_group.visibility = View.GONE
-                        connected_group.visibility = View.VISIBLE
-                    }
-                }
-            }
-            .disposeOnState(ActivityState.DESTROY, this)
-
-        states
-            .filter { it is States.Connecting }
-            .switchMapSingle { device.connectRxGatt() }
-            .switchMapMaybe { gatt -> gatt.whenConnectionIsReady().map { gatt } }
-            .doOnSubscribe { connecting_progress_bar.visibility = View.VISIBLE }
-            .doFinally { connecting_progress_bar.visibility = View.INVISIBLE }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    Toast.makeText(this, "Connected !", Toast.LENGTH_SHORT).show()
-                    states.onNext(States.Connected(it))
-                },
-                {
-                    val message =
-                        when (it) {
-                            is BluetoothIsTurnedOff -> "Bluetooth is turned off"
-                            is DeviceDisconnected -> "Unable to connect to the device"
-                            else -> "Error occurred: $it"
-                        }
-                    AlertDialog.Builder(this).setMessage(message).show()
-                }
-            )
-            .disposeOnState(ActivityState.DESTROY, this)
-
-        states
-            .filter { it is States.Connecting }
-            .switchMapSingle { device.connectRxGatt() }
-            .switchMapMaybe { gatt -> gatt.whenConnectionIsReady().map { gatt } }
-            .doOnSubscribe { connecting_progress_bar.visibility = View.VISIBLE }
-            .doFinally { connecting_progress_bar.visibility = View.INVISIBLE }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    Toast.makeText(this, "Connected !", Toast.LENGTH_SHORT).show()
-                    states.onNext(States.Connected(it))
-                },
-                {
-                    val message =
-                        when (it) {
-                            is BluetoothIsTurnedOff -> "Bluetooth is turned off"
-                            is DeviceDisconnected -> "Unable to connect to the device"
-                            else -> "Error occurred: $it"
-                        }
-                    AlertDialog.Builder(this).setMessage(message).show()
-                }
-            )
-            .disposeOnState(ActivityState.DESTROY, this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -124,21 +60,16 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    override fun onDestroy() {
-        (states.value as? States.Connected)?.gatt?.source?.disconnect()
-        super.onDestroy()
-        super.onDestroy()
+    override fun onResume() {
+        super.onResume()
+        if (!bluetoothAdapter.isEnabled) {
+            promptEnableBluetooth()
+        }
     }
-
-    private sealed class States {
-        object Connecting : States()
-        class Connected(val gatt: RxBluetoothGatt) : States()
-    }
-
-    companion object {
-        fun intent(context: Context, device: BluetoothDevice): Intent = Intent(context, DeviceActivity::class.java)
-            .putExtra(DEVICE_EXTRA, device)
-
-        private const val DEVICE_EXTRA = "DEVICE_EXTRA"
+    private fun promptEnableBluetooth() {
+        if (!bluetoothAdapter.isEnabled) {
+            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            startActivityForResult(enableBtIntent, ENABLE_BLUETOOTH_REQUEST_CODE)
+        }
     }
 }
