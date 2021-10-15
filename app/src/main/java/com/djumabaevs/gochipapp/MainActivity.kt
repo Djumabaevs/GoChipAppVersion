@@ -65,6 +65,30 @@ class MainActivity : AppCompatActivity() {
             }
             .disposeOnState(ActivityState.DESTROY, this)
 
+        states
+            .filter { it is States.Connecting }
+            .switchMapSingle { device.connectRxGatt() }
+            .switchMapMaybe { gatt -> gatt.whenConnectionIsReady().map { gatt } }
+            .doOnSubscribe { connecting_progress_bar.visibility = View.VISIBLE }
+            .doFinally { connecting_progress_bar.visibility = View.INVISIBLE }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    Toast.makeText(this, "Connected !", Toast.LENGTH_SHORT).show()
+                    states.onNext(States.Connected(it))
+                },
+                {
+                    val message =
+                        when (it) {
+                            is BluetoothIsTurnedOff -> "Bluetooth is turned off"
+                            is DeviceDisconnected -> "Unable to connect to the device"
+                            else -> "Error occurred: $it"
+                        }
+                    AlertDialog.Builder(this).setMessage(message).show()
+                }
+            )
+            .disposeOnState(ActivityState.DESTROY, this)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
