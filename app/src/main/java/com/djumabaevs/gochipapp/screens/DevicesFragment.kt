@@ -24,8 +24,6 @@ class DevicesFragment : Fragment() {
             binding.textDevices.text = it
         })
 
-
-
         return binding.root
     }
 
