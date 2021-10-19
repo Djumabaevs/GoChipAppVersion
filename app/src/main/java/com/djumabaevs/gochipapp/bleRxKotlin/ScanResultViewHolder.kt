@@ -1,9 +1,8 @@
-package com.djumabaevs.gochipapp.ble
+package com.djumabaevs.gochipapp.bleRxKotlin
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.cell_scan_result.*
 import kotlinx.android.synthetic.main.cell_scan_result.view.*
 
 class ScanResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), LayoutContainer {

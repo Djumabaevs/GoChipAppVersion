@@ -1,4 +1,4 @@
-package com.djumabaevs.gochipapp.ble
+package com.djumabaevs.gochipapp.bleRxKotlin
 
 
 import android.Manifest

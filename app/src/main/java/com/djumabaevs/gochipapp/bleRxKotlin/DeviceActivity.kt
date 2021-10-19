@@ -1,4 +1,4 @@
-package com.djumabaevs.gochipapp.ble
+package com.djumabaevs.gochipapp.bleRxKotlin
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice

@@ -1,4 +1,4 @@
-package com.djumabaevs.gochipapp.ble
+package com.djumabaevs.gochipapp.bleRxKotlin
 
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable

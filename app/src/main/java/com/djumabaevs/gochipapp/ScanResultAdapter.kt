@@ -42,4 +42,6 @@ class ScanResultAdapter(
             view.setOnClickListener { onClickListener.invoke(result) }
         }
     }
+
+
 }
