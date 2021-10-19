@@ -6,35 +6,32 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGattCharacteristic
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.databinding.DataBindingUtil.setContentView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.djumabaevs.gochipapp.CharacteristicAdapter
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.bleThrough.*
-import com.djumabaevs.gochipapp.databinding.FragmentBleDetailsBinding
-import com.djumabaevs.gochipapp.databinding.FragmentHomeBinding
-import kotlinx.android.synthetic.main.activity_ble_operations.*
+import kotlinx.android.synthetic.main.activity_ble_operations.characteristics_recycler_view
+import kotlinx.android.synthetic.main.activity_ble_operations.log_scroll_view
+import kotlinx.android.synthetic.main.activity_ble_operations.log_text_view
+import kotlinx.android.synthetic.main.activity_ble_operations.mtu_field
+import kotlinx.android.synthetic.main.activity_ble_operations.request_mtu_button
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.selector
-import org.jetbrains.anko.support.v4.alert
-import org.jetbrains.anko.support.v4.runOnUiThread
-import org.jetbrains.anko.support.v4.selector
 import org.jetbrains.anko.yesButton
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import java.util.UUID
 
-
-class BleDetailsFragment : Fragment() {
+class BleOperationsActivity : AppCompatActivity() {
 
     private lateinit var device: BluetoothDevice
     private val dateFormatter = SimpleDateFormat("MMM d, HH:mm:ss", Locale.US)
@@ -63,23 +60,19 @@ class BleDetailsFragment : Fragment() {
     }
     private var notifyingCharacteristics = mutableListOf<UUID>()
 
-    private lateinit var binding: FragmentBleDetailsBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentBleDetailsBinding.inflate(inflater, container, false)
-
+    override fun onCreate(savedInstanceState: Bundle?) {
         ConnectionManager.registerListener(connectionEventListener)
+        super.onCreate(savedInstanceState)
+        device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
+            ?: error("Missing BluetoothDevice from MainActivity!")
 
-        val args = this.arguments
-//        device = args?.getParcelable(BluetoothDevice.EXTRA_DEVICE) ?: error("Missing BluetoothDevice from MainActivity!")
-        device = requireActivity().intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)!!
-//            ?: error("Missing BluetoothDevice from MainActivity!")
-//
-//        supportActionBar?.apply {
-//            setDisplayHomeAsUpEnabled(true)
-//            setDisplayShowTitleEnabled(true)
-//            title = getString(R.string.ble_playground)
-//        }
+        setContentView(R.layout.fragment_ble_details)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowTitleEnabled(true)
+            title = getString(R.string.properties_of_chips)
+        }
         setupRecyclerView()
         request_mtu_button.setOnClickListener {
             if (mtu_field.text.isNotEmpty() && mtu_field.text.isNotBlank()) {
@@ -90,9 +83,8 @@ class BleDetailsFragment : Fragment() {
             } else {
                 log("Please specify a numeric value for desired ATT MTU (23-517)")
             }
-        //    hideKeyboard()
+            hideKeyboard()
         }
-        return binding.root
     }
 
     override fun onDestroy() {
@@ -104,7 +96,7 @@ class BleDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-         //       onBackPressed()
+                onBackPressed()
                 return true
             }
         }
@@ -115,7 +107,7 @@ class BleDetailsFragment : Fragment() {
         characteristics_recycler_view.apply {
             adapter = characteristicAdapter
             layoutManager = LinearLayoutManager(
-                requireContext(),
+                this@BleOperationsActivity,
                 RecyclerView.VERTICAL,
                 false
             )
@@ -196,9 +188,7 @@ class BleDetailsFragment : Fragment() {
                     alert {
                         title = "Disconnected"
                         message = "Disconnected from device."
-                        positiveButton("OK") {
-                       //     onBackPressed()
-                        }
+                        positiveButton("OK") { onBackPressed() }
                     }.show()
                 }
             }
@@ -248,17 +238,17 @@ class BleDetailsFragment : Fragment() {
             }
     }
 
-//    private fun Fragment.hideKeyboard() {
-//        hideKeyboard(currentFocus ?: View(requireContext()))
-//    }
-//
-//    private fun Context.hideKeyboard(view: View) {
-//        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-//        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-//    }
+    private fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 
     private fun EditText.showKeyboard() {
-        val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         requestFocus()
         inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
     }

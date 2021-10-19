@@ -234,20 +234,17 @@ class HomeFragment : Fragment() {
     private val connectionEventListener by lazy {
         ConnectionEventListener().apply {
             onConnectionSetupComplete = { gatt ->
-//                Intent(requireContext(), BleDetailsFragment::class.java).also {
-//                    it.putExtra(BluetoothDevice.EXTRA_DEVICE, gatt.device)
-//                    val bleFragment = BleDetailsFragment()
-//                    val transaction: FragmentTransaction = fragmentManager!!.beginTransaction()
+                Intent(requireContext(), BleOperationsActivity::class.java).also {
+                    it.putExtra(BluetoothDevice.EXTRA_DEVICE, gatt.device)
+                    activity?.startActivity(it)
+                }
+//                val bundle = Bundle()
+//                val bleFragment = BleDetailsFragment()
+//                bundle.putParcelable(BluetoothDevice.EXTRA_DEVICE, gatt.device)
+//                bleFragment.arguments = bundle
+//                val transaction: FragmentTransaction = fragmentManager!!.beginTransaction()
 //                    transaction.replace(R.id.home_fragment, bleFragment)
 //                    transaction.commit()
-//                }
-                val bundle = Bundle()
-                bundle.putParcelable(BluetoothDevice.EXTRA_DEVICE, gatt.device)
-                val bleFragment = BleDetailsFragment()
-                bleFragment.arguments = bundle
-                val transaction: FragmentTransaction = fragmentManager!!.beginTransaction()
-                    transaction.replace(R.id.nav_view, bleFragment)
-                    transaction.commit()
                 ConnectionManager.unregisterListener(this)
             }
             onDisconnect = {
