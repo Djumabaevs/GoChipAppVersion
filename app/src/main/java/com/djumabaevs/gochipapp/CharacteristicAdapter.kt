@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothGattCharacteristic
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.djumabaevs.gochipapp.bleThrough.printProperties
 import kotlinx.android.synthetic.main.row_characteristic.view.characteristic_properties
 import kotlinx.android.synthetic.main.row_characteristic.view.characteristic_uuid
 import org.jetbrains.anko.layoutInflater
@@ -36,7 +37,7 @@ class CharacteristicAdapter(
 
         fun bind(characteristic: BluetoothGattCharacteristic) {
             view.characteristic_uuid.text = characteristic.uuid.toString()
-      //      view.characteristic_properties.text = characteristic.printProperties()
+            view.characteristic_properties.text = characteristic.printProperties()
             view.setOnClickListener { onClickListener.invoke(characteristic) }
         }
     }

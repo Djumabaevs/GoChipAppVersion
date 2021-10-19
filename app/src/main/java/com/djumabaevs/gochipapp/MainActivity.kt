@@ -31,6 +31,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import com.djumabaevs.gochipapp.screens.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.vincentmasselis.rxbluetoothkotlin.rxScan
 import com.vincentmasselis.rxuikotlin.utils.ActivityState
@@ -70,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navBottomView.setupWithNavController(navController)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
