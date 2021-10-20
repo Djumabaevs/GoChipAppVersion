@@ -17,10 +17,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
-    <uses-feature
-        android:name="android.hardware.nfc"
-        />
-
+    <uses-feature android:name="android.hardware.nfc" />
     <uses-feature android:name="android.software.companion_device_setup" />
     <uses-feature
         android:name="android.hardware.bluetooth_le"
@@ -35,9 +32,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".screens.BleOperationsActivity"
+            android:name=".nfc.ReceiverActivity"
             android:exported="true" />
-        <!-- <provider -->
+        <activity
+            android:name=".screens.BleOperationsActivity"
+            android:exported="true" /> <!-- <provider -->
         <!-- android:name=".internal.RxBluetoothKotlinContextSniffer" -->
         <!-- android:authorities="${com.djumabaevs.gochipapp}.rxbluetoothkotlin-context-sniffer" -->
         <!-- android:exported="false" /> -->
