@@ -37,7 +37,6 @@ import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.ScanResultAdapter
 import com.djumabaevs.gochipapp.bleThrough.ConnectionEventListener
 import com.djumabaevs.gochipapp.bleThrough.ConnectionManager
-import com.djumabaevs.gochipapp.databinding.FragmentDevicesBinding
 import com.djumabaevs.gochipapp.databinding.FragmentHomeBinding
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.alert
