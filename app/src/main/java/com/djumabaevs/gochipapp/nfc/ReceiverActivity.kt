@@ -8,14 +8,19 @@ import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
 import android.os.Bundle
 import android.os.Parcelable
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.work.Constraints
+import androidx.work.NetworkType
 import com.djumabaevs.gochipapp.R
 
 const val MIME_TEXT_PLAIN = "text/plain"
 
 class ReceiverActivity : AppCompatActivity() {
+
+    private var buttonRequest = findViewById<Button>(R.id.button)
 
     private var tvIncomingMessage: TextView? = null
 
@@ -46,6 +51,13 @@ class ReceiverActivity : AppCompatActivity() {
         }
 
         initViews()
+
+        buttonRequest.setOnClickListener {
+            val oneTimeRequestConstraints = Constraints.Builder()
+                .setRequiresCharging(false)
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+        }
     }
 
     private fun initViews() {
@@ -133,4 +145,6 @@ class ReceiverActivity : AppCompatActivity() {
     private fun disableForegroundDispatch(activity: AppCompatActivity, adapter: NfcAdapter?) {
         adapter?.disableForegroundDispatch(activity)
     }
+
+
 }
