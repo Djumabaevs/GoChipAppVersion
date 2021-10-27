@@ -13,8 +13,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.work.Constraints
+import androidx.work.Data
 import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
 import com.djumabaevs.gochipapp.R
+import com.djumabaevs.gochipapp.util.OneTimeRequestWorker
 
 const val MIME_TEXT_PLAIN = "text/plain"
 
@@ -58,7 +61,12 @@ class ReceiverActivity : AppCompatActivity() {
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
         }
+
+        val data = Data.Builder()
+        data.putString("inputKey", "input value")
     }
+
+    val sampleWork = OneTimeWorkRequest.Builder(OneTimeRequestWorker::class.java)
 
     private fun initViews() {
         this.tvIncomingMessage = findViewById(R.id.tv_in_message)
