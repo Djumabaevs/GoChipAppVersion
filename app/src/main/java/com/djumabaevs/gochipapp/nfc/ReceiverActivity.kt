@@ -60,13 +60,18 @@ class ReceiverActivity : AppCompatActivity() {
                 .setRequiresCharging(false)
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
-        }
 
-        val data = Data.Builder()
-        data.putString("inputKey", "input value")
+            val data = Data.Builder()
+            data.putString("inputKey", "input value")
+
+            val sampleWork = OneTimeWorkRequest
+                .Builder(OneTimeRequestWorker::class.java)
+                .setInputData(data.build())
+                .setConstraints(oneTimeRequestConstraints)
+        }
     }
 
-    val sampleWork = OneTimeWorkRequest.Builder(OneTimeRequestWorker::class.java)
+
 
     private fun initViews() {
         this.tvIncomingMessage = findViewById(R.id.tv_in_message)
