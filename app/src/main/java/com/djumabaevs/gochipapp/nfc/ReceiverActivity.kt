@@ -55,6 +55,8 @@ class ReceiverActivity : AppCompatActivity() {
         buttonRequest.setOnClickListener {
             val oneTimeRequestConstraints = Constraints.Builder()
                 .setRequiresCharging(false)
+                .setRequiresStorageNotLow(true)
+                .setRequiresBatteryNotLow(true)
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
