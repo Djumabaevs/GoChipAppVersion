@@ -45,4 +45,16 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_in_message"
         app:layout_constraintVertical_bias="0.047" />
 
+    <Button
+        android:id="@+id/buttonMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Periodic requests"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.561"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.129" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

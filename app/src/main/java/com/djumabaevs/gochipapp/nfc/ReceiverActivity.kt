@@ -21,6 +21,7 @@ const val MIME_TEXT_PLAIN = "text/plain"
 class ReceiverActivity : AppCompatActivity() {
 
     private var buttonRequest = findViewById<Button>(R.id.button)
+    private var buttonPeriodic = findViewById<Button>(R.id.buttonMore)
 
     private var tvIncomingMessage: TextView? = null
 
@@ -78,9 +79,18 @@ class ReceiverActivity : AppCompatActivity() {
                     if(workInfo != null) {
                         when(workInfo.state) {
                             WorkInfo.State.ENQUEUED -> {
-                                //TODO: do some jobs
+                                Toast.makeText(this, "Process is Enqueued", Toast.LENGTH_LONG).show()
+                            }
+                            WorkInfo.State.RUNNING -> {
+                                Toast.makeText(this, "Process is Running", Toast.LENGTH_LONG).show()
+                            }
+                            WorkInfo.State.BLOCKED -> {
+                                Toast.makeText(this, "Process is Blocked", Toast.LENGTH_LONG).show()
                             }
                         }
+                    }
+                    if(workInfo != null && workInfo.state.isFinished) {
+
                     }
                 })
         }

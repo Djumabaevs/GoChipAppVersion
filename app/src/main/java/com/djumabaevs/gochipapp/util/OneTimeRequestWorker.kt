@@ -12,6 +12,8 @@ class OneTimeRequestWorker(context: Context, params: WorkerParameters): Worker(c
         val inputValue = inputData.getString("inputKey")
         Log.i("Worker", "$inputValue")
 
+        //Put your background tasks here
+
         return Result.success(createOutputData())
     }
 
