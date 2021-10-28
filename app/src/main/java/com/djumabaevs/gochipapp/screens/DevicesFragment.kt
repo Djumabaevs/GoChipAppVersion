@@ -13,9 +13,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.work.*
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.nfc.OutcomingNfcManager
+import com.djumabaevs.gochipapp.nfc.ReceiverActivity
+import com.djumabaevs.gochipapp.util.OneTimeRequestWorker
+import com.djumabaevs.gochipapp.util.PeriodicRequestWorker
 import org.jetbrains.anko.support.v4.runOnUiThread
+import java.util.concurrent.TimeUnit
 
 
 class DevicesFragment : Fragment(),  OutcomingNfcManager.NfcActivity {
@@ -23,6 +28,9 @@ class DevicesFragment : Fragment(),  OutcomingNfcManager.NfcActivity {
     private lateinit var tvOutcomingMessage: TextView
     private lateinit var etOutcomingMessage: EditText
     private lateinit var btnSetOutcomingMessage: Button
+
+    private lateinit var buttonRequest: Button
+    private lateinit var buttonPeriodic: Button
 
     private var nfcAdapter: NfcAdapter? = null
 
@@ -52,10 +60,80 @@ class DevicesFragment : Fragment(),  OutcomingNfcManager.NfcActivity {
             ).show()
         }
 
+        this.buttonRequest = view.findViewById(R.id.button)
+        this.buttonPeriodic = view.findViewById(R.id.buttonMore)
+        buttonRequest.setOnClickListener {
+            val oneTimeRequestConstraints = Constraints.Builder()
+                .setRequiresCharging(false)
+                .setRequiresStorageNotLow(true)
+                .setRequiresBatteryNotLow(true)
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+
+            val data = Data.Builder()
+            data.putString("inputKey", "input value")
+
+            val sampleWork = OneTimeWorkRequest
+                .Builder(OneTimeRequestWorker::class.java)
+                .setInputData(data.build())
+                .setConstraints(oneTimeRequestConstraints)
+                .build()
+
+            WorkManager.getInstance(requireContext()).enqueue(sampleWork)
+
+            WorkManager.getInstance(requireContext())
+                .getWorkInfoByIdLiveData(sampleWork.id)
+                .observe(this, { workInfo ->
+                    OneTimeRequestWorker.Companion.logger(workInfo.state.name)
+                    if(workInfo != null) {
+                        when(workInfo.state) {
+                            WorkInfo.State.ENQUEUED -> {
+                                Toast.makeText(requireContext(), "Process is Enqueued", Toast.LENGTH_LONG).show()
+                            }
+                            WorkInfo.State.RUNNING -> {
+                                Toast.makeText(requireContext(), "Process is Running", Toast.LENGTH_LONG).show()
+                            }
+                            WorkInfo.State.BLOCKED -> {
+                                Toast.makeText(requireContext(), "Process is Blocked", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }
+                    if(workInfo != null && workInfo.state.isFinished) {
+
+                    }
+                })
+        }
+
+        buttonPeriodic.setOnClickListener {
+            val periodicRequestConstraints = Constraints.Builder()
+                .setRequiresCharging(false)
+                .setRequiresStorageNotLow(true)
+                .setRequiresBatteryNotLow(true)
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+
+            val periodicWorkRequest = PeriodicWorkRequest
+                .Builder(PeriodicRequestWorker::class.java, 5, TimeUnit.SECONDS)
+                .setConstraints(periodicRequestConstraints)
+                .build()
+
+            WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
+                "Periodic Work Request",
+                ExistingPeriodicWorkPolicy.KEEP,
+                periodicWorkRequest
+            )
+            Toast.makeText(requireContext(), "Process is notified", Toast.LENGTH_LONG).show()
+        }
+
         this.tvOutcomingMessage = view.findViewById(R.id.tv_out_message)
         this.etOutcomingMessage = view.findViewById(R.id.et_message)
         this.btnSetOutcomingMessage = view.findViewById(R.id.btn_set_out_message)
-        this.btnSetOutcomingMessage.setOnClickListener { setOutGoingMessage() }
+        this.btnSetOutcomingMessage.setOnClickListener {
+            setOutGoingMessage()
+//        val intent = Intent(this@DevicesFragment.context, ReceiverActivity::class.java)
+//            startActivity(intent)
+
+        }
 
         // encapsulate sending logic in a separate class
         this.outcomingNfcCallback = OutcomingNfcManager(this)

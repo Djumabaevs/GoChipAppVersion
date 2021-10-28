@@ -15,13 +15,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.work.*
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.util.OneTimeRequestWorker
+import com.djumabaevs.gochipapp.util.PeriodicRequestWorker
+import java.util.concurrent.TimeUnit
 
 const val MIME_TEXT_PLAIN = "text/plain"
 
 class ReceiverActivity : AppCompatActivity() {
 
-    private var buttonRequest = findViewById<Button>(R.id.button)
-    private var buttonPeriodic = findViewById<Button>(R.id.buttonMore)
 
     private var tvIncomingMessage: TextView? = null
 
@@ -35,6 +35,7 @@ class ReceiverActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_receiver)
+
 
         this.nfcAdapter = NfcAdapter.getDefaultAdapter(this)?.let { it }
 
@@ -53,50 +54,7 @@ class ReceiverActivity : AppCompatActivity() {
 
         initViews()
 
-        buttonRequest.setOnClickListener {
-            val oneTimeRequestConstraints = Constraints.Builder()
-                .setRequiresCharging(false)
-                .setRequiresStorageNotLow(true)
-                .setRequiresBatteryNotLow(true)
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-
-            val data = Data.Builder()
-            data.putString("inputKey", "input value")
-
-            val sampleWork = OneTimeWorkRequest
-                .Builder(OneTimeRequestWorker::class.java)
-                .setInputData(data.build())
-                .setConstraints(oneTimeRequestConstraints)
-                .build()
-
-            WorkManager.getInstance(this).enqueue(sampleWork)
-
-            WorkManager.getInstance(this)
-                .getWorkInfoByIdLiveData(sampleWork.id)
-                .observe(this, { workInfo ->
-                    OneTimeRequestWorker.Companion.logger(workInfo.state.name)
-                    if(workInfo != null) {
-                        when(workInfo.state) {
-                            WorkInfo.State.ENQUEUED -> {
-                                Toast.makeText(this, "Process is Enqueued", Toast.LENGTH_LONG).show()
-                            }
-                            WorkInfo.State.RUNNING -> {
-                                Toast.makeText(this, "Process is Running", Toast.LENGTH_LONG).show()
-                            }
-                            WorkInfo.State.BLOCKED -> {
-                                Toast.makeText(this, "Process is Blocked", Toast.LENGTH_LONG).show()
-                            }
-                        }
-                    }
-                    if(workInfo != null && workInfo.state.isFinished) {
-
-                    }
-                })
-        }
     }
-
-
 
     private fun initViews() {
         this.tvIncomingMessage = findViewById(R.id.tv_in_message)
