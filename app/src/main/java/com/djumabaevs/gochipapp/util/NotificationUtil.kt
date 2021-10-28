@@ -1,6 +1,7 @@
 package com.djumabaevs.gochipapp.util
 
 import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 
@@ -21,6 +22,8 @@ class NotificationUtil {
             notificationChannel.lockscreenVisibility = channelLockscreenVisibility
 
             val notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(notificationChannel)
         }
     }
 }
