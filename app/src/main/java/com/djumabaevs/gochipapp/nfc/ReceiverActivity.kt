@@ -71,7 +71,18 @@ class ReceiverActivity : AppCompatActivity() {
 
             WorkManager.getInstance(this).enqueue(sampleWork)
 
-            WorkManager.getInstance(this).getWorkInfoByIdLiveData(sampleWork.id)
+            WorkManager.getInstance(this)
+                .getWorkInfoByIdLiveData(sampleWork.id)
+                .observe(this, { workInfo ->
+                    OneTimeRequestWorker.Companion.logger(workInfo.state.name)
+                    if(workInfo != null) {
+                        when(workInfo.state) {
+                            WorkInfo.State.ENQUEUED -> {
+                                //TODO: do some jobs
+                            }
+                        }
+                    }
+                })
         }
     }
 
