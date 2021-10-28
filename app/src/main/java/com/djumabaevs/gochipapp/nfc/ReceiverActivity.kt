@@ -70,6 +70,8 @@ class ReceiverActivity : AppCompatActivity() {
                 .build()
 
             WorkManager.getInstance(this).enqueue(sampleWork)
+
+            WorkManager.getInstance(this).getWorkInfoByIdLiveData(sampleWork.id)
         }
     }
 

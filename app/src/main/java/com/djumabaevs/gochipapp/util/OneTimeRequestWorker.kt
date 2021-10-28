@@ -11,6 +11,8 @@ class OneTimeRequestWorker(context: Context, params: WorkerParameters): Worker(c
     override fun doWork(): Result {
         val inputValue = inputData.getString("inputKey")
         Log.i("Worker", "$inputValue")
+
+        return Result.success(createOutputData())
     }
 
     private fun createOutputData(): Data {
