@@ -24,6 +24,18 @@ object InboxStyleMockData {
         return list
     }
 
+    fun mIndividualEmailParticipants(): ArrayList<String> {
+        val list = ArrayList<String>()
+
+        list.add("Gavin Jackson")
+        list.add("Leo")
+        list.add("Dmitriy")
+        list.add("")
+        list.add("Sagynbek")
+
+        return list
+    }
+
     const val mChannelId = "channel_email_1"
     const val mChannelName = "Sample email"
 

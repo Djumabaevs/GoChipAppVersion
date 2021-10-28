@@ -24,6 +24,10 @@ class NotificationUtil {
             val notificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(notificationChannel)
+
+            return channelID
+        } else {
+            return ""
         }
     }
 }

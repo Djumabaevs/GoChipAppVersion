@@ -1,6 +1,9 @@
 package com.djumabaevs.gochipapp.screens
 
+import android.app.Notification
+import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.nfc.NfcAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +13,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,6 +23,8 @@ import androidx.work.*
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.nfc.OutcomingNfcManager
 import com.djumabaevs.gochipapp.nfc.ReceiverActivity
+import com.djumabaevs.gochipapp.util.InboxStyleMockData
+import com.djumabaevs.gochipapp.util.NotificationUtil
 import com.djumabaevs.gochipapp.util.OneTimeRequestWorker
 import com.djumabaevs.gochipapp.util.PeriodicRequestWorker
 import org.jetbrains.anko.support.v4.runOnUiThread
@@ -24,6 +32,9 @@ import java.util.concurrent.TimeUnit
 
 
 class DevicesFragment : Fragment(),  OutcomingNfcManager.NfcActivity {
+
+    private val NOTIFICATION_ID = 911
+    private lateinit var mNotificationManagerCompat: NotificationManagerCompat
 
     private lateinit var tvOutcomingMessage: TextView
     private lateinit var etOutcomingMessage: EditText
@@ -175,7 +186,50 @@ class DevicesFragment : Fragment(),  OutcomingNfcManager.NfcActivity {
     }
 
     private fun generateInboxStyleNotification() {
+        val notificationChannelID: String =
+            NotificationUtil().createInboxStyleNotificationChannel(requireContext())
+        val inboxStyle = NotificationCompat
+            .InboxStyle()
+            .setBigContentTitle(InboxStyleMockData.mBigContentTitle)
+            .setSummaryText(InboxStyleMockData.mSummaryText)
+        for(summary in InboxStyleMockData.mIndividualEmailSummary()) {
+            inboxStyle.addLine(summary)
+        }
+        val mainIntent = Intent(requireContext(), DevicesFragment::class.java)
+        val pendingIntent = PendingIntent.getActivity(
+            requireContext(),
+            0,
+            mainIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val notificationCompatBuilder = activity?.applicationContext?.let {
+            NotificationCompat.Builder(
+                it,
+                notificationChannelID
+            )
+        }
+        activity?.applicationContext?.let { ContextCompat.getColor(it, R.color.dark_green_blue) }
+            ?.let {
+                notificationCompatBuilder?.setStyle(inboxStyle)
+                ?.setContentTitle(InboxStyleMockData.mContentTitle)
+                ?.setContentText(InboxStyleMockData.mContentText)
+                ?.setSmallIcon(R.drawable.ic_baseline_notifications_none_24)
+                ?.setLargeIcon(BitmapFactory.decodeResource(resources,R.drawable.ic_baseline_person_24))
+                ?.setContentIntent(pendingIntent)
+                ?.setDefaults(NotificationCompat.DEFAULT_ALL)
+                ?.setColor(it)
+                    ?.setSubText(InboxStyleMockData.mNumberOfNewEmails.toString())
+                    ?.setCategory(Notification.CATEGORY_EMAIL)
+                    ?.setPriority(InboxStyleMockData.mPriority)
+                    ?.setVisibility(InboxStyleMockData.mChannelLockScreenVisibility)
 
+                for(name in InboxStyleMockData.mIndividualEmailParticipants()) {
+                    notificationCompatBuilder?.addPerson(name)
+                }
+
+                val notification = notificationCompatBuilder?.build()
+
+            }
     }
  }
 
