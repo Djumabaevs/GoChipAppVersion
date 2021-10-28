@@ -1,5 +1,6 @@
 package com.djumabaevs.gochipapp.util
 
+import android.app.NotificationChannel
 import android.content.Context
 import android.os.Build
 
@@ -14,7 +15,12 @@ class NotificationUtil {
             val channelEnableVibrate: Boolean = InboxStyleMockData.mChannelEnableVibrate
             val channelLockscreenVisibility: Int = InboxStyleMockData.mChannelLockScreenVisibility
 
-            val notificationChannel =
+            val notificationChannel = NotificationChannel(channelID, channelName,channelImportance)
+            notificationChannel.description = channelDescription
+            notificationChannel.enableVibration(channelEnableVibrate)
+            notificationChannel.lockscreenVisibility = channelLockscreenVisibility
+
+            val notificationManager =
         }
     }
 }
