@@ -29,6 +29,10 @@ class DevicesFragment : Fragment(),  OutcomingNfcManager.NfcActivity {
     private lateinit var etOutcomingMessage: EditText
     private lateinit var btnSetOutcomingMessage: Button
 
+    private lateinit var tvNotification: TextView
+    private lateinit var tvDetailNotification: TextView
+    private lateinit var btnNotification: Button
+
     private lateinit var buttonRequest: Button
     private lateinit var buttonPeriodic: Button
 
@@ -59,6 +63,10 @@ class DevicesFragment : Fragment(),  OutcomingNfcManager.NfcActivity {
                 Toast.LENGTH_SHORT
             ).show()
         }
+
+        this.tvNotification = view.findViewById(R.id.textNotification)
+        this.tvDetailNotification = view.findViewById(R.id.textDetailsNotification)
+        this.btnNotification = view.findViewById(R.id.btn_notification)
 
         this.buttonRequest = view.findViewById(R.id.button)
         this.buttonPeriodic = view.findViewById(R.id.buttonMore)
@@ -164,6 +172,10 @@ class DevicesFragment : Fragment(),  OutcomingNfcManager.NfcActivity {
         runOnUiThread {
             Toast.makeText(requireContext(), R.string.message_beaming_complete, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun generateInboxStyleNotification() {
+
     }
  }
 
