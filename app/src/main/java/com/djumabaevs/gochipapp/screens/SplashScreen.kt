@@ -8,6 +8,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.djumabaevs.gochipapp.MainActivity
 import com.djumabaevs.gochipapp.R
+import com.djumabaevs.gochipapp.login.LoginActivity
 
 
 @Suppress("DEPRECATION")
@@ -22,9 +23,11 @@ class SplashScreen : AppCompatActivity() {
         )
 
         Handler().postDelayed({
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }, 2500)
+
+
     }
 }
