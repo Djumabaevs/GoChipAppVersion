@@ -9,8 +9,6 @@ import com.djumabaevs.gochipapp.R
 
 class LoginActivity : AppCompatActivity() {
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -19,6 +17,7 @@ class LoginActivity : AppCompatActivity() {
         btnToDrawer.setOnClickListener {
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+
         }
     }
 }
