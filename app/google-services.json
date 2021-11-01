@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "928871804915",
+    "project_id": "gochipapp",
+    "storage_bucket": "gochipapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928871804915:android:f700fea2180351bc7e2c86",
+        "android_client_info": {
+          "package_name": "com.djumabaevs.gochipapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928871804915-cgpocdj57dlllm2j996i1jv0qfgi42m4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjnBHw6HEtX5qk4L-dAUgIQLrDkPgxipw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928871804915-cgpocdj57dlllm2j996i1jv0qfgi42m4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
