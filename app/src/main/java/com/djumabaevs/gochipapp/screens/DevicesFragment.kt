@@ -60,6 +60,9 @@ class DevicesFragment : Fragment(),  OutcomingNfcManager.NfcActivity {
 
         val view: View = inflater.inflate(R.layout.fragment_devices, container,
             false)
+
+        mNotificationManagerCompat = NotificationManagerCompat.from(this@DevicesFragment.requireContext())
+
         this.nfcAdapter = NfcAdapter.getDefaultAdapter(requireContext())
 
         if (!isNfcSupported) {
@@ -144,6 +147,10 @@ class DevicesFragment : Fragment(),  OutcomingNfcManager.NfcActivity {
             Toast.makeText(requireContext(), "Process is notified", Toast.LENGTH_LONG).show()
         }
 
+        btnNotification.setOnClickListener {
+            generateInboxStyleNotification()
+        }
+
         this.tvOutcomingMessage = view.findViewById(R.id.tv_out_message)
         this.etOutcomingMessage = view.findViewById(R.id.et_message)
         this.btnSetOutcomingMessage = view.findViewById(R.id.btn_set_out_message)
@@ -184,6 +191,7 @@ class DevicesFragment : Fragment(),  OutcomingNfcManager.NfcActivity {
             Toast.makeText(requireContext(), R.string.message_beaming_complete, Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun generateInboxStyleNotification() {
         val notificationChannelID: String =
@@ -228,6 +236,8 @@ class DevicesFragment : Fragment(),  OutcomingNfcManager.NfcActivity {
                 }
 
                 val notification = notificationCompatBuilder?.build()
+
+                mNotificationManagerCompat.notify(NOTIFICATION_ID, notification!!)
 
             }
     }
