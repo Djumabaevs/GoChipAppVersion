@@ -9,7 +9,9 @@ import android.widget.Button
 import com.djumabaevs.gochipapp.MainActivity
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.databinding.ActivityLoginBinding
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 
 class LoginActivity : AppCompatActivity() {
@@ -37,11 +39,25 @@ class LoginActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-//        var btnToDrawer = findViewById<Button>(R.id.go_to_drawer)
-//        btnToDrawer.setOnClickListener {
-//            var intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
-//
-//        }
+        progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Please wait")
+        progressDialog.setCanceledOnTouchOutside(false)
+
+        mCallBacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
+
+            }
+
+            override fun onVerificationFailed(e: FirebaseException) {
+
+            }
+
+            override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
+
+            }
+
+        }
+        binding
+
     }
 }
