@@ -5,7 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="#f7f7f7"
     tools:context=".login.LoginActivity">
+
+    <ImageView
+        android:id="@+id/iconIv"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_baseline_phone_android_24"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"/>
 
     <Button
         android:id="@+id/go_to_drawer"
