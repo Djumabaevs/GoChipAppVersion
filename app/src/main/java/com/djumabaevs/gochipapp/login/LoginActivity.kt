@@ -12,7 +12,9 @@ import com.djumabaevs.gochipapp.databinding.ActivityLoginBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
 
@@ -57,7 +59,26 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
-        binding
+        binding.btnContinue.setOnClickListener {
 
+        }
+
+        binding.btnCodeSubmit.setOnClickListener {
+
+        }
+    }
+
+    private fun startPhoneNumberVerification(phone: String) {
+        progressDialog.setMessage("Verifying phone number...")
+        progressDialog.show()
+
+        val options = PhoneAuthOptions.newBuilder(firebaseAuth)
+            .setPhoneNumber(phone)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(this)
+            .setCallbacks(mCallBacks!!)
+            .build()
+
+        PhoneAuthProvider.verifyPhoneNumber(options)
     }
 }
