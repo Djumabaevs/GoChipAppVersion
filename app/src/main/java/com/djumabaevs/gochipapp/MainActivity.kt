@@ -18,6 +18,7 @@ import android.os.ParcelUuid
 import android.util.Log
 import android.view.Menu
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.navigation.NavigationView
@@ -32,6 +33,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
+import com.djumabaevs.gochipapp.login.LoginActivity
 import com.djumabaevs.gochipapp.screens.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -57,6 +59,7 @@ class MainActivity : AppCompatActivity() {
 //    ).build()
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -64,6 +67,15 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         firebaseAuth = FirebaseAuth.getInstance()
+        checkUser()
+
+        val textCheck: TextView = findViewById(R.id.phoneTv)
+        val btnChech: Button = findViewById(R.id.logoutBtn)
+
+        btnChech.setOnClickListener {
+            firebaseAuth.signOut()
+            checkUser()
+        }
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -96,5 +108,18 @@ class MainActivity : AppCompatActivity() {
 //        return ContextCompat.checkSelfPermission(this, permissionType) ==
 //                PackageManager.PERMISSION_GRANTED
 //    }
+
+    private fun checkUser() {
+        val textCheck: TextView = findViewById(R.id.phoneTv)
+        val btnChech: Button = findViewById(R.id.logoutBtn)
+
+        val firebaseUser = firebaseAuth.currentUser
+        if(firebaseUser == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+        } else {
+            val phone = firebaseUser.phoneNumber
+            textCheck.text = phone
+        }
+    }
 
 }
