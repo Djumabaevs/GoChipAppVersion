@@ -64,8 +64,8 @@ class LoginActivity : AppCompatActivity() {
                 forceResendingToken = token
                 progressDialog.dismiss()
 
-                binding.phoneLl.visibility = View.VISIBLE
-                binding.codeLl.visibility = View.GONE
+                binding.phoneLl.visibility = View.GONE
+                binding.codeLl.visibility = View.VISIBLE
                 Toast.makeText(this@LoginActivity, "Verification code sent...", Toast.LENGTH_SHORT).show()
                 binding.codeSentDescriptionTv.text =
                     "Please type the verification code we sent to ${binding.phoneEt.text.toString().trim()}"
