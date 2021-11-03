@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -72,11 +73,30 @@ class LoginActivity : AppCompatActivity() {
 
         }
         binding.btnContinue.setOnClickListener {
-
+            val phone = binding.phoneEt.text.toString().trim()
+            if(TextUtils.isEmpty(phone)) {
+                Toast.makeText(this@LoginActivity, "Please enter phone number", Toast.LENGTH_SHORT).show()
+            } else {
+                startPhoneNumberVerification(phone)
+            }
         }
 
         binding.btnCodeSubmit.setOnClickListener {
+            val phone = binding.phoneEt.text.toString().trim()
+            if(TextUtils.isEmpty(phone)) {
+                Toast.makeText(this@LoginActivity, "Please enter phone number", Toast.LENGTH_SHORT).show()
+            } else {
+                resendVerificationCode(phone, forceResendingToken)
+            }
+        }
 
+        binding.btnContinue.setOnClickListener {
+            val code = binding.codeEt.text.toString().trim()
+            if(TextUtils.isEmpty(code)) {
+                Toast.makeText(this@LoginActivity, "Please enter verification code", Toast.LENGTH_SHORT).show()
+            } else {
+                verifyPhoneNumberWithCode(mVerificationId, code)
+            }
         }
     }
 
@@ -124,6 +144,9 @@ class LoginActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 val phone = firebaseAuth.currentUser?.phoneNumber
                 Toast.makeText(this, "Logged in as $phone", Toast.LENGTH_SHORT).show()
+
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
             }
             .addOnFailureListener { e ->
                 progressDialog.dismiss()

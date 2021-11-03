@@ -22,6 +22,31 @@ tools:openDrawer="start">
     app:headerLayout="@layout/nav_header_main"
     app:menu="@menu/menu" >
 
+    <TextView
+        android:layout_marginTop="290dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You are logged in as "
+        android:textColor="#000"/>
+
+    <TextView
+        android:id="@+id/phoneTv"
+        android:layout_marginTop="320dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#777777"
+        android:text="Phone Number"/>
+
+    <Button
+        android:id="@+id/logoutBtn"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="350dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"/>
+
 
 
 <!--    <androidx.recyclerview.widget.RecyclerView-->
