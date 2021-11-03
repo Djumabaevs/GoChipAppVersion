@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
         mCallBacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
                 signInWithPhoneAuthCredential(phoneAuthCredential)
+                Log.d(TAG, "onVerificationCompleted: $phoneAuthCredential")
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
@@ -64,6 +65,8 @@ class LoginActivity : AppCompatActivity() {
                 forceResendingToken = token
                 progressDialog.dismiss()
 
+                Log.d(TAG, "onCodeSent: $verificationId")
+
                 binding.phoneLl.visibility = View.GONE
                 binding.codeLl.visibility = View.VISIBLE
                 Toast.makeText(this@LoginActivity, "Verification code sent...", Toast.LENGTH_SHORT).show()
@@ -72,6 +75,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
+
         binding.btnContinue.setOnClickListener {
             val phone = binding.phoneEt.text.toString().trim()
             if(TextUtils.isEmpty(phone)) {
@@ -81,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnCodeSubmit.setOnClickListener {
+        binding.resendCodeTv.setOnClickListener {
             val phone = binding.phoneEt.text.toString().trim()
             if(TextUtils.isEmpty(phone)) {
                 Toast.makeText(this@LoginActivity, "Please enter phone number", Toast.LENGTH_SHORT).show()
@@ -90,7 +94,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnContinue.setOnClickListener {
+        binding.btnCodeSubmit.setOnClickListener {
             val code = binding.codeEt.text.toString().trim()
             if(TextUtils.isEmpty(code)) {
                 Toast.makeText(this@LoginActivity, "Please enter verification code", Toast.LENGTH_SHORT).show()
@@ -103,6 +107,8 @@ class LoginActivity : AppCompatActivity() {
     private fun startPhoneNumberVerification(phone: String) {
         progressDialog.setMessage("Verifying phone number...")
         progressDialog.show()
+
+        Log.d(TAG, "startPhoneNumberVerification: $phone")
 
         val options = PhoneAuthOptions.newBuilder(firebaseAuth)
             .setPhoneNumber(phone)
