@@ -34,6 +34,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import com.djumabaevs.gochipapp.screens.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.vincentmasselis.rxbluetoothkotlin.rxScan
 import com.vincentmasselis.rxuikotlin.utils.ActivityState
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,6 +49,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    private lateinit var firebaseAuth: FirebaseAuth
+
 //    val filter = ScanFilter.Builder().setServiceUuid(
 //      //  ParcelUuid.fromString(ENVIRONMENTAL_SERVICE_UUID.toString())
 //        ParcelUuid.fromString("Redmi")
@@ -59,6 +62,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        firebaseAuth = FirebaseAuth.getInstance()
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
