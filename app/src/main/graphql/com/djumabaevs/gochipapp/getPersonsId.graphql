@@ -1,0 +1,13 @@
+query PanelsQuery {
+    ui_pannels {
+        pannels_to_users {
+            person {
+                person_name
+                person_phone
+                person_uid
+            }
+        }
+        pannel_name
+        pannel_uuid
+    }
+}

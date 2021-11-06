@@ -55,7 +55,7 @@
             android:layout_marginTop="10dp"
             android:background="#fff"
             android:inputType="phone"
-            android:hint="+(1)xxxxxxxxxx"
+            android:hint="+(...)xxxxxxxxxx"
             android:padding="10dp"
             android:textAlignment="center"
             android:textColor="#000"
