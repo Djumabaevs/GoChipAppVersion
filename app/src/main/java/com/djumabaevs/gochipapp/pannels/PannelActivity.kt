@@ -26,7 +26,7 @@ class PannelActivity : AppCompatActivity() {
         binding = ActivityPannelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val personInfo = mutableListOf<GetPersonsDataQuery.Person>()
+        val personInfo = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
         val adapter = PersonAdapter(personInfo)
         binding.personRecycler.layoutManager = LinearLayoutManager(this)
         binding.personRecycler.adapter = adapter
@@ -63,11 +63,11 @@ class PannelActivity : AppCompatActivity() {
 
                 binding.progressBar.visibility = View.GONE
 
-                val newPersonData = response.data?.ui_pannels_to_users?.firstOrNull()?.person
+                val newPersonData = response.data?.ui_pannels_to_users
 
 
                 if (newPersonData != null) {
-                    personInfo.addAll(listOf(newPersonData))
+                    personInfo.addAll(newPersonData)
                     adapter.notifyDataSetChanged()
                 }
 

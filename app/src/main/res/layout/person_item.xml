@@ -39,6 +39,33 @@
             android:layout_height="wrap_content"
             android:hint="uid" />
 
+        <TextView
+            android:id="@+id/tvPanelPet"
+            android:layout_width="match_parent"
+            android:textSize="12sp"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_marginTop="40dp"
+            android:layout_height="wrap_content"
+            android:hint="uid" />
+
+        <TextView
+            android:id="@+id/tvPanelDigital"
+            android:layout_width="match_parent"
+            android:textSize="12sp"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_marginTop="40dp"
+            android:layout_height="wrap_content"
+            android:hint="uid" />
+
+        <TextView
+            android:id="@+id/tvPanelVet"
+            android:layout_width="match_parent"
+            android:textSize="12sp"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_marginTop="40dp"
+            android:layout_height="wrap_content"
+            android:hint="uid" />
+
 
     </LinearLayout>
 
