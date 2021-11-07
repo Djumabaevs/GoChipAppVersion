@@ -12,11 +12,13 @@ import android.widget.Toast
 import com.djumabaevs.gochipapp.MainActivity
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.databinding.ActivityLoginBinding
+import com.djumabaevs.gochipapp.pannels.PannelActivity
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import kotlinx.android.synthetic.main.activity_login.*
 import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
@@ -101,6 +103,10 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 verifyPhoneNumberWithCode(mVerificationId, code)
             }
+        }
+
+        btnSkip.setOnClickListener {
+            startActivity(Intent(this, PannelActivity::class.java))
         }
     }
 
