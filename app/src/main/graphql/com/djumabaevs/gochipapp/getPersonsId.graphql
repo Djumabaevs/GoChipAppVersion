@@ -1,13 +1,14 @@
-query PanelsQuery {
-    ui_pannels {
-        pannels_to_users {
-            person {
-                person_name
-                person_phone
-                person_uid
-            }
+query getPersonsData($person_uid: uuid, $profile_type: Int){
+    ui_pannels_to_users(where: {person_uid: {_eq: $person_uid}, profile_type: {_eq: $profile_type}}, order_by: [{pannel_order: asc}]){
+        pannel {
+            pannel_name
         }
-        pannel_name
+        pannel_order
         pannel_uuid
+        person {
+            person_name
+            person_phone
+            person_uid
+        }
     }
 }
