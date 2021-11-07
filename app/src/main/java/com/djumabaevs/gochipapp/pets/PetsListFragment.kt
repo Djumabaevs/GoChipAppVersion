@@ -60,6 +60,8 @@ class PetsListFragment : Fragment() {
                     return@launchWhenResumed
                 }
 
+                Log.d("PersonListGoChip", "response pets: $response")
+
                 binding.progressBar.visibility = View.GONE
 
                 val newPets = response.data?.pets?.filterNotNull()

@@ -19,9 +19,9 @@ fun apolloClient(context: Context): ApolloClient {
         .build()
 
     instance = ApolloClient.builder()
- //       .serverUrl("https://gochip-external-new.wcvie.at/v1/graphql")
+        .serverUrl("https://gochip-external-new.wcvie.at/v1/graphql")
  //       .serverUrl("https://syn-otp-server-external.production.syncrasy.dev/graphql")
-        .serverUrl("https://syn-vet-app-api-external.production.syncrasy.dev/v1/graphql")
+ //       .serverUrl("https://syn-vet-app-api-external.production.syncrasy.dev/v1/graphql")
       //  .subscriptionTransportFactory(WebSocketSubscriptionTransport.Factory("wss://gochip-external-new.wcvie.at/v1/graphql", okHttpClient))
         .okHttpClient(okHttpClient)
         .build()

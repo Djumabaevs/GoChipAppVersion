@@ -19,25 +19,25 @@
                 android:layout_width="match_parent"
                 android:textSize="12sp"
                 android:fontFamily="@font/roboto_medium"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:text="name" />
+                android:hint="name"/>
         <TextView
             android:id="@+id/tvPersonPhone"
             android:layout_width="match_parent"
             android:textSize="12sp"
             android:fontFamily="@font/roboto_medium"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
-            android:text="phone" />
+            android:hint="phone" />
         <TextView
             android:id="@+id/tvPersonUid"
             android:layout_width="match_parent"
             android:textSize="12sp"
             android:fontFamily="@font/roboto_medium"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="30dp"
             android:layout_height="wrap_content"
-            android:text="uid" />
+            android:hint="uid" />
 
 
     </LinearLayout>

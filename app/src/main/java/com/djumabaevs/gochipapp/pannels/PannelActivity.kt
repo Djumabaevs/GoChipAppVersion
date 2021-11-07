@@ -26,7 +26,7 @@ class PannelActivity : AppCompatActivity() {
         binding = ActivityPannelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val personInfo = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
+        val personInfo = mutableListOf<GetPersonsDataQuery.Person>()
         val adapter = PersonAdapter(personInfo)
         binding.personRecycler.layoutManager = LinearLayoutManager(this)
         binding.personRecycler.adapter = adapter
@@ -44,30 +44,32 @@ class PannelActivity : AppCompatActivity() {
 
         lifecycleScope.launchWhenResumed {
             var personUid: String? = null
-            var profileType: Int = 200
+            var profileType: Int = 100
             for (item in channel) {
                 val response = try {
                     apolloClient(this@PannelActivity)
                         .query(GetPersonsDataQuery(
                             person_uid = Input.fromNullable(personUid),
-                            profile_type = Input.fromNullable(profileType)))
+                           // profile_type = Input.fromNullable(profileType)
+                        )
+                        )
                         .await()
                 } catch (e: ApolloException) {
                     Log.d("PersonListGoChip", "Failure", e)
                     return@launchWhenResumed
                 }
 
+                Log.d("PersonListGoChip", "response person: $response")
+
                 binding.progressBar.visibility = View.GONE
 
-                val newPersonData = response.data?.ui_pannels_to_users
-
+                val newPersonData = response.data?.ui_pannels_to_users?.firstOrNull()?.person
 
 
                 if (newPersonData != null) {
-                    personInfo.addAll(newPersonData)
+                    personInfo.addAll(listOf(newPersonData))
                     adapter.notifyDataSetChanged()
                 }
-                //    petUid = response.data?.pets?.get(0)?.pet_uid.toString()
 
 
             }

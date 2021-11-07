@@ -5,10 +5,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.text.TextUtils.replace
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
 import com.djumabaevs.gochipapp.MainActivity
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.databinding.ActivityLoginBinding
@@ -105,7 +108,12 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        btnSkip.setOnClickListener {
+        binding.btnSkip.setOnClickListener {
+//            supportFragmentManager.commit {
+//                replace(R.id.login_main, PanelFragment())
+//                setReorderingAllowed(true)
+//                addToBackStack(null)
+//            }
             startActivity(Intent(this, PannelActivity::class.java))
         }
     }

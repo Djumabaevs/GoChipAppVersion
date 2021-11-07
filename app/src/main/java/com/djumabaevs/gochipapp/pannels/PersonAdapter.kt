@@ -11,7 +11,7 @@ import com.djumabaevs.gochipapp.databinding.PersonItemBinding
 import com.djumabaevs.gochipapp.databinding.PetItemBinding
 
 class PersonAdapter(
-    private val personData: List<GetPersonsDataQuery.Ui_pannels_to_user>,
+    private val personData: List<GetPersonsDataQuery.Person>,
 ) : RecyclerView.Adapter<PersonAdapter.ViewHolder>() {
 
 
@@ -27,9 +27,10 @@ class PersonAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val person = personData[position]
 
-        holder.binding.tvPersonName.text = person.person.person_name
-        holder.binding.tvPersonPhone.text = person.person.person_phone
-        holder.binding.tvPersonUid.text = person.person.person_uid.toString()
+        holder.binding.tvPersonName.text = person.person_name
+ //       holder.binding.tvPersonName.text = person.ui_pannels_to_users.firstOrNull()?.person?.person_name
+        holder.binding.tvPersonPhone.text = person.person_phone
+        holder.binding.tvPersonUid.text = person.person_uid.toString()
 
     }
 
