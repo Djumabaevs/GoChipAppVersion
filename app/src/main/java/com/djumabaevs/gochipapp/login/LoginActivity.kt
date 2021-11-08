@@ -174,3 +174,30 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 }
+
+//private lateinit var binding: ActivityMainBinding
+//private var apolloClient: ApolloClient = getApolloClient()
+//private var job = Job()
+//private val coroutineScope = CoroutineScope(job + Dispatchers.Main)
+//
+//override fun onCreate(savedInstanceState: Bundle?) {
+//    super.onCreate(savedInstanceState)
+//    binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+//}
+//
+//fun getBooks(view: View) {
+//    coroutineScope.launch {
+//        makeSearchRequest(binding.editText.text.toString())
+//    }
+//}
+//
+//private suspend fun makeSearchRequest(value: String) {
+//    val res = apolloClient.query(
+//        BooksQuery.builder()
+//            .title(value).build()
+//    ).toDeferred().await()
+//
+//    binding.recyclerview.apply {
+//        adapter = res.data?.findBooks()?.let { RecyclerViewAdapter(it) }
+//    }
+//}
