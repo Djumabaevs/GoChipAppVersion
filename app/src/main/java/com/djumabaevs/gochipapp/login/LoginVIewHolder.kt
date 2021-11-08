@@ -4,21 +4,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.djumabaevs.gochipapp.GetVetPersonByPhoneQuery
 import com.djumabaevs.gochipapp.R
 
 class LoginViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.recyclerview_item, parent, false)) {
-    private var title: TextView? = null
-    private var author: TextView? = null
+    RecyclerView.ViewHolder(inflater.inflate(R.layout.login_item, parent, false)) {
+    private var loginPersonName: TextView? = null
+    private var loginPersonStatus: TextView? = null
 
     init {
-        title = itemView.findViewById(R.id.title)
-        author = itemView.findViewById(R.id.author)
+        loginPersonName = itemView.findViewById(R.id.login_person_name)
+        loginPersonStatus = itemView.findViewById(R.id.login_person_status)
     }
 
-    fun bind(book: BooksQuery.FindBook) {
-        title?.text = book.title()
-        author?.text = book.author()
+    fun bind(book: GetVetPersonByPhoneQuery.Person) {
+        loginPersonName?.text = book.person_name
+        loginPersonStatus?.text = book.status.toString()
     }
 
 }

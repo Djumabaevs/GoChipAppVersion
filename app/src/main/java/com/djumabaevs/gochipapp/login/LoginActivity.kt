@@ -12,8 +12,12 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import com.apollographql.apollo.api.Input
+import com.apollographql.apollo.coroutines.toDeferred
+import com.djumabaevs.gochipapp.GetVetPersonByPhoneQuery
 import com.djumabaevs.gochipapp.MainActivity
 import com.djumabaevs.gochipapp.R
+import com.djumabaevs.gochipapp.apollo.apolloClient
 import com.djumabaevs.gochipapp.databinding.ActivityLoginBinding
 import com.djumabaevs.gochipapp.pannels.PannelActivity
 import com.google.firebase.FirebaseException
@@ -22,6 +26,10 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
@@ -38,6 +46,9 @@ class LoginActivity : AppCompatActivity() {
     private val TAG = "MAIN_TAG"
 
     private lateinit var progressDialog: ProgressDialog
+
+    private var job = Job()
+    private val coroutineScope = CoroutineScope(job + Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -173,31 +184,30 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
+    private suspend fun makeLoginRequest(value: String) {
+        var phoneId: String? = null
+        val res = apolloClient(this@LoginActivity).query(
+       GetVetPersonByPhoneQuery(phone = Input.fromNullable(phoneId))
+    ).toDeferred().await()
+
+    binding.recyclerview.apply {
+//        adapter = res.data?.persons?.firstOrNull()?.person_name { LoginAdapter(it) }
+        adapter = res.data?.persons.let {
+            LoginAdapter(it!!)
+        }}
+    }
+
+    fun getLoginData(view: View) {
+    coroutineScope.launch {
+        makeLoginRequest(binding.editText.text.toString())
+    }
+}
 }
 
-//private lateinit var binding: ActivityMainBinding
-//private var apolloClient: ApolloClient = getApolloClient()
-//private var job = Job()
-//private val coroutineScope = CoroutineScope(job + Dispatchers.Main)
-//
-//override fun onCreate(savedInstanceState: Bundle?) {
-//    super.onCreate(savedInstanceState)
-//    binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-//}
-//
-//fun getBooks(view: View) {
-//    coroutineScope.launch {
-//        makeSearchRequest(binding.editText.text.toString())
-//    }
-//}
-//
-//private suspend fun makeSearchRequest(value: String) {
-//    val res = apolloClient.query(
-//        BooksQuery.builder()
-//            .title(value).build()
-//    ).toDeferred().await()
-//
-//    binding.recyclerview.apply {
-//        adapter = res.data?.findBooks()?.let { RecyclerViewAdapter(it) }
-//    }
-//}
+
+
+
+
+
+

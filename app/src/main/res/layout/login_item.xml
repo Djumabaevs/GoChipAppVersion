@@ -7,14 +7,14 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/login_person_name"
         tools:text="Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
 
     <TextView
-        android:id="@+id/author"
+        android:id="@+id/login_person_status"
         tools:text="Author"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -143,4 +143,28 @@
         android:textSize="25sp"
         android:layout_gravity="center_horizontal"/>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:hint="Book Name (optional)"
+            android:id="@+id/editText"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"/>
+        <Button
+            android:onClick="getLoginData"
+            android:text="Get Books"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        tools:itemCount="4"
+        android:id="@+id/recyclerview"
+        tools:listitem="@layout/login_item"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>

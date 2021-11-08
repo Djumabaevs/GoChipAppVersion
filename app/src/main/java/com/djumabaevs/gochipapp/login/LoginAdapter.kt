@@ -3,18 +3,19 @@ package com.djumabaevs.gochipapp.login
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.djumabaevs.gochipapp.GetVetPersonByPhoneQuery
 
-class RecyclerViewAdapter(private val list:  List<BooksQuery.FindBook>)
-    : RecyclerView.Adapter<BookViewHolder>() {
+class LoginAdapter(private val list:  List<GetVetPersonByPhoneQuery.Person>)
+    : RecyclerView.Adapter<LoginViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoginViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return BookViewHolder(inflater, parent)
+        return LoginViewHolder(inflater, parent)
     }
 
-    override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-        val book: BooksQuery.FindBook = list[position]
-        holder.bind(book)
+    override fun onBindViewHolder(holder: LoginViewHolder, position: Int) {
+        val loginData: GetVetPersonByPhoneQuery.Person = list[position]
+        holder.bind(loginData)
     }
 
     override fun getItemCount(): Int = list.size
