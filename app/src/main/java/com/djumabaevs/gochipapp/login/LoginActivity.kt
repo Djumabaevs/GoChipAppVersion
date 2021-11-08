@@ -198,7 +198,7 @@ class LoginActivity : AppCompatActivity() {
         }}
     }
 
-    fun getLoginData(view: View) {
+    fun getLoginData() {
     coroutineScope.launch {
         makeLoginRequest(binding.editText.text.toString())
     }

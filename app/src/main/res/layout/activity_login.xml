@@ -154,7 +154,7 @@
             android:layout_height="match_parent"/>
         <Button
             android:onClick="getLoginData"
-            android:text="Get Books"
+            android:text="Get People"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
