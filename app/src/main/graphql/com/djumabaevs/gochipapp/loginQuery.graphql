@@ -1,0 +1,6 @@
+query _login($phoneNumber:String!) {
+    login(phoneNumber:$phoneNumber){
+        status
+        valid
+    }
+}
