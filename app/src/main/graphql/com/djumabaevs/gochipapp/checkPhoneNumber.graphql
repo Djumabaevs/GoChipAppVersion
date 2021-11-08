@@ -1,0 +1,6 @@
+query checkPhoneNumber($phone: String){
+    persons(where:{person_phone: {_eq: $phone}}){
+        person_name
+        person_phone
+    }
+}

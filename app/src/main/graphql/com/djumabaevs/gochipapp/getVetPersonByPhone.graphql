@@ -1,0 +1,15 @@
+query getVetPersonByPhone($phone: String){
+    persons(where:{person_phone:{_eq: $phone}}){
+        person_uid
+        person_name
+        status
+        persons_vets{
+            row_id
+            status
+            vet{
+                vet_name
+                vet_uid
+            }
+        }
+    }
+}

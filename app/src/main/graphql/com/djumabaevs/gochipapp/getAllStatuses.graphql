@@ -1,0 +1,6 @@
+query getAllStatuses {
+    statuses{
+        status_id
+        status_name
+    }
+}

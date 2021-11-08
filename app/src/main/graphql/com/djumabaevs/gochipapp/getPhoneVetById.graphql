@@ -1,0 +1,5 @@
+query getPhoneVetById($vet_uid: uuid){
+    vets(where:{vet_uid:{_eq: $vet_uid}}){
+        vet_phone
+    }
+}
