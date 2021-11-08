@@ -1,6 +1,6 @@
-query _verify ($phoneNumber:String!, $code: String!){
-    verify(phoneNumber:$phoneNumber, code:$code){
-        status
-        valid
-    }
-}
+#query _verify ($phoneNumber:String!, $code: String!){
+#    verify(phoneNumber:$phoneNumber, code:$code){
+#        status
+#        valid
+#    }
+#}
