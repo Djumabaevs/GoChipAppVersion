@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.toDeferred
+import com.djumabaevs.gochipapp.GetPhoneVetByIdQuery
 import com.djumabaevs.gochipapp.GetVetPersonByPhoneQuery
 import com.djumabaevs.gochipapp.MainActivity
 import com.djumabaevs.gochipapp.R
@@ -26,10 +27,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
@@ -66,7 +64,8 @@ class LoginActivity : AppCompatActivity() {
 
         mCallBacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-                signInWithPhoneAuthCredential(phoneAuthCredential)
+                  signInWithPhoneAuthCredential(phoneAuthCredential)
+
                 Log.d(TAG, "onVerificationCompleted: $phoneAuthCredential")
             }
 
@@ -165,28 +164,46 @@ class LoginActivity : AppCompatActivity() {
         progressDialog.show()
 
         val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
-        signInWithPhoneAuthCredential(credential)
+
+            signInWithPhoneAuthCredential(credential)
+
     }
 
-    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        progressDialog.setMessage("Loggin in")
 
-        firebaseAuth.signInWithCredential(credential)
-            .addOnSuccessListener {
-                val phone = firebaseAuth.currentUser?.phoneNumber
-                Toast.makeText(this, "Logged in as $phone", Toast.LENGTH_SHORT).show()
+    private  fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+       GlobalScope.launch {
+           progressDialog.setMessage("Loggin in")
 
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            }
-            .addOnFailureListener { e ->
-                progressDialog.dismiss()
-                Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
-            }
+           val phoneId: String? = null
+           val res = apolloClient(this@LoginActivity).query(
+               GetPhoneVetByIdQuery()
+           ).toDeferred().await()
+
+           firebaseAuth.signInWithCredential(credential)
+               .addOnSuccessListener {
+                   val vetPhone = res
+                       .data?.vets?.firstOrNull()?.vet_phone
+                   val phone = firebaseAuth.currentUser?.phoneNumber
+                   if(vetPhone == phone) {
+                       Toast
+                           .makeText(this@LoginActivity, "Hi! You are veterinar! " +
+                                   "Please wait, you will be directed to special screen!",
+                               Toast.LENGTH_SHORT).show()
+                   } else {
+                       Toast.makeText(this@LoginActivity, "Logged in as $phone", Toast.LENGTH_SHORT).show()
+                       startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                       finish()
+                   }
+               }
+               .addOnFailureListener { e ->
+                   progressDialog.dismiss()
+                   Toast.makeText(this@LoginActivity, "${e.message}", Toast.LENGTH_SHORT).show()
+               }
+       }
     }
 
     private suspend fun makeLoginRequest(value: String) {
-        var phoneId: String? = null
+        val phoneId: String? = null
         val res = apolloClient(this@LoginActivity).query(
        GetVetPersonByPhoneQuery(phone = Input.fromNullable(phoneId))
     ).toDeferred().await()
@@ -194,11 +211,16 @@ class LoginActivity : AppCompatActivity() {
     binding.recyclerview.apply {
 //        adapter = res.data?.persons?.firstOrNull()?.person_name { LoginAdapter(it) }
         adapter = res.data?.persons.let {
-            LoginAdapter(it!!)
-        }}
+            if(res.data?.persons?.firstOrNull()?.persons_vets?.firstOrNull()?.vet != null) {
+                LoginAdapter(it!!)
+            } else {
+                null
+            }
+        }
+    }
     }
 
-    fun getLoginData() {
+    fun getLoginData(view: View) {
     coroutineScope.launch {
         makeLoginRequest(binding.editText.text.toString())
     }
