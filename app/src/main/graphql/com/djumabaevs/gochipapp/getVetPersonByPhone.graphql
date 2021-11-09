@@ -2,6 +2,7 @@ query getVetPersonByPhone($phone: String){
     persons(where:{person_phone:{_eq: $phone}}){
         person_uid
         person_name
+        person_phone
         status
         persons_vets{
             row_id

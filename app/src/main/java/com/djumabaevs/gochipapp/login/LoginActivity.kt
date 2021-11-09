@@ -21,6 +21,7 @@ import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.apollo.apolloClient
 import com.djumabaevs.gochipapp.databinding.ActivityLoginBinding
 import com.djumabaevs.gochipapp.pannels.PannelActivity
+import com.djumabaevs.gochipapp.vets.VetActivity
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -175,20 +176,39 @@ class LoginActivity : AppCompatActivity() {
            progressDialog.setMessage("Loggin in")
 
            val phoneId: String? = null
+           val resName = apolloClient(this@LoginActivity).query(
+               GetVetPersonByPhoneQuery(phone = Input.fromNullable(phoneId))
+           ).toDeferred().await()
+
            val res = apolloClient(this@LoginActivity).query(
                GetPhoneVetByIdQuery()
            ).toDeferred().await()
 
+           val resPhone = apolloClient(this@LoginActivity).query(
+               GetVetPersonByPhoneQuery()
+           ).toDeferred().await()
+
            firebaseAuth.signInWithCredential(credential)
                .addOnSuccessListener {
+
+                   val personPhone = resPhone
+                       .data?.persons?.firstOrNull()?.person_phone
+
                    val vetPhone = res
                        .data?.vets?.firstOrNull()?.vet_phone
+
+                   val vetName = resName
+                       .data?.persons?.firstOrNull()?.persons_vets?.firstOrNull()?.vet?.vet_name
+
                    val phone = firebaseAuth.currentUser?.phoneNumber
-                   if(vetPhone == phone) {
+
+                   if(phone == personPhone) {
                        Toast
                            .makeText(this@LoginActivity, "Hi! You are veterinar! " +
                                    "Please wait, you will be directed to special screen!",
                                Toast.LENGTH_SHORT).show()
+                       startActivity(Intent(this@LoginActivity, VetActivity::class.java))
+                       finish()
                    } else {
                        Toast.makeText(this@LoginActivity, "Logged in as $phone", Toast.LENGTH_SHORT).show()
                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
@@ -214,7 +234,7 @@ class LoginActivity : AppCompatActivity() {
             if(res.data?.persons?.firstOrNull()?.persons_vets?.firstOrNull()?.vet != null) {
                 LoginAdapter(it!!)
             } else {
-                null
+                LoginAdapter(it!!)
             }
         }
     }
