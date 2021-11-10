@@ -3,6 +3,7 @@ query getPersonsData($person_uid: uuid, $profile_type: Int){
         pannel {
             pannel_name
         }
+        profile_type
         pannel_order
         pannel_uuid
         person {

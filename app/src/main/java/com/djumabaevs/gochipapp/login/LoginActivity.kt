@@ -198,34 +198,34 @@ class LoginActivity : AppCompatActivity() {
            firebaseAuth.signInWithCredential(credential)
                .addOnSuccessListener {
 
-                   val checkOrNotCheck = checkVetOrNot
-                       .data?.ui_pannels_to_users?.map {
-                           it.person.person_phone
-                       }?.filter {
-                               it?.endsWith("00") == true
-                       }
-
-                   val personUidCheck = personUid
-                       .data?.persons?.map {
-                           it.person_uid
-                       }?.filter {
-                           it == checkOrNotCheck
-                       }
-
-                   val personPhone = resPhone
-                       .data?.persons?.map {
-                           it.person_phone
-                       }?.filter { (it?.endsWith("00") == true ) || (it?.endsWith("77") == true)}
-
-                   val vetPhone = res
-                       .data?.vets?.firstOrNull()?.vet_phone
-
-                   val vetName = resName
-                       .data?.persons?.firstOrNull()?.persons_vets?.firstOrNull()?.vet?.vet_name
-
                    val phone = firebaseAuth.currentUser?.phoneNumber?.replaceFirst("+","")
 
-                   if(personPhone?.contains(phone) == true) {
+                   val phones = checkVetOrNot
+                       .data?.ui_pannels_to_users?.mapNotNull {
+                           it.person.person_phone
+                       } ?: emptyList()
+
+
+                   if(phones.contains(phone)) {
+                       val users = checkVetOrNot.data?.ui_pannels_to_users?.filter { it.person.person_phone == phone } ?: emptyList()
+
+                       val v100 = users.any { it.profile_type == 100 }
+                       val v200 = users.any { it.profile_type == 200 }
+                       val v100_200 = v100 && v200
+
+                       when {
+                           v100 -> {
+
+                           }
+                           v200 -> {
+
+                           }
+                           v100_200 -> {
+
+                           }
+                       }
+
+
                        Toast.makeText(this@LoginActivity, "Logged in as $phone", Toast.LENGTH_SHORT).show()
                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                        finish()
