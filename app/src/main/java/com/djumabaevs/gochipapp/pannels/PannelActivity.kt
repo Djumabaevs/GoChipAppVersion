@@ -44,7 +44,7 @@ class PannelActivity : AppCompatActivity() {
 
         lifecycleScope.launchWhenResumed {
             var personUid: String? = null
-            var profileType: Int = 200
+            var profileType: Int = 100
             for (item in channel) {
                 val response = try {
                     apolloClient(this@PannelActivity)

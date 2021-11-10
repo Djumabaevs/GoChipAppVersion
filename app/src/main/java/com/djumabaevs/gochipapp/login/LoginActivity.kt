@@ -14,10 +14,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.toDeferred
-import com.djumabaevs.gochipapp.GetPhoneVetByIdQuery
-import com.djumabaevs.gochipapp.GetVetPersonByPhoneQuery
-import com.djumabaevs.gochipapp.MainActivity
-import com.djumabaevs.gochipapp.R
+import com.djumabaevs.gochipapp.*
 import com.djumabaevs.gochipapp.apollo.apolloClient
 import com.djumabaevs.gochipapp.databinding.ActivityLoginBinding
 import com.djumabaevs.gochipapp.pannels.PannelActivity
@@ -175,6 +172,8 @@ class LoginActivity : AppCompatActivity() {
        GlobalScope.launch {
            progressDialog.setMessage("Loggin in")
 
+
+
            val phoneId: String? = null
            val resName = apolloClient(this@LoginActivity).query(
                GetVetPersonByPhoneQuery(phone = Input.fromNullable(phoneId))
@@ -188,11 +187,35 @@ class LoginActivity : AppCompatActivity() {
                GetVetPersonByPhoneQuery()
            ).toDeferred().await()
 
+           val personUid = apolloClient(this@LoginActivity).query(
+               GetVetPersonByPhoneQuery()
+           ).toDeferred().await()
+
+           val checkVetOrNot = apolloClient(this@LoginActivity).query(
+               GetPersonsDataQuery()
+           ).toDeferred().await()
+
            firebaseAuth.signInWithCredential(credential)
                .addOnSuccessListener {
 
+                   val checkOrNotCheck = checkVetOrNot
+                       .data?.ui_pannels_to_users?.map {
+                           it.person.person_phone
+                       }?.filter {
+                               it?.endsWith("00") == true
+                       }
+
+                   val personUidCheck = personUid
+                       .data?.persons?.map {
+                           it.person_uid
+                       }?.filter {
+                           it == checkOrNotCheck
+                       }
+
                    val personPhone = resPhone
-                       .data?.persons?.firstOrNull()?.person_phone
+                       .data?.persons?.map {
+                           it.person_phone
+                       }?.filter { (it?.endsWith("00") == true ) || (it?.endsWith("77") == true)}
 
                    val vetPhone = res
                        .data?.vets?.firstOrNull()?.vet_phone
@@ -200,18 +223,18 @@ class LoginActivity : AppCompatActivity() {
                    val vetName = resName
                        .data?.persons?.firstOrNull()?.persons_vets?.firstOrNull()?.vet?.vet_name
 
-                   val phone = firebaseAuth.currentUser?.phoneNumber
+                   val phone = firebaseAuth.currentUser?.phoneNumber?.replaceFirst("+","")
 
-                   if(phone == personPhone) {
+                   if(personPhone?.contains(phone) == true) {
+                       Toast.makeText(this@LoginActivity, "Logged in as $phone", Toast.LENGTH_SHORT).show()
+                       startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                       finish()
+                   } else {
                        Toast
                            .makeText(this@LoginActivity, "Hi! You are veterinar! " +
                                    "Please wait, you will be directed to special screen!",
                                Toast.LENGTH_SHORT).show()
                        startActivity(Intent(this@LoginActivity, VetActivity::class.java))
-                       finish()
-                   } else {
-                       Toast.makeText(this@LoginActivity, "Logged in as $phone", Toast.LENGTH_SHORT).show()
-                       startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                        finish()
                    }
                }
