@@ -1,6 +1,7 @@
 package com.djumabaevs.gochipapp.login
 
 import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -45,6 +46,19 @@ class LoginActivity : AppCompatActivity() {
 
     private var job = Job()
     private val coroutineScope = CoroutineScope(job + Dispatchers.Main)
+
+    val positiveButtonClick = { dialog: DialogInterface, which: Int ->
+        Toast.makeText(applicationContext,
+            android.R.string.yes, Toast.LENGTH_SHORT).show()
+    }
+    val negativeButtonClick = { dialog: DialogInterface, which: Int ->
+        Toast.makeText(applicationContext,
+            android.R.string.no, Toast.LENGTH_SHORT).show()
+    }
+    val neutralButtonClick = { dialog: DialogInterface, which: Int ->
+        Toast.makeText(applicationContext,
+            "Maybe", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -171,8 +185,6 @@ class LoginActivity : AppCompatActivity() {
     private  fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
        GlobalScope.launch {
            progressDialog.setMessage("Loggin in")
-
-
 
            val phoneId: String? = null
            val resName = apolloClient(this@LoginActivity).query(
