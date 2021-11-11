@@ -27,11 +27,13 @@ class VetAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val person = personData[position]
+        var vetName = holder.binding.vetNameTxt.text
 
-        holder.binding.vetPanelName.text = person.pannel.pannel_name
-        holder.binding.vetNameTxt.text = person.person.person_name
-        holder.binding.vetPhoneTxt.text = person.person.person_phone
-        holder.binding.vetProfileTxt.text = person.profile_type.toString()
+        vetName = person.person.person_name
+        holder.binding.vetPanelName.text = "Panel is " + person.pannel.pannel_name + " for " + vetName
+
+//        holder.binding.vetPhoneTxt.text = person.person.person_phone
+//        holder.binding.vetProfileTxt.text = "profile of user is: " + person.profile_type.toString()
 
     }
 

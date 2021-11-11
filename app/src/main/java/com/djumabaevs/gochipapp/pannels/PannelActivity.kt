@@ -16,19 +16,24 @@ import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.apollo.apolloClient
 import com.djumabaevs.gochipapp.databinding.ActivityPannelBinding
 import com.djumabaevs.gochipapp.pets.PetsListAdapter
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.channels.Channel
 
 class PannelActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPannelBinding
 
+    private lateinit var firebaseAuth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPannelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        firebaseAuth = FirebaseAuth.getInstance()
+
         val personInfo = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
-        val adapter = PersonAdapter(personInfo)
+        val adapter = VetAdapter(personInfo)
         binding.personRecycler.layoutManager = LinearLayoutManager(this)
         binding.personRecycler.adapter = adapter
 
@@ -64,20 +69,37 @@ class PannelActivity : AppCompatActivity() {
 
                 binding.progressBar.visibility = View.GONE
 
+                val phone = firebaseAuth.currentUser?.phoneNumber?.replaceFirst("+","")
+
                 val checkVetOrNot = apolloClient(this@PannelActivity).query(
                     GetPersonsDataQuery()
                 ).toDeferred().await()
 
-                val profiles = checkVetOrNot
-                    .data?.ui_pannels_to_users?.firstOrNull()?.profile_type
+                val phones = checkVetOrNot
+                    .data?.ui_pannels_to_users?.mapNotNull {
+                        it.person.person_phone
+                    } ?: emptyList()
+
+                val veterinars = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
+                val people = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
+
+                val containsVet = phones.contains(phone)
+
+                checkVetOrNot.data?.ui_pannels_to_users?.forEach { item ->
+                    if (item.profile_type == 100 && containsVet) {
+                        veterinars.add(item)
+                    } else if (item.profile_type == 200 && containsVet) {
+                        people.add(item)
+                    }
+                }
 
                 val usersProfile = checkVetOrNot.data?.ui_pannels_to_users?.filter { it.profile_type == 100 } ?: emptyList()
 
-                val newPersonData = response.data?.ui_pannels_to_users
+        //        val newPersonData = response.data?.ui_pannels_to_users
 
 
-                if (usersProfile != null) {
-                    personInfo.addAll(usersProfile)
+                if (veterinars != null) {
+                    personInfo.addAll(veterinars)
                     adapter.notifyDataSetChanged()
                 }
 

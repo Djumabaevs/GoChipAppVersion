@@ -136,14 +136,19 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-//        binding.btnSkip.setOnClickListener {
-////            supportFragmentManager.commit {
-////                replace(R.id.login_main, PanelFragment())
-////                setReorderingAllowed(true)
-////                addToBackStack(null)
-////            }
-////            startActivity(Intent(this, PannelActivity::class.java))
-//        }
+        binding.btnSkip.setOnClickListener {
+//            supportFragmentManager.commit {
+//                replace(R.id.login_main, PanelFragment())
+//                setReorderingAllowed(true)
+//                addToBackStack(null)
+//            }
+            startActivity(Intent(this, PannelActivity::class.java))
+        }
+
+
+        binding.btnSkip2.setOnClickListener {
+            startActivity(Intent(this, VetActivity::class.java))
+        }
     }
 
     private fun startPhoneNumberVerification(phone: String) {
@@ -220,6 +225,7 @@ class LoginActivity : AppCompatActivity() {
                            it.person.person_phone
                        } ?: emptyList()
 
+                   val verifyNumber = checkVetOrNot?.data?.ui_pannels_to_users
 
                    if(phones.contains(phone)) {
                        val users = checkVetOrNot.data?.ui_pannels_to_users?.filter { it.person.person_phone == phone } ?: emptyList()
@@ -249,8 +255,7 @@ class LoginActivity : AppCompatActivity() {
 
                    } else {
                        Toast
-                           .makeText(this@LoginActivity, "Hi! We could not find your number in our database. PLease contact Dmitriy from Cyprus!" +
-                                   "Please wait, you will be directed to special screen!",
+                           .makeText(this@LoginActivity, "Hi! PLease contact Dmitriy from Cyprus!",
                                Toast.LENGTH_LONG).show()
 
                    }

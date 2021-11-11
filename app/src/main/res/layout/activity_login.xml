@@ -56,7 +56,7 @@
             android:layout_marginTop="10dp"
             android:background="#fff"
             android:inputType="phone"
-            android:hint="+(...)xxxxxxxxxx"
+            android:hint="+()........."
             android:padding="10dp"
             android:textAlignment="center"
             android:textColor="#000"
@@ -105,7 +105,7 @@
             android:layout_marginTop="10dp"
             android:background="#fff"
             android:inputType="phone"
-            android:hint="+(...)........."
+            android:hint="......"
             android:padding="10dp"
             android:textAlignment="center"
             android:textColor="#000"
@@ -134,14 +134,22 @@
 
     </LinearLayout>
 
-<!--    <Button-->
-<!--        android:id="@+id/btnSkip"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="SKIP"-->
-<!--        android:textColor="@color/dark_blue"-->
-<!--        android:textSize="25sp"-->
-<!--        android:layout_gravity="center_horizontal"/>-->
+    <Button
+        android:id="@+id/btnSkip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vet"
+        android:textColor="@color/dark_blue"
+        android:textSize="25sp"
+        android:layout_gravity="center_horizontal"/>
+    <Button
+        android:id="@+id/btnSkip2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Owner"
+        android:textColor="@color/dark_blue"
+        android:textSize="25sp"
+        android:layout_gravity="center_horizontal"/>
 
 <!--    <LinearLayout-->
 <!--        android:orientation="horizontal"-->
