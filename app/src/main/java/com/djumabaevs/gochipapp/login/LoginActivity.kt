@@ -1,5 +1,6 @@
 package com.djumabaevs.gochipapp.login
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -49,15 +50,17 @@ class LoginActivity : AppCompatActivity() {
 
     val positiveButtonClick = { dialog: DialogInterface, which: Int ->
         Toast.makeText(applicationContext,
-            android.R.string.yes, Toast.LENGTH_SHORT).show()
+            "Redirecting to Owner profile...", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        finish()
     }
     val negativeButtonClick = { dialog: DialogInterface, which: Int ->
         Toast.makeText(applicationContext,
-            android.R.string.no, Toast.LENGTH_SHORT).show()
+            "Redirecting to Vet profile...", Toast.LENGTH_SHORT).show()
     }
     val neutralButtonClick = { dialog: DialogInterface, which: Int ->
         Toast.makeText(applicationContext,
-            "Maybe", Toast.LENGTH_SHORT).show()
+            "Bye bye!", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -224,7 +227,7 @@ class LoginActivity : AppCompatActivity() {
 
                        when {
                            v100_200 -> {
-                               Toast.makeText(this@LoginActivity, "Logged in as 100/200!! $phone", Toast.LENGTH_SHORT).show()
+                            basicAlert()
                            }
                            v100 -> {
                                Toast.makeText(this@LoginActivity, "Logged in as 100 !! $phone", Toast.LENGTH_SHORT).show()
@@ -234,8 +237,7 @@ class LoginActivity : AppCompatActivity() {
                            }
                        }
 
-                       startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                       finish()
+
                    } else {
                        Toast
                            .makeText(this@LoginActivity, "Hi! You are veterinar! " +
@@ -275,6 +277,18 @@ class LoginActivity : AppCompatActivity() {
         makeLoginRequest(binding.editText.text.toString())
     }
 }
+    fun basicAlert(){
+        val builder = AlertDialog.Builder(this)
+        with(builder)
+        {
+            setTitle("Choosing Vet or Owner")
+            setMessage("Please choose profile type")
+            setPositiveButton("Owner", DialogInterface.OnClickListener(function = positiveButtonClick))
+            setNegativeButton("Vet", negativeButtonClick)
+            setNeutralButton("Cancel", neutralButtonClick)
+            show()
+        }
+    }
 }
 
 
