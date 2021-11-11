@@ -233,10 +233,16 @@ class LoginActivity : AppCompatActivity() {
                             basicAlert()
                            }
                            v100 -> {
-                               Toast.makeText(this@LoginActivity, "Logged in as 100 !! $phone", Toast.LENGTH_SHORT).show()
+                               Toast.makeText(applicationContext,
+                                   "Redirecting to Owner profile...", Toast.LENGTH_LONG).show()
+                               startActivity(Intent(this@LoginActivity, PannelActivity::class.java))
+                               finish()
                            }
                            v200 -> {
-                               Toast.makeText(this@LoginActivity, "Logged in as 200!!  $phone", Toast.LENGTH_SHORT).show()
+                               Toast.makeText(applicationContext,
+                                   "Redirecting to Vet profile...", Toast.LENGTH_LONG).show()
+                               startActivity(Intent(this@LoginActivity, VetActivity::class.java))
+                               finish()
                            }
                        }
 
