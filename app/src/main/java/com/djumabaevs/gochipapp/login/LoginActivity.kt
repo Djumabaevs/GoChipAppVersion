@@ -183,9 +183,6 @@ class LoginActivity : AppCompatActivity() {
                GetPhoneVetByIdQuery()
            ).toDeferred().await()
 
-           val resPhone = apolloClient(this@LoginActivity).query(
-               GetVetPersonByPhoneQuery()
-           ).toDeferred().await()
 
            val personUid = apolloClient(this@LoginActivity).query(
                GetVetPersonByPhoneQuery()
@@ -214,19 +211,17 @@ class LoginActivity : AppCompatActivity() {
                        val v100_200 = v100 && v200
 
                        when {
+                           v100_200 -> {
+                               Toast.makeText(this@LoginActivity, "Logged in as 100/200!! $phone", Toast.LENGTH_SHORT).show()
+                           }
                            v100 -> {
-
+                               Toast.makeText(this@LoginActivity, "Logged in as 100 !! $phone", Toast.LENGTH_SHORT).show()
                            }
                            v200 -> {
-
-                           }
-                           v100_200 -> {
-
+                               Toast.makeText(this@LoginActivity, "Logged in as 200!!  $phone", Toast.LENGTH_SHORT).show()
                            }
                        }
 
-
-                       Toast.makeText(this@LoginActivity, "Logged in as $phone", Toast.LENGTH_SHORT).show()
                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                        finish()
                    } else {
