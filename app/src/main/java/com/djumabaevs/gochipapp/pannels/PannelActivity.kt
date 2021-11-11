@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.await
+import com.apollographql.apollo.coroutines.toDeferred
 import com.apollographql.apollo.exception.ApolloException
 import com.djumabaevs.gochipapp.GetPersonsDataQuery
 import com.djumabaevs.gochipapp.GetPetQuery
@@ -63,11 +64,20 @@ class PannelActivity : AppCompatActivity() {
 
                 binding.progressBar.visibility = View.GONE
 
+                val checkVetOrNot = apolloClient(this@PannelActivity).query(
+                    GetPersonsDataQuery()
+                ).toDeferred().await()
+
+                val profiles = checkVetOrNot
+                    .data?.ui_pannels_to_users?.firstOrNull()?.profile_type
+
+                val usersProfile = checkVetOrNot.data?.ui_pannels_to_users?.filter { it.profile_type == 100 } ?: emptyList()
+
                 val newPersonData = response.data?.ui_pannels_to_users
 
 
-                if (newPersonData != null) {
-                    personInfo.addAll(newPersonData)
+                if (usersProfile != null) {
+                    personInfo.addAll(usersProfile)
                     adapter.notifyDataSetChanged()
                 }
 
