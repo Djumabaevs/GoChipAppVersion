@@ -50,17 +50,20 @@ class LoginActivity : AppCompatActivity() {
 
     val positiveButtonClick = { dialog: DialogInterface, which: Int ->
         Toast.makeText(applicationContext,
-            "Redirecting to Owner profile...", Toast.LENGTH_SHORT).show()
-        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            "Redirecting to Owner profile...", Toast.LENGTH_LONG).show()
+        startActivity(Intent(this@LoginActivity, PannelActivity::class.java))
         finish()
     }
     val negativeButtonClick = { dialog: DialogInterface, which: Int ->
         Toast.makeText(applicationContext,
-            "Redirecting to Vet profile...", Toast.LENGTH_SHORT).show()
+            "Redirecting to Vet profile...", Toast.LENGTH_LONG).show()
+        startActivity(Intent(this@LoginActivity, VetActivity::class.java))
+        finish()
     }
     val neutralButtonClick = { dialog: DialogInterface, which: Int ->
         Toast.makeText(applicationContext,
             "Bye bye!", Toast.LENGTH_SHORT).show()
+        dialog.dismiss()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -133,14 +136,14 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnSkip.setOnClickListener {
-//            supportFragmentManager.commit {
-//                replace(R.id.login_main, PanelFragment())
-//                setReorderingAllowed(true)
-//                addToBackStack(null)
-//            }
-            startActivity(Intent(this, PannelActivity::class.java))
-        }
+//        binding.btnSkip.setOnClickListener {
+////            supportFragmentManager.commit {
+////                replace(R.id.login_main, PanelFragment())
+////                setReorderingAllowed(true)
+////                addToBackStack(null)
+////            }
+////            startActivity(Intent(this, PannelActivity::class.java))
+//        }
     }
 
     private fun startPhoneNumberVerification(phone: String) {
@@ -240,11 +243,10 @@ class LoginActivity : AppCompatActivity() {
 
                    } else {
                        Toast
-                           .makeText(this@LoginActivity, "Hi! You are veterinar! " +
+                           .makeText(this@LoginActivity, "Hi! We could not find your number in our database. PLease contact Dmitriy from Cyprus!" +
                                    "Please wait, you will be directed to special screen!",
-                               Toast.LENGTH_SHORT).show()
-                       startActivity(Intent(this@LoginActivity, VetActivity::class.java))
-                       finish()
+                               Toast.LENGTH_LONG).show()
+
                    }
                }
                .addOnFailureListener { e ->
@@ -254,29 +256,30 @@ class LoginActivity : AppCompatActivity() {
        }
     }
 
-    private suspend fun makeLoginRequest(value: String) {
-        val phoneId: String? = null
-        val res = apolloClient(this@LoginActivity).query(
-       GetVetPersonByPhoneQuery(phone = Input.fromNullable(phoneId))
-    ).toDeferred().await()
-
-    binding.recyclerview.apply {
-//        adapter = res.data?.persons?.firstOrNull()?.person_name { LoginAdapter(it) }
-        adapter = res.data?.persons.let {
-            if(res.data?.persons?.firstOrNull()?.persons_vets?.firstOrNull()?.vet != null) {
-                LoginAdapter(it!!)
-            } else {
-                LoginAdapter(it!!)
-            }
-        }
-    }
-    }
-
-    fun getLoginData(view: View) {
-    coroutineScope.launch {
-        makeLoginRequest(binding.editText.text.toString())
-    }
-}
+//    private suspend fun makeLoginRequest(value: String) {
+//        val phoneId: String? = null
+//        val res = apolloClient(this@LoginActivity).query(
+//       GetVetPersonByPhoneQuery(phone = Input.fromNullable(phoneId))
+//    ).toDeferred().await()
+//
+//    binding.recyclerview.apply {
+////        adapter = res.data?.persons?.firstOrNull()?.person_name { LoginAdapter(it) }
+//        adapter = res.data?.persons.let {
+//            if(res.data?.persons?.firstOrNull()?.persons_vets?.firstOrNull()?.vet != null) {
+//                LoginAdapter(it!!)
+//            } else {
+//                LoginAdapter(it!!)
+//            }
+//        }
+//    }
+//
+//    }
+//
+//    fun getLoginData(view: View) {
+//    coroutineScope.launch {
+//        makeLoginRequest(binding.editText.text.toString())
+//    }
+//}
     fun basicAlert(){
         val builder = AlertDialog.Builder(this)
         with(builder)
