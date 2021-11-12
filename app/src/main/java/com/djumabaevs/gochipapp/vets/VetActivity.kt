@@ -83,10 +83,8 @@ class VetActivity : AppCompatActivity() {
 
                 val pannels = mainQuery.data?.ui_pannels_to_users?.filter {
                     it.person.person_phone == phone &&
-                    it.profile_type == 100
-                }
-
-
+                            it.profile_type == 100
+                }?.sortedBy { it.pannel_order  } ?: emptyList()
 //                val phones = checkVetOrNot
 //                    .data?.ui_pannels_to_users?.mapNotNull {
 //                        it.person.person_phone
@@ -154,7 +152,7 @@ class VetActivity : AppCompatActivity() {
 //
 //                if (currentUser != null) {
 //                    personInfo.add(currentUser)
-                    adapter.submit(pannels!!.map { it.pannel })
+                    adapter.submit(pannels.map { it.pannel })
 //                    adapter.notifyDataSetChanged()
 
             }

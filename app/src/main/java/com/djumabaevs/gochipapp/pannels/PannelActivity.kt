@@ -71,44 +71,55 @@ class PannelActivity : AppCompatActivity() {
 
                 val phone = firebaseAuth.currentUser?.phoneNumber?.replaceFirst("+","")
 
-                val checkVetOrNot = apolloClient(this@PannelActivity).query(
+                val mainQuery = apolloClient(this@PannelActivity).query(
                     GetPersonsDataQuery()
                 ).toDeferred().await()
 
-                val phones = checkVetOrNot
-                    .data?.ui_pannels_to_users?.mapNotNull {
-                        it.person.person_phone
-                    } ?: emptyList()
+                val pannels = mainQuery.data?.ui_pannels_to_users?.filter {
+                    it.person.person_phone == phone &&
+                            it.profile_type == 200
+                }?.sortedBy { it.pannel_order  } ?: emptyList()
 
-                val veterinars = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
-                val people = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
+//                val checkVetOrNot = apolloClient(this@PannelActivity).query(
+//                    GetPersonsDataQuery()
+//                ).toDeferred().await()
+//
+//                val phones = checkVetOrNot
+//                    .data?.ui_pannels_to_users?.mapNotNull {
+//                        it.person.person_phone
+//                    } ?: emptyList()
+//
+//                val veterinars = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
+//                val people = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
+//
+//                val personPhone = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
+//
+//                checkVetOrNot.data?.ui_pannels_to_users?.forEach { item ->
+//                    if (item.profile_type == 100 ) {
+//                        veterinars.add(item)
+//                    } else if (item.profile_type == 200 ) {
+//                        people.add(item)
+//                    }
+//                }
+//
+//                checkVetOrNot.data?.ui_pannels_to_users?.forEach { item ->
+//                    if(item.person.person_phone == phone) {
+//                        personPhone.add(item)
+//                    }
+//                }
+//
+//                val usersProfile = checkVetOrNot.data?.ui_pannels_to_users?.filter { it.profile_type == 100 } ?: emptyList()
+//
+//        //        val newPersonData = response.data?.ui_pannels_to_users
+//
+//                val users = checkVetOrNot.data?.ui_pannels_to_users?.filter { it.person.person_phone == phone } ?: emptyList()
 
-                val personPhone = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
+//                if ( veterinars != null) {
+//                    personInfo.addAll(users.intersect(veterinars))
+//                    adapter.notifyDataSetChanged()
+//                }
 
-                checkVetOrNot.data?.ui_pannels_to_users?.forEach { item ->
-                    if (item.profile_type == 100 ) {
-                        veterinars.add(item)
-                    } else if (item.profile_type == 200 ) {
-                        people.add(item)
-                    }
-                }
-
-                checkVetOrNot.data?.ui_pannels_to_users?.forEach { item ->
-                    if(item.person.person_phone == phone) {
-                        personPhone.add(item)
-                    }
-                }
-
-                val usersProfile = checkVetOrNot.data?.ui_pannels_to_users?.filter { it.profile_type == 100 } ?: emptyList()
-
-        //        val newPersonData = response.data?.ui_pannels_to_users
-
-                val users = checkVetOrNot.data?.ui_pannels_to_users?.filter { it.person.person_phone == phone } ?: emptyList()
-
-                if ( veterinars != null) {
-                    personInfo.addAll(users.intersect(veterinars))
-                    adapter.notifyDataSetChanged()
-                }
+                adapter.submit(pannels.map { it.pannel })
 
 
             }
