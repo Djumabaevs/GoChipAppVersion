@@ -138,7 +138,7 @@
         android:id="@+id/btnSkip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vet"
+        android:text="Owner"
         android:textColor="@color/dark_blue"
         android:textSize="25sp"
         android:layout_gravity="center_horizontal"/>
@@ -146,7 +146,7 @@
         android:id="@+id/btnSkip2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Owner"
+        android:text="Vet"
         android:textColor="@color/dark_blue"
         android:textSize="25sp"
         android:layout_gravity="center_horizontal"/>

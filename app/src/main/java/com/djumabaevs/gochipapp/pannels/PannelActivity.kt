@@ -33,7 +33,7 @@ class PannelActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         val personInfo = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
-        val adapter = VetAdapter(personInfo)
+        val adapter = VetAdapter(listOf())
         binding.personRecycler.layoutManager = LinearLayoutManager(this)
         binding.personRecycler.adapter = adapter
 
@@ -83,13 +83,19 @@ class PannelActivity : AppCompatActivity() {
                 val veterinars = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
                 val people = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
 
-                val containsVet = phones.contains(phone)
+                val personPhone = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
 
                 checkVetOrNot.data?.ui_pannels_to_users?.forEach { item ->
-                    if (item.profile_type == 100 && containsVet) {
+                    if (item.profile_type == 100 ) {
                         veterinars.add(item)
-                    } else if (item.profile_type == 200 && containsVet) {
+                    } else if (item.profile_type == 200 ) {
                         people.add(item)
+                    }
+                }
+
+                checkVetOrNot.data?.ui_pannels_to_users?.forEach { item ->
+                    if(item.person.person_phone == phone) {
+                        personPhone.add(item)
                     }
                 }
 
@@ -97,9 +103,10 @@ class PannelActivity : AppCompatActivity() {
 
         //        val newPersonData = response.data?.ui_pannels_to_users
 
+                val users = checkVetOrNot.data?.ui_pannels_to_users?.filter { it.person.person_phone == phone } ?: emptyList()
 
-                if (veterinars != null) {
-                    personInfo.addAll(veterinars)
+                if ( veterinars != null) {
+                    personInfo.addAll(users.intersect(veterinars))
                     adapter.notifyDataSetChanged()
                 }
 

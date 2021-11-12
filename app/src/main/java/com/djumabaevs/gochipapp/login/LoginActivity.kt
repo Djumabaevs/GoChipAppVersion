@@ -225,7 +225,7 @@ class LoginActivity : AppCompatActivity() {
                            it.person.person_phone
                        } ?: emptyList()
 
-                   val verifyNumber = checkVetOrNot?.data?.ui_pannels_to_users
+                   val verifyNumber = checkVetOrNot.data?.ui_pannels_to_users
 
                    if(phones.contains(phone)) {
                        val users = checkVetOrNot.data?.ui_pannels_to_users?.filter { it.person.person_phone == phone } ?: emptyList()

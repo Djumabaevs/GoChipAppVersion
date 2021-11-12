@@ -12,7 +12,7 @@ import com.djumabaevs.gochipapp.databinding.PetItemBinding
 import com.djumabaevs.gochipapp.databinding.VetItemBinding
 
 class VetAdapter(
-    private val personData: List<GetPersonsDataQuery.Ui_pannels_to_user>,
+    private var userPannels: List<GetPersonsDataQuery.Pannel>,
 ) : RecyclerView.Adapter<VetAdapter.ViewHolder>() {
 
 
@@ -26,11 +26,11 @@ class VetAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val person = personData[position]
+        val pannel = userPannels[position]
         var vetName = holder.binding.vetNameTxt.text
 
-        vetName = person.person.person_name
-        holder.binding.vetPanelName.text = "Panel is " + person.pannel.pannel_name + " for " + vetName
+//        vetName = person.person.person_name
+        holder.binding.vetPanelName.text = pannel.pannel_name
 
 //        holder.binding.vetPhoneTxt.text = person.person.person_phone
 //        holder.binding.vetProfileTxt.text = "profile of user is: " + person.profile_type.toString()
@@ -38,6 +38,11 @@ class VetAdapter(
     }
 
     override fun getItemCount(): Int {
-        return personData.size
+        return userPannels.size
+    }
+
+    fun submit(pannels: List<GetPersonsDataQuery.Pannel>) {
+        userPannels = pannels
+        notifyDataSetChanged()
     }
 }
