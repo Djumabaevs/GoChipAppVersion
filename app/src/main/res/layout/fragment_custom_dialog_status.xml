@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="325dp"
-        android:layout_height="407dp"
+        android:layout_height="200dp"
         android:background="#25252E"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
             android:layout_marginTop="14dp"
             android:fontFamily="@font/notosans_bold"
             android:paddingLeft="25dp"
-            android:text="Ваш Статус"
+            android:text="Choose profile"
             android:textColor="#ffffff"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/button_work"
@@ -39,9 +39,8 @@
             android:layout_marginStart="25dp"
             android:layout_marginEnd="47dp"
             android:background="@drawable/green_button"
-            android:drawableLeft="@drawable/working"
             android:gravity="center_vertical"
-            android:text="Я Работаю"
+            android:text="Owner"
             android:textAllCaps="false"
             app:layout_constraintBottom_toTopOf="@+id/button_dinner"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,59 +48,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_status" />
 
+
         <Button
             android:id="@+id/button_dinner"
             style="@style/button_text"
             android:layout_width="275dp"
             android:layout_height="50dp"
-            android:gravity="center_vertical"
             android:background="@drawable/orange_button"
-            android:drawableLeft="@drawable/dinner"
-            android:text="Я на обеде"
-            tools:layout_editor_absoluteX="25dp"
-            android:textAllCaps="false"
-            tools:layout_editor_absoluteY="138dp"
-            app:layout_constraintBottom_toTopOf="@+id/button_repair"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.409"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_work" />
-
-        <Button
-            android:id="@+id/button_repair"
-            style="@style/button_text"
-            android:layout_width="275dp"
-            android:layout_height="50dp"
             android:gravity="center_vertical"
-            android:background="@drawable/red_button"
-            android:drawableLeft="@drawable/wrench"
-            android:text="Я на ремонте"
-            tools:layout_editor_absoluteX="25dp"
-            tools:layout_editor_absoluteY="211dp"
+            android:text="Vet"
             android:textAllCaps="false"
-            app:layout_constraintBottom_toTopOf="@+id/button_not_working"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.409"
+            app:layout_constraintHorizontal_bias="0.42"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_dinner" />
-
-        <Button
-            android:id="@+id/button_not_working"
-            style="@style/button_text"
-            android:layout_width="275dp"
-            android:layout_height="50dp"
-            android:textAllCaps="false"
-            android:gravity="center_vertical"
-            android:background="@drawable/grey_button"
-            android:drawableLeft="@drawable/working_off"
-            android:text="Я не работаю"
-            tools:layout_editor_absoluteX="25dp"
-            tools:layout_editor_absoluteY="282dp"
-            app:layout_constraintBottom_toTopOf="@+id/button_ok"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.409"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_repair" />
+            app:layout_constraintTop_toBottomOf="@+id/button_work"
+            app:layout_constraintBottom_toTopOf="@+id/button_ok"/>
 
         <Button
             android:id="@+id/button_ok"
@@ -109,7 +70,6 @@
             android:layout_width="130dp"
             android:layout_height="40dp"
             android:layout_marginStart="19dp"
-            android:layout_marginTop="19dp"
             android:layout_marginEnd="59dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_button"
@@ -117,7 +77,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button_cancel"
-            app:layout_constraintTop_toBottomOf="@+id/button_not_working" />
+            app:layout_constraintTop_toBottomOf="@+id/button_dinner" />
 
         <Button
             android:id="@+id/button_cancel"
@@ -125,15 +85,15 @@
             android:layout_width="130dp"
             android:layout_height="40dp"
             android:layout_marginStart="37dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="7dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="33dp"
             android:background="@drawable/cancel_button"
-            android:text="ОТМЕНА"
+            android:text="Cancel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_ok"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_not_working" />
+            app:layout_constraintTop_toBottomOf="@+id/button_dinner" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
