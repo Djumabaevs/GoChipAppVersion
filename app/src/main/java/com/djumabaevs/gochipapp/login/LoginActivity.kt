@@ -2,8 +2,10 @@ package com.djumabaevs.gochipapp.login
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -21,12 +23,14 @@ import com.djumabaevs.gochipapp.apollo.apolloClient
 import com.djumabaevs.gochipapp.databinding.ActivityLoginBinding
 import com.djumabaevs.gochipapp.pannels.PannelActivity
 import com.djumabaevs.gochipapp.vets.VetActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.layout_alert_dialog_title.view.*
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 
@@ -149,7 +153,12 @@ class LoginActivity : AppCompatActivity() {
         binding.btnSkip2.setOnClickListener {
             startActivity(Intent(this, VetActivity::class.java))
         }
-    }
+
+        binding.btnSkip3.setOnClickListener {
+
+            }
+        }
+
 
     private fun startPhoneNumberVerification(phone: String) {
         progressDialog.setMessage("Verifying phone number...")
@@ -303,6 +312,59 @@ class LoginActivity : AppCompatActivity() {
             show()
         }
     }
+
+    //Custom dialog
+    fun showDialogFunction() {
+        fun MaterialAlertDialogBuilder.showDialog(
+            context: Context,
+            title: String = "",
+            message: String = "",
+            positiveText: String? = null,
+            negativeText: String? = null,
+            positiveClick: DialogInterface.OnClickListener? = null,
+            negativeClick: DialogInterface.OnClickListener? = null,
+            isDialogCancelable: Boolean = false
+        ): androidx.appcompat.app.AlertDialog {
+            val titleView = View.inflate(context, R.layout.layout_alert_dialog_title, null)
+            setCustomTitle(titleView)
+
+            val alertDialog = create()
+
+            if (title.isNotBlank()) {
+                titleView.tv_title.visibility = View.VISIBLE
+                titleView.tv_title.text = title
+            }
+
+            if (message.isNotBlank()) {
+                setMessage(message)
+            }
+            setCancelable(isDialogCancelable)
+            alertDialog.setCanceledOnTouchOutside(isDialogCancelable)
+            positiveText?.let {
+                if (it.isNotBlank()) {
+                    setPositiveButton(positiveText, positiveClick)
+                }
+            }
+            negativeText?.let {
+                if (it.isNotBlank()) {
+                    setNeutralButton(negativeText, negativeClick)
+                }
+            }
+
+            titleView.iv_close.setOnClickListener {
+                alertDialog.dismiss()
+            }
+
+
+            alertDialog.setOnShowListener {
+                val neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
+                neutralButton.paintFlags = neutralButton.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            }
+            alertDialog.show()
+            return alertDialog
+        }
+    }
+
 }
 
 
