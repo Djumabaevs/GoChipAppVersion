@@ -22,6 +22,7 @@ import com.djumabaevs.gochipapp.*
 import com.djumabaevs.gochipapp.apollo.apolloClient
 import com.djumabaevs.gochipapp.databinding.ActivityLoginBinding
 import com.djumabaevs.gochipapp.pannels.PannelActivity
+import com.djumabaevs.gochipapp.util.CustomDialogStatusFragment
 import com.djumabaevs.gochipapp.vets.VetActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.FirebaseException
@@ -155,6 +156,15 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnSkip3.setOnClickListener {
+            //                StatusTracker
+//                    .getInstance()
+//                    .getDialog(MainActivity.this, mContentHelper)
+//                    .show();
+
+//                StatusWorkDesignNewDialogFragment showDialogFragment = new StatusWorkDesignNewDialogFragment();
+//                showDialogFragment.show(getSupportFragmentManager(), "show");
+            val f = CustomDialogStatusFragment()
+            f.show(supportFragmentManager, "null")
 
             }
         }
@@ -245,7 +255,9 @@ class LoginActivity : AppCompatActivity() {
 
                        when {
                            v100_200 -> {
-                            basicAlert()
+                      //      basicAlert()
+                               val f = CustomDialogStatusFragment()
+                               f.show(supportFragmentManager, "null")
                            }
                            v100 -> {
                                Toast.makeText(applicationContext,

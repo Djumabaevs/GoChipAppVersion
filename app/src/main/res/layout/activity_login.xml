@@ -118,8 +118,9 @@
             style="@style/TextAppearance.MaterialComponents.Caption"
             android:padding="5dp"
             android:textColor="#777777"
+            android:textSize="14sp"
             android:textAlignment="center"
-            android:text="Didn't receive sms? Resend."/>
+            android:text="Didn't receive sms? RESEND"/>
 
         <Button
             android:id="@+id/btnCodeSubmit"
