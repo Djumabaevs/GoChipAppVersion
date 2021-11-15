@@ -58,7 +58,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title">
 
-        <com.myshoppal.utils.MSPEditText
+        <com.djumabaevs.gochipapp.util.MSPEditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             tools:text="123456" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.myshoppal.utils.MSPTextView
+    <com.djumabaevs.gochipapp.util.MSPTextView
         android:id="@+id/tv_forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_login">
 
-        <com.myshoppal.utils.MSPTextView
+        <com.djumabaevs.gochipapp.util.MSPTextView
             android:id="@+id/tv_don_t_have_an_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
