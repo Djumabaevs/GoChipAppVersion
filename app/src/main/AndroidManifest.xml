@@ -32,6 +32,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".login.newLogin.NewLoginActivity"
+            android:exported="true" />
+        <activity
             android:name=".login.StartActivity"
             android:exported="true" />
         <activity
