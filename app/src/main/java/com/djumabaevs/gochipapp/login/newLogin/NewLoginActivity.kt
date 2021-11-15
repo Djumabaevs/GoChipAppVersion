@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil.setContentView
 import com.djumabaevs.gochipapp.R
+import com.djumabaevs.gochipapp.pannels.PannelActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_new_login.*
 
@@ -17,6 +19,8 @@ import kotlinx.android.synthetic.main.activity_new_login.*
 @Suppress("DEPRECATION")
 class NewLoginActivity : BaseActivity(), View.OnClickListener {
 
+    private lateinit var firebaseAuth: FirebaseAuth
+
     /**
      * This function is auto created by Android when the Activity Class is created.
      */
@@ -25,6 +29,8 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         // This is used to align the xml view to this class
         setContentView(R.layout.activity_new_login)
+
+        firebaseAuth = FirebaseAuth.getInstance()
 
         // This is used to hide the status bar and make the login screen as a full screen activity.
         // It is deprecated in the API level 30. I will update you with the alternate solution soon.
@@ -38,7 +44,7 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
         // Click event assigned to Login button.
         btn_login.setOnClickListener(this)
         // Click event assigned to Register text.
-   //     tv_register.setOnClickListener(this)
+        tv_register.setOnClickListener(this)
     }
 
     /**
@@ -103,6 +109,8 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
             val password = et_password.text.toString().trim { it <= ' ' }
 
             // Log-In using FirebaseAuth
+            val emailSignedIn = firebaseAuth.currentUser?.email
+
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
 
@@ -110,8 +118,13 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
                     hideProgressDialog()
 
                     if (task.isSuccessful) {
-
-                        showErrorSnackBar("You are logged in successfully.", false)
+                        if(emailSignedIn == "djumabaevb@gmail.com") {
+                            Toast.makeText(this, "Verified", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(this, "Not found", Toast.LENGTH_LONG).show()
+                        }
+//                        val intent = Intent(this@NewLoginActivity, PannelActivity::class.java)
+//                        startActivity(intent)
                     } else {
                         showErrorSnackBar(task.exception!!.message.toString(), true)
                     }
