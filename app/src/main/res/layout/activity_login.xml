@@ -135,38 +135,38 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnSkip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Owner"
-        android:textColor="@color/dark_blue"
-        android:textSize="15sp"
-        android:layout_gravity="center_horizontal"/>
-    <Button
-        android:id="@+id/btnSkip2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Vet"
-        android:textColor="@color/dark_blue"
-        android:textSize="15sp"
-        android:layout_gravity="center_horizontal"/>
-    <Button
-        android:id="@+id/btnSkip3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test dialog"
-        android:textColor="@color/dark_blue"
-        android:textSize="15sp"
-        android:layout_gravity="center_horizontal"/>
-    <Button
-        android:id="@+id/btnSkip4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Login"
-        android:textColor="@color/dark_blue"
-        android:textSize="15sp"
-        android:layout_gravity="center_horizontal"/>
+<!--    <Button-->
+<!--        android:id="@+id/btnSkip"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Owner"-->
+<!--        android:textColor="@color/dark_blue"-->
+<!--        android:textSize="15sp"-->
+<!--        android:layout_gravity="center_horizontal"/>-->
+<!--    <Button-->
+<!--        android:id="@+id/btnSkip2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Vet"-->
+<!--        android:textColor="@color/dark_blue"-->
+<!--        android:textSize="15sp"-->
+<!--        android:layout_gravity="center_horizontal"/>-->
+<!--    <Button-->
+<!--        android:id="@+id/btnSkip3"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Test dialog"-->
+<!--        android:textColor="@color/dark_blue"-->
+<!--        android:textSize="15sp"-->
+<!--        android:layout_gravity="center_horizontal"/>-->
+<!--    <Button-->
+<!--        android:id="@+id/btnSkip4"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="New Login"-->
+<!--        android:textColor="@color/dark_blue"-->
+<!--        android:textSize="15sp"-->
+<!--        android:layout_gravity="center_horizontal"/>-->
 
 <!--    <LinearLayout-->
 <!--        android:orientation="horizontal"-->

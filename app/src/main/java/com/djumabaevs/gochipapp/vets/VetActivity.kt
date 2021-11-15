@@ -76,14 +76,15 @@ class VetActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.GONE
 
                 val phone = firebaseAuth.currentUser?.phoneNumber?.replaceFirst("+","")
+                val emailSignedIn = firebaseAuth.currentUser?.email
 
                 val mainQuery = apolloClient(this@VetActivity).query(
                     GetPersonsDataQuery()
                 ).toDeferred().await()
 
                 val pannels = mainQuery.data?.ui_pannels_to_users?.filter {
-                    it.person.person_phone == phone &&
-                            it.profile_type == 100
+                   ( it.person.person_phone == phone &&
+                            it.profile_type == 100) || (it.person.person_email == emailSignedIn && it.profile_type == 100)
                 }?.sortedBy { it.pannel_order  } ?: emptyList()
 //                val phones = checkVetOrNot
 //                    .data?.ui_pannels_to_users?.mapNotNull {

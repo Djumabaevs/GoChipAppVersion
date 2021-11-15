@@ -70,14 +70,15 @@ class PannelActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.GONE
 
                 val phone = firebaseAuth.currentUser?.phoneNumber?.replaceFirst("+","")
+                val emailSignedIn = firebaseAuth.currentUser?.email
 
                 val mainQuery = apolloClient(this@PannelActivity).query(
                     GetPersonsDataQuery()
                 ).toDeferred().await()
 
                 val pannels = mainQuery.data?.ui_pannels_to_users?.filter {
-                    it.person.person_phone == phone &&
-                            it.profile_type == 200
+                    (it.person.person_phone == phone &&
+                            it.profile_type == 200) || (it.person.person_email == emailSignedIn && it.profile_type == 200)
                 }?.sortedBy { it.pannel_order  } ?: emptyList()
 
 //                val checkVetOrNot = apolloClient(this@PannelActivity).query(

@@ -13,6 +13,7 @@ import com.apollographql.apollo.coroutines.toDeferred
 import com.djumabaevs.gochipapp.GetPersonsDataQuery
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.apollo.apolloClient
+import com.djumabaevs.gochipapp.login.LoginActivity
 import com.djumabaevs.gochipapp.pannels.PannelActivity
 import com.djumabaevs.gochipapp.util.CustomDialogStatusFragment
 import com.djumabaevs.gochipapp.vets.VetActivity
@@ -53,6 +54,8 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
         btn_login.setOnClickListener(this)
         // Click event assigned to Register text.
         tv_register.setOnClickListener(this)
+
+        tv_otp_phone_login.setOnClickListener(this)
     }
 
     /**
@@ -70,12 +73,17 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
 //                }
 
                 R.id.btn_login -> {
-                    lifecycleScope.launch {  logInRegisteredUser() }
+                      logInRegisteredUser()
                 }
 
                 R.id.tv_register -> {
                     // Launch the register screen when the user clicks on the text.
                     val intent = Intent(this@NewLoginActivity, NewRegisterActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.tv_otp_phone_login -> {
+                    val intent = Intent(this@NewLoginActivity, LoginActivity::class.java)
                     startActivity(intent)
                 }
             }
@@ -104,7 +112,7 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
     /**
      * A function to Log-In. The user will be able to log in using the registered email and password with Firebase Authentication.
      */
-    private suspend fun logInRegisteredUser() {
+    private fun logInRegisteredUser() {
 
         if (validateLoginDetails()) {
 
@@ -117,6 +125,8 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
 
             // Log-In using FirebaseAuth
             val emailSignedIn = firebaseAuth.currentUser?.email
+
+            GlobalScope.launch {
 
                 val checkForEmail = apolloClient(this@NewLoginActivity).query(
                     GetPersonsDataQuery()
@@ -139,7 +149,9 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
 
                         if (task.isSuccessful) {
                             if (emails.contains(emailSignedIn)) {
-                                val users = checkForEmail.data?.ui_pannels_to_users?.filter { it.person.person_email == emailSignedIn } ?: emptyList()
+                                val users =
+                                    checkForEmail.data?.ui_pannels_to_users?.filter { it.person.person_email == emailSignedIn }
+                                        ?: emptyList()
 
                                 val v100 = users.any { it.profile_type == 100 }
                                 val v200 = users.any { it.profile_type == 200 }
@@ -152,20 +164,38 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
                                         f.show(supportFragmentManager, "null")
                                     }
                                     v100 -> {
-                                        Toast.makeText(applicationContext,
-                                            "Redirecting to Owner profile...", Toast.LENGTH_LONG).show()
-                                        startActivity(Intent(this@NewLoginActivity, PannelActivity::class.java))
+                                        Toast.makeText(
+                                            applicationContext,
+                                            "Redirecting to Owner profile...", Toast.LENGTH_LONG
+                                        ).show()
+                                        startActivity(
+                                            Intent(
+                                                this@NewLoginActivity,
+                                                PannelActivity::class.java
+                                            )
+                                        )
                                         finish()
                                     }
                                     v200 -> {
-                                        Toast.makeText(applicationContext,
-                                            "Redirecting to Vet profile...", Toast.LENGTH_LONG).show()
-                                        startActivity(Intent(this@NewLoginActivity, VetActivity::class.java))
+                                        Toast.makeText(
+                                            applicationContext,
+                                            "Redirecting to Vet profile...", Toast.LENGTH_LONG
+                                        ).show()
+                                        startActivity(
+                                            Intent(
+                                                this@NewLoginActivity,
+                                                VetActivity::class.java
+                                            )
+                                        )
                                         finish()
                                     }
                                 }
                             } else {
-                                Toast.makeText(this@NewLoginActivity, "Not found", Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    this@NewLoginActivity,
+                                    "Not found",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
 //                        val intent = Intent(this@NewLoginActivity, PannelActivity::class.java)
 //                        startActivity(intent)
@@ -173,6 +203,7 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
                             showErrorSnackBar(task.exception!!.message.toString(), true)
                         }
                     }
+            }
         }
     }
 }

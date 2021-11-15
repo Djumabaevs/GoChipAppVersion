@@ -142,35 +142,35 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnSkip.setOnClickListener {
-//            supportFragmentManager.commit {
-//                replace(R.id.login_main, PanelFragment())
-//                setReorderingAllowed(true)
-//                addToBackStack(null)
+//        binding.btnSkip.setOnClickListener {
+////            supportFragmentManager.commit {
+////                replace(R.id.login_main, PanelFragment())
+////                setReorderingAllowed(true)
+////                addToBackStack(null)
+////            }
+//            startActivity(Intent(this, PannelActivity::class.java))
+//        }
+//
+//
+//        binding.btnSkip2.setOnClickListener {
+//            startActivity(Intent(this, VetActivity::class.java))
+//        }
+//
+//        binding.btnSkip3.setOnClickListener {
+//            //                StatusTracker
+////                    .getInstance()
+////                    .getDialog(MainActivity.this, mContentHelper)
+////                    .show();
+//
+////                StatusWorkDesignNewDialogFragment showDialogFragment = new StatusWorkDesignNewDialogFragment();
+////                showDialogFragment.show(getSupportFragmentManager(), "show");
+//            val f = CustomDialogStatusFragment()
+//            f.show(supportFragmentManager, "null")
+//
 //            }
-            startActivity(Intent(this, PannelActivity::class.java))
-        }
-
-
-        binding.btnSkip2.setOnClickListener {
-            startActivity(Intent(this, VetActivity::class.java))
-        }
-
-        binding.btnSkip3.setOnClickListener {
-            //                StatusTracker
-//                    .getInstance()
-//                    .getDialog(MainActivity.this, mContentHelper)
-//                    .show();
-
-//                StatusWorkDesignNewDialogFragment showDialogFragment = new StatusWorkDesignNewDialogFragment();
-//                showDialogFragment.show(getSupportFragmentManager(), "show");
-            val f = CustomDialogStatusFragment()
-            f.show(supportFragmentManager, "null")
-
-            }
-        binding.btnSkip4.setOnClickListener {
-            startActivity(Intent(this, NewLoginActivity::class.java))
-        }
+//        binding.btnSkip4.setOnClickListener {
+//            startActivity(Intent(this, NewLoginActivity::class.java))
+//        }
         }
 
 

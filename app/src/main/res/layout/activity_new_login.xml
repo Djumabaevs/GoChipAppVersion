@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/content_description"
             android:scaleType="fitXY"
-            android:src="@drawable/auth_screens_background" />
+            android:src="@drawable/my_rectangle" />
 
         <ImageView
             android:layout_width="@dimen/auth_logo_width_size"
@@ -101,11 +101,27 @@
         android:layout_marginEnd="16dp"
         android:foreground="?attr/selectableItemBackground"
         android:padding="@dimen/clickable_text_view_padding"
-        android:text="@string/lbl_forgot_password"
+        android:text=""
         android:textColor="@color/colorSecondaryText"
         android:textSize="@dimen/forgot_password_textSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_password" />
+
+    <com.djumabaevs.gochipapp.util.MSPTextView
+        android:id="@+id/tv_otp_phone_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:padding="@dimen/clickable_text_view_padding"
+        android:text="Phone OTP"
+        android:fontFamily="@font/notosans_bold"
+        android:textColor="@color/dark_green_blue"
+        android:textSize="@dimen/forgot_password_textSize"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_password"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.djumabaevs.gochipapp.util.MSPButton
         android:id="@+id/btn_login"
@@ -115,7 +131,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/button_background"
+        android:background="@color/medium_dark_blue"
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center"
         android:paddingTop="@dimen/btn_padding"
