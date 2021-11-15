@@ -7,6 +7,8 @@ query getPersonsData($person_uid: uuid, $profile_type: Int){
         pannel_order
         pannel_uuid
         person {
+            person_email
+            person_password
             person_name
             person_phone
             person_uid

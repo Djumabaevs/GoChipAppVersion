@@ -8,10 +8,18 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil.setContentView
+import androidx.lifecycle.lifecycleScope
+import com.apollographql.apollo.coroutines.toDeferred
+import com.djumabaevs.gochipapp.GetPersonsDataQuery
 import com.djumabaevs.gochipapp.R
+import com.djumabaevs.gochipapp.apollo.apolloClient
 import com.djumabaevs.gochipapp.pannels.PannelActivity
+import com.djumabaevs.gochipapp.util.CustomDialogStatusFragment
+import com.djumabaevs.gochipapp.vets.VetActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_new_login.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * Login Screen of the application.
@@ -62,8 +70,7 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
 //                }
 
                 R.id.btn_login -> {
-
-                    logInRegisteredUser()
+                    lifecycleScope.launch {  logInRegisteredUser() }
                 }
 
                 R.id.tv_register -> {
@@ -97,7 +104,7 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
     /**
      * A function to Log-In. The user will be able to log in using the registered email and password with Firebase Authentication.
      */
-    private fun logInRegisteredUser() {
+    private suspend fun logInRegisteredUser() {
 
         if (validateLoginDetails()) {
 
@@ -111,24 +118,61 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
             // Log-In using FirebaseAuth
             val emailSignedIn = firebaseAuth.currentUser?.email
 
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
+                val checkForEmail = apolloClient(this@NewLoginActivity).query(
+                    GetPersonsDataQuery()
+                ).toDeferred().await()
 
-                    // Hide the progress dialog
-                    hideProgressDialog()
+                val emails = checkForEmail
+                    .data?.ui_pannels_to_users?.mapNotNull {
+                        it.person.person_email
+                    } ?: emptyList()
+                val passwords = checkForEmail
+                    .data?.ui_pannels_to_users?.mapNotNull {
+                        it.person.person_password
+                    } ?: emptyList()
 
-                    if (task.isSuccessful) {
-                        if(emailSignedIn == "djumabaevb@gmail.com") {
-                            Toast.makeText(this, "Verified", Toast.LENGTH_LONG).show()
-                        } else {
-                            Toast.makeText(this, "Not found", Toast.LENGTH_LONG).show()
-                        }
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+
+                        // Hide the progress dialog
+                        hideProgressDialog()
+
+                        if (task.isSuccessful) {
+                            if (emails.contains(emailSignedIn)) {
+                                val users = checkForEmail.data?.ui_pannels_to_users?.filter { it.person.person_email == emailSignedIn } ?: emptyList()
+
+                                val v100 = users.any { it.profile_type == 100 }
+                                val v200 = users.any { it.profile_type == 200 }
+                                val v100_200 = v100 && v200
+
+                                when {
+                                    v100_200 -> {
+                                        //      basicAlert()
+                                        val f = CustomDialogStatusFragment()
+                                        f.show(supportFragmentManager, "null")
+                                    }
+                                    v100 -> {
+                                        Toast.makeText(applicationContext,
+                                            "Redirecting to Owner profile...", Toast.LENGTH_LONG).show()
+                                        startActivity(Intent(this@NewLoginActivity, PannelActivity::class.java))
+                                        finish()
+                                    }
+                                    v200 -> {
+                                        Toast.makeText(applicationContext,
+                                            "Redirecting to Vet profile...", Toast.LENGTH_LONG).show()
+                                        startActivity(Intent(this@NewLoginActivity, VetActivity::class.java))
+                                        finish()
+                                    }
+                                }
+                            } else {
+                                Toast.makeText(this@NewLoginActivity, "Not found", Toast.LENGTH_LONG).show()
+                            }
 //                        val intent = Intent(this@NewLoginActivity, PannelActivity::class.java)
 //                        startActivity(intent)
-                    } else {
-                        showErrorSnackBar(task.exception!!.message.toString(), true)
+                        } else {
+                            showErrorSnackBar(task.exception!!.message.toString(), true)
+                        }
                     }
-                }
         }
     }
 }
