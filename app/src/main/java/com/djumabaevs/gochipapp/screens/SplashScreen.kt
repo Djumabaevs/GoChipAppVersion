@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.djumabaevs.gochipapp.MainActivity
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.login.LoginActivity
+import com.djumabaevs.gochipapp.login.newLogin.NewLoginActivity
 
 
 @Suppress("DEPRECATION")

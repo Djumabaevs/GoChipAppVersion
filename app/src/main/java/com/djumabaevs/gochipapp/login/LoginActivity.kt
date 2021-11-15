@@ -21,6 +21,7 @@ import com.apollographql.apollo.coroutines.toDeferred
 import com.djumabaevs.gochipapp.*
 import com.djumabaevs.gochipapp.apollo.apolloClient
 import com.djumabaevs.gochipapp.databinding.ActivityLoginBinding
+import com.djumabaevs.gochipapp.login.newLogin.NewLoginActivity
 import com.djumabaevs.gochipapp.pannels.PannelActivity
 import com.djumabaevs.gochipapp.util.CustomDialogStatusFragment
 import com.djumabaevs.gochipapp.vets.VetActivity
@@ -167,6 +168,9 @@ class LoginActivity : AppCompatActivity() {
             f.show(supportFragmentManager, "null")
 
             }
+        binding.btnSkip4.setOnClickListener {
+            startActivity(Intent(this, NewLoginActivity::class.java))
+        }
         }
 
 
