@@ -1,5 +1,7 @@
 package com.djumabaevs.gochipapp.pannels
 
+import android.content.Context
+import android.content.Intent
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +12,7 @@ import com.djumabaevs.gochipapp.GetPetQuery
 import com.djumabaevs.gochipapp.databinding.PersonItemBinding
 import com.djumabaevs.gochipapp.databinding.PetItemBinding
 import com.djumabaevs.gochipapp.databinding.VetItemBinding
+import kotlin.coroutines.coroutineContext
 
 class VetAdapter(
     private var userPannels: List<GetPersonsDataQuery.Pannel>,
@@ -31,6 +34,11 @@ class VetAdapter(
 
 //        vetName = person.person.person_name
         holder.binding.vetPanelName.text = pannel.pannel_name
+
+        holder.binding.vetPanelName.setOnClickListener {
+            val intent = Intent(holder.itemView.context, VetPanelActivity::class.java)
+            holder.itemView.context.startActivity(intent)
+        }
 
 //        holder.binding.vetPhoneTxt.text = person.person.person_phone
 //        holder.binding.vetProfileTxt.text = "profile of user is: " + person.profile_type.toString()
