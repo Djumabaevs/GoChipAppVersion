@@ -120,7 +120,9 @@ class PannelActivity : AppCompatActivity() {
 //                    adapter.notifyDataSetChanged()
 //                }
 
-                adapter.submit(pannels.map { it.pannel })
+
+
+               adapter.submit(pannels.map { it.pannel })
 
 
             }

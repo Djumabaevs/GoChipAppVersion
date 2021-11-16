@@ -3,9 +3,11 @@ package com.djumabaevs.gochipapp.pannels
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.databinding.ActivityVetPanelBinding
 import com.djumabaevs.gochipapp.vets.VetActivity
+import kotlinx.android.synthetic.main.activity_new_login.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class VetPanelActivity : AppCompatActivity() {
@@ -21,8 +23,10 @@ class VetPanelActivity : AppCompatActivity() {
         val intentVet = Intent(this, VetActivity::class.java)
         setSupportActionBar(binding.toolbar)
 
+        var vetName = intent.getStringExtra("vetName")
+
         supportActionBar?.apply {
-            title = "Toolbar Back Button"
+            title = vetName
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
@@ -30,8 +34,13 @@ class VetPanelActivity : AppCompatActivity() {
         binding.toolbar.setOnClickListener {
             startActivity(intentPannel)
         }
-        var vetName = intent.getStringExtra("vetName")
+
         binding.vetName.text = vetName
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        onBackPressed()
+        return super.onOptionsItemSelected(item)
     }
 }
