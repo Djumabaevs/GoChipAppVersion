@@ -30,13 +30,15 @@ class VetAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pannel = userPannels[position]
-        var vetName = holder.binding.vetNameTxt.text
+        var vetName = pannel.pannel_name
+
 
 //        vetName = person.person.person_name
         holder.binding.vetPanelName.text = pannel.pannel_name
 
         holder.binding.vetPanelName.setOnClickListener {
             val intent = Intent(holder.itemView.context, VetPanelActivity::class.java)
+            intent.putExtra("vetName", vetName )
             holder.itemView.context.startActivity(intent)
         }
 
