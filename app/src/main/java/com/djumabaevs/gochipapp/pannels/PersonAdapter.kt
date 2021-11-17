@@ -27,13 +27,13 @@ class PersonAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val person = personData[position]
 
+//        holder.binding.tvPersonName.text = person.person_uid.toString()
+//        holder.binding.tvPersonName.text = person.ui_pannels_to_users.firstOrNull()?.person?.person_name
         holder.binding.tvPersonName.text = person.person.person_name
- //       holder.binding.tvPersonName.text = person.ui_pannels_to_users.firstOrNull()?.person?.person_name
+//        holder.binding.tvPersonUid.text = person.person.person_uid.toString()
         holder.binding.tvPersonPhone.text = person.person.person_phone
-        holder.binding.tvPersonUid.text = person.person.person_uid.toString()
-        holder.binding.tvPanelDigital.text = person.pannel.pannel_name
-        holder.binding.tvPanelPet.text = person.__typename
-        holder.binding.tvPanelVet.text = person.pannel.__typename
+        holder.binding.tvPersonEmail.text = person.person.person_email
+        holder.binding.tvPersonPassword.text = person.person.person_password
 
     }
 
