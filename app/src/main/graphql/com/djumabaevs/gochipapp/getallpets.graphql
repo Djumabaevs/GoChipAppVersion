@@ -27,5 +27,8 @@ query getAllPets($orderType: order_by, $where:pets_bool_exp) {
         person{
             person_name
         }
+        pet{
+            pet_name
+        }
     }
 }

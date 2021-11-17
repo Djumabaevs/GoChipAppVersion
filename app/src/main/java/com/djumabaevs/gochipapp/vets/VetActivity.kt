@@ -1,27 +1,20 @@
 package com.djumabaevs.gochipapp.vets
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.await
 import com.apollographql.apollo.coroutines.toDeferred
 import com.apollographql.apollo.exception.ApolloException
+import com.djumabaevs.gochipapp.GetAllPetsQuery
 import com.djumabaevs.gochipapp.GetPersonsDataQuery
-import com.djumabaevs.gochipapp.GetPetQuery
-import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.apollo.apolloClient
-import com.djumabaevs.gochipapp.databinding.ActivityPannelBinding
 import com.djumabaevs.gochipapp.databinding.ActivityVetBinding
-import com.djumabaevs.gochipapp.pannels.PannelActivity
-import com.djumabaevs.gochipapp.pannels.PersonAdapter
 import com.djumabaevs.gochipapp.pannels.VetAdapter
-import com.djumabaevs.gochipapp.pets.PetsListAdapter
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.channels.Channel
 
@@ -38,8 +31,8 @@ class VetActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-        val personInfo = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
-        val adapter = VetAdapter(listOf())
+        val personInfo = GetAllPetsQuery.Person
+        val adapter = VetAdapter(listOf(), null)
         binding.vetRecycler.layoutManager = LinearLayoutManager(this)
         binding.vetRecycler.adapter = adapter
 
@@ -81,6 +74,12 @@ class VetActivity : AppCompatActivity() {
                 val mainQuery = apolloClient(this@VetActivity).query(
                     GetPersonsDataQuery()
                 ).toDeferred().await()
+                val query2 = apolloClient(this@VetActivity).query(
+                    GetAllPetsQuery()
+                ).toDeferred().await()
+
+                val personName = query2.data?.persons_pets?.firstOrNull()?.person?.person_name
+                val petname = query2.data?.persons_pets?.filter{ it.person.person_name == personName }?.first()
 
                 val pannels = mainQuery.data?.ui_pannels_to_users?.filter {
                    ( it.person.person_phone == phone &&
@@ -153,7 +152,7 @@ class VetActivity : AppCompatActivity() {
 //
 //                if (currentUser != null) {
 //                    personInfo.add(currentUser)
-                    adapter.submit(pannels.map { it.pannel })
+                    adapter.submit(pannels.map { it.pannel }, petname)
 //                    adapter.notifyDataSetChanged()
 
             }

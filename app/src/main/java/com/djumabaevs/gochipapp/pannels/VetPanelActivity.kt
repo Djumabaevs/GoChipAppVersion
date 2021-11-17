@@ -23,7 +23,8 @@ class VetPanelActivity : AppCompatActivity() {
         val intentVet = Intent(this, VetActivity::class.java)
         setSupportActionBar(binding.toolbar)
 
-        var vetName = intent.getStringExtra("vetName")
+        val vetName = intent.getStringExtra("vetName")
+        val personsNameGet = intent.getStringExtra("personName")
 
         supportActionBar?.apply {
             title = vetName
@@ -35,7 +36,7 @@ class VetPanelActivity : AppCompatActivity() {
             startActivity(intentPannel)
         }
 
-        binding.vetName.text = vetName
+        binding.vetName.text = personsNameGet
 
     }
 

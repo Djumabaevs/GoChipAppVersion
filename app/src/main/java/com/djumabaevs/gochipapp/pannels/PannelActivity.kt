@@ -10,12 +10,10 @@ import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.await
 import com.apollographql.apollo.coroutines.toDeferred
 import com.apollographql.apollo.exception.ApolloException
+import com.djumabaevs.gochipapp.GetAllPetsQuery
 import com.djumabaevs.gochipapp.GetPersonsDataQuery
-import com.djumabaevs.gochipapp.GetPetQuery
-import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.apollo.apolloClient
 import com.djumabaevs.gochipapp.databinding.ActivityPannelBinding
-import com.djumabaevs.gochipapp.pets.PetsListAdapter
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.channels.Channel
 
@@ -33,7 +31,7 @@ class PannelActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         val personInfo = mutableListOf<GetPersonsDataQuery.Ui_pannels_to_user>()
-        val adapter = VetAdapter(listOf())
+        val adapter = VetAdapter(listOf(), null)
         binding.personRecycler.layoutManager = LinearLayoutManager(this)
         binding.personRecycler.adapter = adapter
 
@@ -75,7 +73,12 @@ class PannelActivity : AppCompatActivity() {
                 val mainQuery = apolloClient(this@PannelActivity).query(
                     GetPersonsDataQuery()
                 ).toDeferred().await()
+                val query2 = apolloClient(this@PannelActivity).query(
+                    GetAllPetsQuery()
+                ).toDeferred().await()
 
+                val personName = query2.data?.persons_pets?.firstOrNull()?.person?.person_name
+                val petname = query2.data?.persons_pets?.filter{ it.person.person_name == personName }?.first()
                 val pannels = mainQuery.data?.ui_pannels_to_users?.filter {
                     (it.person.person_phone == phone &&
                             it.profile_type == 200) || (it.person.person_email == emailSignedIn && it.profile_type == 200)
@@ -122,7 +125,7 @@ class PannelActivity : AppCompatActivity() {
 
 
 
-               adapter.submit(pannels.map { it.pannel })
+               adapter.submit(pannels.map { it.pannel }, petname)
 
 
             }
