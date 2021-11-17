@@ -26,6 +26,7 @@ class VetAdapter(
         val pannel = userPannels[position]
         val vetName = pannel.pannel_name
         val personsName = userInfo?.person?.person_name
+        val panelInfo = pannel.__typename
 
 //        vetName = person.person.person_name
         holder.binding.vetPanelName.text = pannel.pannel_name
@@ -34,6 +35,7 @@ class VetAdapter(
             val intent = Intent(holder.itemView.context, VetPanelActivity::class.java)
             intent.putExtra("vetName", vetName )
             intent.putExtra("personName", personsName)
+            intent.putExtra("panelType", panelInfo)
             holder.itemView.context.startActivity(intent)
         }
 
