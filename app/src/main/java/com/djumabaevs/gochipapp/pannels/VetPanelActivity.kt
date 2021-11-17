@@ -65,7 +65,7 @@ class VetPanelActivity : AppCompatActivity() {
         val channel = Channel<Unit>(Channel.CONFLATED)
 
         coroutineScope.launch {
-            makeLoginRequest(binding.testName.toString())
+            makeLoginRequest()
         }
 
         channel.trySend(Unit)
@@ -80,7 +80,7 @@ class VetPanelActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private suspend fun makeLoginRequest(value: String) {
+    private suspend fun makeLoginRequest() {
         val res = apolloClient(this@VetPanelActivity).query(
             GetPersonsDataQuery()
         ).toDeferred().await()
