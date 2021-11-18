@@ -31,12 +31,22 @@ class VetAdapter(
 //        vetName = person.person.person_name
         holder.binding.vetPanelName.text = pannel.pannel_name
 
+        val namePanelClicked = pannel.pannel_name
+
         holder.binding.vetPanelName.setOnClickListener {
-            val intent = Intent(holder.itemView.context, VetPanelActivity::class.java)
-            intent.putExtra("vetName", vetName )
-            intent.putExtra("personName", personsName)
-            intent.putExtra("panelType", panelInfo)
-            holder.itemView.context.startActivity(intent)
+
+            if(namePanelClicked == "Pet Details") {
+                val intent = Intent(holder.itemView.context, VetPanelActivity::class.java)
+                intent.putExtra("vetName", vetName )
+                intent.putExtra("personName", personsName)
+                intent.putExtra("panelType", panelInfo)
+                holder.itemView.context.startActivity(intent)
+
+            } else if (namePanelClicked == "Digital Identity") {
+                val intent = Intent(holder.itemView.context, DigitalIdentityActivity::class.java)
+                intent.putExtra("vetName", vetName )
+                holder.itemView.context.startActivity(intent)
+            }
         }
 
 //        holder.binding.vetPhoneTxt.text = person.person.person_phone

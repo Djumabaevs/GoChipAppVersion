@@ -26,7 +26,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 
-class VetPanelActivity : AppCompatActivity() {
+class DigitalIdentityActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityVetPanelBinding
 
@@ -38,13 +38,9 @@ class VetPanelActivity : AppCompatActivity() {
         binding = ActivityVetPanelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val intentPannel = Intent(this, PannelActivity::class.java)
-        val intentVet = Intent(this, VetActivity::class.java)
         setSupportActionBar(binding.toolbar)
 
         val vetName = intent.getStringExtra("vetName")
-        val personsNameGet = intent.getStringExtra("personName")
-        val panelInfo = intent.getStringExtra("panelType")
 
         supportActionBar?.apply {
             title = vetName
@@ -52,7 +48,7 @@ class VetPanelActivity : AppCompatActivity() {
             setDisplayShowHomeEnabled(true)
         }
 
-        var adapter = PersonsPetsAdapter(listOf())
+        var adapter = PersonAdapter(listOf())
         binding.detailsRecycler.layoutManager = LinearLayoutManager(this)
         binding.detailsRecycler.adapter = adapter
 
@@ -78,13 +74,13 @@ class VetPanelActivity : AppCompatActivity() {
     }
 
     private suspend fun makeLoginRequest() {
-        val res = apolloClient(this@VetPanelActivity).query(
-            GetAllPetsQuery()
+        val res = apolloClient(this@DigitalIdentityActivity).query(
+            GetPersonsDataQuery()
         ).toDeferred().await()
 
         binding.detailsRecycler.apply {
-            adapter = res.data?.persons_pets?.let {
-                    PersonsPetsAdapter(it)
+            adapter = res.data?.ui_pannels_to_users?.let {
+                PersonAdapter(it)
             }
             binding.progressBar.visibility = View.GONE
         }
