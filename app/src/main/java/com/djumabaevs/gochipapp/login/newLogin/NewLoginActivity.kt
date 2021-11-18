@@ -159,9 +159,11 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
 
                                 when {
                                     v100_200 -> {
+                                        val intent = Intent(this@NewLoginActivity, ChooseProfileActivity::class.java)
+                                        startActivity(intent)
                                         //      basicAlert()
-                                        val f = CustomDialogStatusFragment()
-                                        f.show(supportFragmentManager, "null")
+//                                        val f = CustomDialogStatusFragment()
+//                                        f.show(supportFragmentManager, "null")
                                     }
                                     v100 -> {
                                         Toast.makeText(
