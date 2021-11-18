@@ -32,6 +32,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".pannels.OwnerDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".pannels.PetIDActivity"
+            android:exported="true" />
+        <activity
             android:name=".pannels.DigitalIdentityActivity"
             android:exported="true" />
         <activity

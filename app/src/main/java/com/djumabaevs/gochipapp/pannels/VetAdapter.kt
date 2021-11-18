@@ -47,6 +47,12 @@ class VetAdapter(
                 intent.putExtra("vetName", vetName )
                 holder.itemView.context.startActivity(intent)
             }
+
+            else if (namePanelClicked == "Pet ID") {
+                val intent = Intent(holder.itemView.context, PetIDActivity::class.java)
+                intent.putExtra("vetName", vetName )
+                holder.itemView.context.startActivity(intent)
+            }
         }
 
 //        holder.binding.vetPhoneTxt.text = person.person.person_phone
