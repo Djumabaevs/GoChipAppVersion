@@ -26,6 +26,7 @@ class VetAdapter(
         val pannel = userPannels[position]
         val vetName = pannel.pannel_name
         val personsName = userInfo?.person?.person_name
+        val petName = userInfo?.pet?.pet_name
         val panelInfo = pannel.__typename
 
 //        vetName = person.person.person_name
@@ -39,7 +40,7 @@ class VetAdapter(
                 val intent = Intent(holder.itemView.context, VetPanelActivity::class.java)
                 intent.putExtra("vetName", vetName )
                 intent.putExtra("personName", personsName)
-                intent.putExtra("panelType", panelInfo)
+                intent.putExtra("petName", petName)
                 holder.itemView.context.startActivity(intent)
 
             } else if (namePanelClicked == "Digital Identity") {

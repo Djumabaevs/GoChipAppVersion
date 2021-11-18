@@ -1,0 +1,16 @@
+query getPersonPet($person_uid: uuid, $pet_uid: uuid) {
+    persons_pets(where: {person_uid: {_eq: $person_uid}, pet_uid: {_eq: $pet_uid}}, order_by: [{pet: {pet_name: asc}, person: {person_email: asc}}]) {
+        person {
+            person_name
+            person_email
+            person_phone
+            person_password
+            persons_pets{
+                pet{
+                    pet_name
+                    pet_photo
+                }
+            }
+        }
+    }
+}

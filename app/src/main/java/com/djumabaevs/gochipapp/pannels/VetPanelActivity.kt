@@ -15,9 +15,9 @@ import com.apollographql.apollo.exception.ApolloException
 import com.djumabaevs.gochipapp.*
 import com.djumabaevs.gochipapp.apollo.apolloClient
 import com.djumabaevs.gochipapp.databinding.ActivityVetPanelBinding
-import com.djumabaevs.gochipapp.login.LoginAdapter
 import com.djumabaevs.gochipapp.pets.PersonsPetsAdapter
 import com.djumabaevs.gochipapp.vets.VetActivity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_new_login.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.coroutines.CoroutineScope
@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 class VetPanelActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityVetPanelBinding
+    private lateinit var firebaseAuth: FirebaseAuth
 
     private var job = Job()
     private val coroutineScope = CoroutineScope(job + Dispatchers.Main)
@@ -37,37 +38,56 @@ class VetPanelActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityVetPanelBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        firebaseAuth = FirebaseAuth.getInstance()
 
         val intentPannel = Intent(this, PannelActivity::class.java)
         val intentVet = Intent(this, VetActivity::class.java)
         setSupportActionBar(binding.toolbar)
 
         val vetName = intent.getStringExtra("vetName")
-        val personsNameGet = intent.getStringExtra("personName")
-        val panelInfo = intent.getStringExtra("panelType")
 
         supportActionBar?.apply {
             title = vetName
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
-
-        var adapter = PersonsPetsAdapter(listOf())
+        val pets = mutableListOf<GetPersonPetQuery.Persons_pet>()
+        val adapter = PersonsPetsAdapter(pets)
         binding.detailsRecycler.layoutManager = LinearLayoutManager(this)
-        binding.detailsRecycler.adapter = adapter
-
         binding.progressBar.visibility = View.VISIBLE
-
-
+        binding.detailsRecycler.adapter = adapter
         val channel = Channel<Unit>(Channel.CONFLATED)
 
-        coroutineScope.launch {
-            makeLoginRequest()
-        }
+//        coroutineScope.launch {
+//            makeLoginRequest()
+//        }
 
         channel.trySend(Unit)
         adapter.onEndOfListReached = {
             channel.trySend(Unit)
+        }
+
+
+        lifecycleScope.launchWhenResumed {
+            for (item in channel) {
+                val response = try {
+                    apolloClient(this@VetPanelActivity).query(GetPersonPetQuery()).await()
+                } catch (e: ApolloException) {
+                    return@launchWhenResumed
+                }
+
+                binding.progressBar.visibility = View.GONE
+
+                val newPets = response.data?.persons_pets?.filterNotNull()
+
+                if (newPets != null) {
+                    pets.addAll(newPets)
+                    adapter.notifyDataSetChanged()
+                }
+
+            }
+            adapter.onEndOfListReached = null
+            channel.close()
         }
 
     }
@@ -77,17 +97,25 @@ class VetPanelActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private suspend fun makeLoginRequest() {
-        val res = apolloClient(this@VetPanelActivity).query(
-            GetAllPetsQuery()
-        ).toDeferred().await()
-
-        binding.detailsRecycler.apply {
-            adapter = res.data?.persons_pets?.let {
-                    PersonsPetsAdapter(it)
-            }
-            binding.progressBar.visibility = View.GONE
-        }
-
-    }
+//    private suspend fun makeLoginRequest() {
+//        val res = apolloClient(this@VetPanelActivity).query(
+//            GetPersonPetQuery()
+//        ).toDeferred().await()
+//
+//        val emailSignedIn = firebaseAuth.currentUser?.email
+//        val petName = intent.getStringExtra("petName")
+//        val checkEmail = res.data?.persons_pets?.map{
+//            it.person.person_email
+//        } ?: emptyList()
+//
+//        if(checkEmail.contains(emailSignedIn)) {
+//            binding.detailsRecycler.apply {
+//                adapter = res.data?.persons_pets?.let {
+//                    PersonsPetsAdapter(it)
+//                }
+//                binding.progressBar.visibility = View.GONE
+//            }
+//        }
+//
+//    }
 }
