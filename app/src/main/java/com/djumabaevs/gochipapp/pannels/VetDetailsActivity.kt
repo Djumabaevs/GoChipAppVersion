@@ -15,7 +15,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 
-class LicenseInfoActivity : AppCompatActivity() {
+class VetDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityVetPanelBinding
 
@@ -41,7 +41,7 @@ class LicenseInfoActivity : AppCompatActivity() {
         binding.detailsRecycler.layoutManager = LinearLayoutManager(this)
         binding.detailsRecycler.adapter = adapter
 
-     //   binding.progressBar.visibility = View.VISIBLE
+    //    binding.progressBar.visibility = View.VISIBLE
 
 
         val channel = Channel<Unit>(Channel.CONFLATED)

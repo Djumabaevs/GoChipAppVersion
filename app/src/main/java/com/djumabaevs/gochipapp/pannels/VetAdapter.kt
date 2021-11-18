@@ -53,6 +53,24 @@ class VetAdapter(
                 intent.putExtra("vetName", vetName )
                 holder.itemView.context.startActivity(intent)
             }
+
+            else if (namePanelClicked == "License Info") {
+                val intent = Intent(holder.itemView.context, LicenseInfoActivity::class.java)
+                intent.putExtra("vetName", vetName )
+                holder.itemView.context.startActivity(intent)
+            }
+
+            else if (namePanelClicked == "Vet Details") {
+                val intent = Intent(holder.itemView.context, VetDetailsActivity::class.java)
+                intent.putExtra("vetName", vetName )
+                holder.itemView.context.startActivity(intent)
+            }
+
+            else if (namePanelClicked == "Owner Details") {
+                val intent = Intent(holder.itemView.context, OwnerDetailsActivity::class.java)
+                intent.putExtra("vetName", vetName )
+                holder.itemView.context.startActivity(intent)
+            }
         }
 
 //        holder.binding.vetPhoneTxt.text = person.person.person_phone

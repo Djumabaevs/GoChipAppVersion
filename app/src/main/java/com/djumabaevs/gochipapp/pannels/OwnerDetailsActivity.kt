@@ -41,7 +41,7 @@ class OwnerDetailsActivity : AppCompatActivity() {
         binding.detailsRecycler.layoutManager = LinearLayoutManager(this)
         binding.detailsRecycler.adapter = adapter
 
-        binding.progressBar.visibility = View.VISIBLE
+    //    binding.progressBar.visibility = View.VISIBLE
 
 
         val channel = Channel<Unit>(Channel.CONFLATED)
