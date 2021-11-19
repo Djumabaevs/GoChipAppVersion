@@ -51,8 +51,7 @@ class VetPanelActivity : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
-        val pets = mutableListOf<GetPersonPetQuery.Persons_pet>()
-        val adapter = PersonsPetsAdapter(pets)
+        val adapter = PersonsPetsAdapter()
         binding.detailsRecycler.layoutManager = LinearLayoutManager(this)
         binding.progressBar.visibility = View.VISIBLE
         binding.detailsRecycler.adapter = adapter
@@ -77,12 +76,22 @@ class VetPanelActivity : AppCompatActivity() {
                 }
 
                 binding.progressBar.visibility = View.GONE
+                val emailSignedIn = firebaseAuth.currentUser?.email
 
+                val personData = response.data?.persons_pets?.first {
+                    it.person.person_email == emailSignedIn
+                }
+
+                personData?.person?.persons_pets?.let {
+                    adapter.submitData(it)
+                }
+
+
+                val personEmail = response.data?.persons_pets?.firstOrNull()?.person?.person_email
                 val newPets = response.data?.persons_pets?.filterNotNull()
 
-                if (newPets != null) {
-                    pets.addAll(newPets)
-                    adapter.notifyDataSetChanged()
+                if (emailSignedIn == personEmail) {
+
                 }
 
             }

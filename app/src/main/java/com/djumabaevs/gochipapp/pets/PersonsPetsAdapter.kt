@@ -1,15 +1,17 @@
 package com.djumabaevs.gochipapp.pets
 
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.djumabaevs.gochipapp.GetPersonPetQuery
 import com.djumabaevs.gochipapp.databinding.PersonPetItemBinding
 
 class PersonsPetsAdapter(
-    private val personData: List<GetPersonPetQuery.Persons_pet>,
 ) : RecyclerView.Adapter<PersonsPetsAdapter.ViewHolder>() {
 
+    private var pets: List<GetPersonPetQuery.Persons_pet1> = listOf()
 
     class ViewHolder(val binding: PersonPetItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -21,15 +23,22 @@ class PersonsPetsAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val personsPet = personData[position]
+        val personsPet = pets[position]
+        holder.binding.testPersonPet.text = personsPet.pet.pet_name
 
-        val validate = personsPet.person.persons_pets.firstOrNull()?.pet?.pet_name
-        val email = personsPet.person.person_email
+        val imageByteArray = Base64.decode(personsPet.pet.pet_photo?.substringAfter(",") ?: "", Base64.DEFAULT)
+        val context = holder.itemView.context
+        val petImage = holder.binding.petView
+        Glide.with(context).load(imageByteArray).circleCrop().into(petImage)
 
-        holder.binding.testPersonPet.text = validate
-        }
+    }
 
     override fun getItemCount(): Int {
-        return personData.size
+        return pets.size
+    }
+
+    fun submitData(pets: List<GetPersonPetQuery.Persons_pet1>) {
+        this.pets = pets
+        notifyDataSetChanged()
     }
 }
