@@ -16,6 +16,7 @@ import com.djumabaevs.gochipapp.*
 import com.djumabaevs.gochipapp.apollo.apolloClient
 import com.djumabaevs.gochipapp.databinding.ActivityVetPanelBinding
 import com.djumabaevs.gochipapp.pets.PersonsPetsAdapter
+import com.djumabaevs.gochipapp.util.VET_TYPE
 import com.djumabaevs.gochipapp.vets.VetActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_new_login.*
@@ -86,13 +87,8 @@ class VetPanelActivity : AppCompatActivity() {
                     adapter.submitData(it)
                 }
 
-
                 val personEmail = response.data?.persons_pets?.firstOrNull()?.person?.person_email
                 val newPets = response.data?.persons_pets?.filterNotNull()
-
-                if (emailSignedIn == personEmail) {
-
-                }
 
             }
             adapter.onEndOfListReached = null

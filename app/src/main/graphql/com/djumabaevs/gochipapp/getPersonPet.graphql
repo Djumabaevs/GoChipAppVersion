@@ -9,6 +9,22 @@ query getPersonPet($person_uid: uuid, $pet_uid: uuid) {
                 pet{
                     pet_name
                     pet_photo
+                    cats {
+                        colour
+                        gender
+                        weight
+                        cats_breed{
+                            breed_name
+                        }
+                    }
+                    dogs {
+                        colour
+                        gender
+                        weight
+                        dogs_breed{
+                            breed_name
+                        }
+                    }
                 }
             }
         }

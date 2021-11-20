@@ -25,6 +25,10 @@ class PersonsPetsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val personsPet = pets[position]
         holder.binding.testPersonPet.text = personsPet.pet.pet_name
+        holder.binding.petColorTxt.text = personsPet.pet.cats.firstOrNull()?.colour ?: personsPet.pet.dogs.firstOrNull()?.colour ?: "raw"
+        holder.binding.petWeightTxt.text = (personsPet.pet.cats.firstOrNull()?.weight ?: personsPet.pet.dogs.firstOrNull()?.weight).toString() ?: "raw"
+        holder.binding.petTypeTxt.text = personsPet.pet.cats.firstOrNull()?.gender ?: personsPet.pet.dogs.firstOrNull()?.gender ?: "raw"
+        holder.binding.petBreedTxt.text = personsPet.pet.cats.firstOrNull()?.cats_breed?.breed_name ?: personsPet.pet.dogs.firstOrNull()?.dogs_breed?.breed_name
 
         val imageByteArray = Base64.decode(personsPet.pet.pet_photo?.substringAfter(",") ?: "", Base64.DEFAULT)
         val context = holder.itemView.context

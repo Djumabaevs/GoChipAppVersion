@@ -15,6 +15,7 @@ import com.djumabaevs.gochipapp.GetPersonsDataQuery
 import com.djumabaevs.gochipapp.apollo.apolloClient
 import com.djumabaevs.gochipapp.databinding.ActivityVetBinding
 import com.djumabaevs.gochipapp.pannels.VetAdapter
+import com.djumabaevs.gochipapp.util.VET_TYPE
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.channels.Channel
 
@@ -49,13 +50,12 @@ class VetActivity : AppCompatActivity() {
 
         lifecycleScope.launchWhenResumed {
             var personUid: String? = null
-            var profileType: Int = 100
             for (item in channel) {
                 val response = try {
                     apolloClient(this@VetActivity)
                         .query(GetPersonsDataQuery(
                             person_uid = Input.fromNullable(personUid),
-                            profile_type = Input.fromNullable(profileType)
+                            profile_type = Input.fromNullable(VET_TYPE)
                         )
                         )
                         .await()
@@ -83,7 +83,7 @@ class VetActivity : AppCompatActivity() {
 
                 val pannels = mainQuery.data?.ui_pannels_to_users?.filter {
                    ( it.person.person_phone == phone &&
-                            it.profile_type == 100) || (it.person.person_email == emailSignedIn && it.profile_type == 100)
+                            it.profile_type == VET_TYPE) || (it.person.person_email == emailSignedIn && it.profile_type == 100)
                 }?.sortedBy { it.pannel_order  } ?: emptyList()
 //                val phones = checkVetOrNot
 //                    .data?.ui_pannels_to_users?.mapNotNull {
