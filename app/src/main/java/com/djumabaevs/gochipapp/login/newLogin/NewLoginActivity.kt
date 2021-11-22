@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.lifecycleScope
 import com.apollographql.apollo.coroutines.toDeferred
@@ -36,8 +37,23 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         //This call the parent constructor
         super.onCreate(savedInstanceState)
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.darkTheme) //when dark mode is enabled, we use the dark theme
+        } else {
+            setTheme(R.style.AppTheme)  //default app theme
+        }
+
         // This is used to align the xml view to this class
         setContentView(R.layout.activity_new_login)
+
+        switchtheme.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+
+        }
 
         firebaseAuth = FirebaseAuth.getInstance()
 
