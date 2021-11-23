@@ -1,11 +1,14 @@
 package com.djumabaevs.gochipapp.login.newLogin
 
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil.setContentView
@@ -17,20 +20,43 @@ import com.djumabaevs.gochipapp.apollo.apolloClient
 import com.djumabaevs.gochipapp.login.LoginActivity
 import com.djumabaevs.gochipapp.pannels.PannelActivity
 import com.djumabaevs.gochipapp.util.CustomDialogStatusFragment
+import com.djumabaevs.gochipapp.util.LocaleHelper
 import com.djumabaevs.gochipapp.vets.VetActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_new_login.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
+import com.djumabaevs.gochipapp.MainActivity
+
+import android.widget.ArrayAdapter
+
+
+
+import android.widget.Spinner
+
+
+
 
 /**
  * Login Screen of the application.
  */
 @Suppress("DEPRECATION")
-class NewLoginActivity : BaseActivity(), View.OnClickListener {
+class NewLoginActivity : BaseActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private lateinit var firebaseAuth: FirebaseAuth
+    private var mContext: Context? = null
 
+    fun getContext(): Context? {
+        return mContext
+    }
+
+    fun setContext(mContext: Context?) {
+        this.mContext = mContext
+    }
+
+    private var spinner: Spinner? = null
+    private val paths = arrayOf("item 1", "item 2", "item 3")
     /**
      * This function is auto created by Android when the Activity Class is created.
      */
@@ -55,6 +81,16 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
 
         }
 
+        spinner = findViewById<View>(R.id.spinner) as Spinner
+        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            this@NewLoginActivity,
+            android.R.layout.simple_spinner_item, paths
+        )
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner!!.adapter = adapter
+        spinner!!.setOnItemSelectedListener(this)
+
         firebaseAuth = FirebaseAuth.getInstance()
 
         // This is used to hide the status bar and make the login screen as a full screen activity.
@@ -64,14 +100,16 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        // Click event assigned to Forgot Password text.
+
 //        tv_forgot_password.setOnClickListener(this)
-        // Click event assigned to Login button.
+
         btn_login.setOnClickListener(this)
-        // Click event assigned to Register text.
+
         tv_register.setOnClickListener(this)
 
         tv_otp_phone_login.setOnClickListener(this)
+
+    //    button_lang.setOnClickListener(this)
     }
 
     /**
@@ -102,6 +140,20 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
                     val intent = Intent(this@NewLoginActivity, LoginActivity::class.java)
                     startActivity(intent)
                 }
+
+//                R.id.button_lang -> {
+//                    val languageToLoad = "de"
+//                    val locale = Locale(languageToLoad)
+//                    Locale.setDefault(locale)
+//                    val config = Configuration()
+//                    config.locale = locale
+//                    mContext?.getResources()
+//                        ?.updateConfiguration(config, mContext!!.getResources().getDisplayMetrics())
+//                    LocaleHelper.setLocale(this, "de")
+//                    val intent = Intent(this@NewLoginActivity, NewLoginActivity::class.java)
+//                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                    startActivity(intent)
+//                }
             }
         }
     }
@@ -223,5 +275,23 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener {
                     }
             }
         }
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, v: View?, position: Int, id: Long) {
+        when (position) {
+            0 -> {
+
+            }
+            1 -> {
+
+            }
+            2 -> {
+
+            }
+        }
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("Not yet implemented")
     }
 }
