@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_login">LOGIN De Valt</string>
-    <string name="app_name">GoChipApp Was ist</string>
+    <string name="title_login">Anmeldung</string>
+    <string name="app_name">GoChipApp</string>
+    <string name="vet">Tierärztin</string>
+    <string name="shelter">Schutz</string>
+    <string name="owner">Eigentümer</string>
+    <string name="choose_profile">Profil auswählen</string>
+    <string name="btn_lbl_login">Anmeldung</string>
+    <string name="don_t_have_an_account">Sie haben kein Konto?</string>
+    <string name="register"><u>Registrieren</u></string>
+    <string name="err_msg_enter_email">Bitte E-Mail eingeben.</string>
 </resources>

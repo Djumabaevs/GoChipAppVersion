@@ -43,4 +43,8 @@
     <string name="btn_lbl_submit">Submit</string>
 
     <string name="email_sent_success">\"Email sent successfully to reset your password! \"</string>
+    <string name="vet">Vet</string>
+    <string name="shelter">Shelter</string>
+    <string name="owner">Owner</string>
+    <string name="choose_profile">Choose Profile</string>
 </resources>

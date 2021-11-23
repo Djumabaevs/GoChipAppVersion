@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_login">Acceso</string>
+    <string name="app_name">GoChipApp</string>
+    <string name="vet">Veterinario</string>
+    <string name="shelter">Abrigo</string>
+    <string name="owner">Dueño</string>
+    <string name="choose_profile">Elegir perfil</string>
+    <string name="btn_lbl_login">Acceso</string>
+    <string name="don_t_have_an_account">No tienes una cuenta?</string>
+    <string name="register"><u>Registrarse</u></string>
+    <string name="err_msg_enter_email">Por favor ingrese su correo electrónico.</string>
+</resources>

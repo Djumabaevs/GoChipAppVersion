@@ -56,7 +56,7 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     }
 
     private var spinner: Spinner? = null
-    private val paths = arrayOf("item 1", "item 2", "item 3")
+    private val paths = arrayOf("Choose language", "German", "Spain")
     /**
      * This function is auto created by Android when the Activity Class is created.
      */
@@ -283,10 +283,30 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
             }
             1 -> {
-
+                val languageToLoad = "de"
+                val locale = Locale(languageToLoad)
+                Locale.setDefault(locale)
+                val config = Configuration()
+                config.locale = locale
+                mContext?.getResources()
+                    ?.updateConfiguration(config, mContext!!.getResources().getDisplayMetrics())
+                LocaleHelper.setLocale(this, "de")
+                    val intent = Intent(this@NewLoginActivity, NewLoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
             }
             2 -> {
-
+                val languageToLoad = "es"
+                val locale = Locale(languageToLoad)
+                Locale.setDefault(locale)
+                val config = Configuration()
+                config.locale = locale
+                mContext?.getResources()
+                    ?.updateConfiguration(config, mContext!!.getResources().getDisplayMetrics())
+                LocaleHelper.setLocale(this, "es")
+                val intent = Intent(this@NewLoginActivity, NewLoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
             }
         }
     }
