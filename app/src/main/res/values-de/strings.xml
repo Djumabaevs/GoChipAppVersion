@@ -10,4 +10,8 @@
     <string name="don_t_have_an_account">Sie haben kein Konto?</string>
     <string name="register"><u>Registrieren</u></string>
     <string name="err_msg_enter_email">Bitte E-Mail eingeben.</string>
+    <string name="phone_otp">Telefon OTP</string>
+    <string name="switch_theme">Thema wechseln</string>
+    <string name="et_hint_email_id">E-Mail-ID</string>
+    <string name="et_hint_password">Passwort</string>
 </resources>

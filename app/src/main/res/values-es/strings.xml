@@ -10,4 +10,8 @@
     <string name="don_t_have_an_account">No tienes una cuenta?</string>
     <string name="register"><u>Registrarse</u></string>
     <string name="err_msg_enter_email">Por favor ingrese su correo electrónico.</string>
+    <string name="phone_otp">Teléfono OTP</string>
+    <string name="switch_theme">Cambiar tema</string>
+    <string name="et_hint_email_id">Identificación de correo</string>
+    <string name="et_hint_password">Contraseña</string>
 </resources>

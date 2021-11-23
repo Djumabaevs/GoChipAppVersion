@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/like_dark_blue</item>
         <item name="background_color">#ffffff</item>
         <!--     Our app's background changes to black when dark mode is activated -->
-        <item name="text_color">@color/main_orange</item>
+        <item name="text_color">@color/main_green</item>
         <!--     text and button color change to white to contrast with the app's background-->
         <item name="button_color">@color/main_layout_dark_gray</item>
         <item name="windowActionBar">false</item>

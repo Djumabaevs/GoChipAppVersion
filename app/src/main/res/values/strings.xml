@@ -47,4 +47,7 @@
     <string name="shelter">Shelter</string>
     <string name="owner">Owner</string>
     <string name="choose_profile">Choose Profile</string>
+    <string name="phone_otp">Phone OTP</string>
+    <string name="switch_theme">Switch Theme</string>
+
 </resources>
