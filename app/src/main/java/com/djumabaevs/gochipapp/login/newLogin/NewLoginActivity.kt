@@ -212,6 +212,8 @@ class NewLoginActivity : BaseActivity(), View.OnClickListener, AdapterView.OnIte
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
 
+
+
                         // Hide the progress dialog
                         hideProgressDialog()
 
