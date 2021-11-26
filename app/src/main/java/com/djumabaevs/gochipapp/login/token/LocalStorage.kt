@@ -109,14 +109,12 @@ class LocalStorage @Inject constructor(
         }
     }
 
-    //Added
     suspend fun setUserPassword(password: String?) {
         context.dataStore.edit { prefs ->
             prefs[USER_PASSWORD] = password ?: ""
         }
     }
 
-    //Added
     val getUserPassword: Flow<String?> = context.dataStore.data.map { prefs ->
         prefs[USER_PASSWORD] ?: ""
     }
@@ -125,15 +123,6 @@ class LocalStorage @Inject constructor(
         prefs[USER_EMAIL] ?: ""
     }
 
-    suspend fun setOnboardingOpened() {
-        context.dataStore.edit { prefs ->
-            prefs[ONBOARDING_OPENED] = true
-        }
-    }
-
-    val isOnboardingOpened: Flow<Boolean> = context.dataStore.data.map { prefs ->
-        prefs[ONBOARDING_OPENED] ?: false
-    }
 
     suspend fun clearUserData() {
         context.dataStore.edit { prefs ->
@@ -141,63 +130,24 @@ class LocalStorage @Inject constructor(
             prefs[USER_FIRST_NAME] = ""
             prefs[USER_PHONE] = ""
             prefs[USER_EMAIL] = ""
-            //Added
             prefs[USER_PASSWORD] = ""
         }
     }
 
-    // news
-    fun isNewsRead(userToken: String?, newsId: Int): Boolean {
-        val notnullToken = userToken ?: return false
-        val readNews = getReadNewsFor(notnullToken)
-        return readNews.contains(newsId.toString())
-    }
-
-    fun setReadNewsFor(userToken: String?, newsId: Int) {
-        val notnullToken = userToken ?: return
-        val newsIdStr = newsId.toString()
-
-        val readNews = getReadNewsFor(notnullToken)
-        val readNewsArrayList = ArrayList<String>()
-
-        for (item in readNews) {
-            readNewsArrayList.add(item)
-        }
-
-        if (!readNewsArrayList.contains(newsIdStr)) {
-            readNewsArrayList.add(newsIdStr)
-        }
-
-        val readNewsSet = HashSet(readNewsArrayList)
-
-        sharedPreferences.edit()?.apply {
-            putStringSet(READ_NEWS_PREFIX + userToken, readNewsSet)
-            apply()
-        }
-    }
-
-    private fun getReadNewsFor(userToken: String): Set<String> {
-        return sharedPreferences.getStringSet(READ_NEWS_PREFIX + userToken, setOf<String>())
-            ?: setOf()
-    }
 
     companion object {
-        const val PREFS_NAME = "FOOD_CLIENT_PREFS_USERS"
+        const val PREFS_NAME = "PREFS_USERS"
 
         const val APP_LOCALE_CODE = "language"
         private val FCM_TOKEN = stringPreferencesKey(name = "fcm_token")
-        private val ANONYM_TOKEN = stringPreferencesKey(name = "FOOD_CLIENT_PREFS_ANONYM")
+        private val ANONYM_TOKEN = stringPreferencesKey(name = "PREFS_ANONYM")
 
         private val USER_TOKEN = stringPreferencesKey(name = "token")
         private val USER_FIRST_NAME = stringPreferencesKey(name = "firstName")
         private val USER_PHONE = stringPreferencesKey(name = "phone")
         private val USER_EMAIL = stringPreferencesKey(name = "email")
-        //Added
         private val USER_PASSWORD = stringPreferencesKey(name = "password")
 
-        private val ONBOARDING_OPENED = booleanPreferencesKey(name = "onboarding_opened")
-
-        private const val READ_NEWS_PREFIX = "read_news"
 
     }
 }

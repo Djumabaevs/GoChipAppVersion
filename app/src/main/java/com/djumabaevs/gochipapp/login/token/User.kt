@@ -12,6 +12,5 @@ data class User(
 
     var phone: String?,
     val email: String?,
-    //Added
     var password: String?
 ) : BaseResponse()
