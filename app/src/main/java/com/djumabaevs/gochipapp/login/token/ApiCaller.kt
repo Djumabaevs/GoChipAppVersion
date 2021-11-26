@@ -1,5 +1,6 @@
 package com.djumabaevs.gochipapp.login.token
 
+import com.djumabaevs.gochipapp.R
 import com.google.gson.JsonSyntaxException
 import kotlinx.coroutines.coroutineScope
 import retrofit2.HttpException

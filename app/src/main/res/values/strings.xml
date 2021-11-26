@@ -50,4 +50,18 @@
     <string name="phone_otp">Phone OTP</string>
     <string name="switch_theme">Switch Theme</string>
 
+    <string name="error_token_expired">Your account is being used on another device.\nTo continue, you must log in again.</string>
+    <string name="error_invalid_address">Invalid address</string>
+    <string name="error_select_payment_option">Select payment option</string>
+    <string name="error_request_json_error">Request process failure</string>
+    <string name="error_request_connection_error">Check internet connection</string>
+    <string name="error_request_timeout">Server is not responding</string>
+    <string name="error_request_http_error_401">Unauthorized</string>
+    <string name="error_request_http_error_404">Page does not exist</string>
+    <string name="error_request_http_error_500">Internal server error</string>
+    <string name="error_request_http_error_format">Request error: %s</string>
+    <string name="error_request_error_unknown">Error: %s</string>
+    <string name="error_select_address">Delivery address not selected</string>
+    <string name="error_enter_name">Enter name</string>
+    <string name="error_enter_phone_number">Enter phone number</string>
 </resources>

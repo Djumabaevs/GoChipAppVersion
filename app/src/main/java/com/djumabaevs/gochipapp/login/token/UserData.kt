@@ -5,6 +5,7 @@ import android.content.Context
 import android.provider.Settings
 import androidx.databinding.ObservableBoolean
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
