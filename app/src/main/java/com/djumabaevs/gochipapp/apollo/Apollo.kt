@@ -26,6 +26,8 @@ fun apolloClient(context: Context): ApolloClient {
             //staging server
 
         .serverUrl("https://gochip-external-new.wcvie.at/v1/graphql")
+
+       // .serverUrl("https://hasura-graphql-engine-dev.apps.env02.syncrasy.dev/v1/graphql")
         .okHttpClient(okHttpClient)
             //unknown
 
@@ -44,7 +46,7 @@ fun apolloClient(context: Context): ApolloClient {
 
 private class AuthorizationInterceptor(val context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val accessToken = LocalStorage.getUserAccessToken(context)
+        val accessToken = LocalStorage.getToken(context)
 
         val request = chain.request().newBuilder()
             .apply { accessToken?.let {

@@ -1,5 +1,7 @@
 package com.djumabaevs.gochipapp.login.token
 
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -17,5 +19,10 @@ interface TokenApi {
         @Query("client_id") clientId: String
     ): TokenResponse
 }
+
+val retrofit = Retrofit.Builder()
+    .baseUrl(baseUrl)
+    .addConverterFactory(GsonConverterFactory.create())
+    .build()
 
 
