@@ -3,11 +3,17 @@ package com.djumabaevs.gochipapp.login.token
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 const val baseUrl = "https://syncrasy-sso-dev.apps.env02.syncrasy.dev/"
 
-@FormUrlEncoded
-@POST("auth/realms/Syncrasy/protocol/openid-connect/token")
-suspend fun getJWTToken(
-@Field("username")
-)
+interface TokenApi {
+    @FormUrlEncoded
+    @POST("auth/realms/Syncrasy/protocol/openid-connect/token")
+    suspend fun getJWTToken(
+        @Query("username") username: String,
+        @Query("password") password: String,
+        @Query("grant_type") grantType: String,
+        @Query("client_id") clientId: String
+    ): TokenResponse
+}
