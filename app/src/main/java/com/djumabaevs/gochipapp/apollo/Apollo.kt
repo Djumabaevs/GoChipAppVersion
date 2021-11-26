@@ -2,7 +2,11 @@ package com.djumabaevs.gochipapp.apollo
 
 import android.content.Context
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.subscription.WebSocketSubscriptionTransport
+import com.djumabaevs.gochipapp.login.token.LocalStorage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -22,7 +26,7 @@ fun apolloClient(context: Context): ApolloClient {
             //staging server
 
         .serverUrl("https://gochip-external-new.wcvie.at/v1/graphql")
-
+        .okHttpClient(okHttpClient)
             //unknown
 
   //      .serverUrl("https://syn-otp-server-external.production.syncrasy.dev/graphql")
@@ -33,7 +37,6 @@ fun apolloClient(context: Context): ApolloClient {
 
 
       //  .subscriptionTransportFactory(WebSocketSubscriptionTransport.Factory("wss://gochip-external-new.wcvie.at/v1/graphql", okHttpClient))
-        .okHttpClient(okHttpClient)
         .build()
 
     return instance!!
@@ -41,8 +44,12 @@ fun apolloClient(context: Context): ApolloClient {
 
 private class AuthorizationInterceptor(val context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
+        val accessToken = LocalStorage.getUserAccessToken(context)
+
         val request = chain.request().newBuilder()
-         //   .addHeader("Authorization", User.getToken(context) ?: "")
+            .apply { accessToken?.let {
+                addHeader("Authorization", "Bearer $it")
+            } }
             .build()
 
         return chain.proceed(request)
