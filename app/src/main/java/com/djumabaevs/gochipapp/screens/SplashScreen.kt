@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.djumabaevs.gochipapp.MainActivity
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.login.LoginActivity
+import com.djumabaevs.gochipapp.login.newLogin.ChooseLoginActivity
 import com.djumabaevs.gochipapp.login.newLogin.NewLoginActivity
 
 
@@ -24,7 +25,7 @@ class SplashScreen : AppCompatActivity() {
         )
 
         Handler().postDelayed({
-            val intent = Intent(this, NewLoginActivity::class.java)
+            val intent = Intent(this, ChooseLoginActivity::class.java)
             startActivity(intent)
             finish()
         }, 2500)

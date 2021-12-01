@@ -24,13 +24,13 @@ class KeycloakActivity : AppCompatActivity() {
 
         val username = binding.etEmail.text
         val password = binding.etPassword.text
-        val grantType = binding.etGrant.text
-        val clientId = binding.etClient.text
+//        val grantType = binding.etGrant.text
+//        val clientId = binding.etClient.text
 
         val token = viewModel.myToken.value?.body()?.accessToken
 
         binding.btnLogin.setOnClickListener {
-            viewModel.getJWTToken(username.toString(), password.toString(), grantType.toString(), clientId.toString())
+            viewModel.getJWTToken(username.toString(), password.toString(), grantType, clientId)
             viewModel.myToken.observe(this) { response ->
                 response?.let {
                     Log.d("Response: ", response.body()?.accessToken.toString())
@@ -44,5 +44,9 @@ class KeycloakActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    companion object {
+        var grantType = "password"
+        var clientId = "hasura"
     }
 }

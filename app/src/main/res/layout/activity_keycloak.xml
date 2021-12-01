@@ -71,12 +71,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="143dp"
             android:hint="password"
             android:textColorHint="@color/colorSecondaryText"
+            app:layout_constraintBottom_toTopOf="@+id/btn_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_email"
-            tools:layout_editor_absoluteY="373dp">
+            app:layout_constraintTop_toBottomOf="@+id/til_email">
 
             <com.djumabaevs.gochipapp.util.MSPEditText
                 android:id="@+id/et_password"
@@ -89,55 +90,45 @@
                 tools:text="123456" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_grant"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="grant type"
-            android:textColorHint="@color/colorSecondaryText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_password"
-            tools:layout_editor_absoluteY="373dp">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/til_grant"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="grant type"-->
+<!--            android:textColorHint="@color/colorSecondaryText"-->
+<!--            tools:layout_editor_absoluteY="412dp">-->
 
-            <com.djumabaevs.gochipapp.util.MSPEditText
-                android:id="@+id/et_grant"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:padding="@dimen/et_padding"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/et_textSize"
-                tools:text="123456" />
-        </com.google.android.material.textfield.TextInputLayout>
+<!--            <com.djumabaevs.gochipapp.util.MSPEditText-->
+<!--                android:id="@+id/et_grant"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:inputType="text"-->
+<!--                android:padding="@dimen/et_padding"-->
+<!--                android:textColor="@color/colorPrimaryText"-->
+<!--                android:textSize="@dimen/et_textSize"-->
+<!--                tools:text="123456" />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_client"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="client id"
-            android:textColorHint="@color/colorSecondaryText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_grant"
-            tools:layout_editor_absoluteY="373dp">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/til_client"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="client id"-->
+<!--            android:textColorHint="@color/colorSecondaryText"-->
+<!--            tools:layout_editor_absoluteY="471dp">-->
 
-            <com.djumabaevs.gochipapp.util.MSPEditText
-                android:id="@+id/et_client"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:padding="@dimen/et_padding"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/et_textSize"
-                tools:text="123456" />
-        </com.google.android.material.textfield.TextInputLayout>
+<!--            <com.djumabaevs.gochipapp.util.MSPEditText-->
+<!--                android:id="@+id/et_client"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:inputType="text"-->
+<!--                android:padding="@dimen/et_padding"-->
+<!--                android:textColor="@color/colorPrimaryText"-->
+<!--                android:textSize="@dimen/et_textSize"-->
+<!--                tools:text="123456" />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
 
         <com.djumabaevs.gochipapp.util.MSPButton
@@ -146,6 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="143dp"
             android:layout_marginEnd="16dp"
             android:background="?attr/colorPrimary"
             android:foreground="?attr/selectableItemBackground"
@@ -156,9 +148,9 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/btn_textSize"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_client" />
+            app:layout_constraintTop_toBottomOf="@+id/til_password" />
 
         <LinearLayout
             android:id="@+id/linearLayout"

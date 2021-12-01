@@ -1,5 +1,6 @@
 package com.djumabaevs.gochipapp.login.newLogin
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.djumabaevs.gochipapp.R
@@ -15,11 +16,13 @@ class ChooseLoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.loginKeycloak.setOnClickListener {
-
+            val intent = Intent(this, KeycloakActivity::class.java)
+            startActivity(intent)
         }
 
         binding.loginEmailAuth.setOnClickListener {
-
+            val intent = Intent(this, NewLoginActivity::class.java)
+            startActivity(intent)
         }
     }
 }
