@@ -32,6 +32,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".login.newLogin.ChooseLoginActivity"
+            android:exported="true" />
+        <activity
             android:name=".pannels.VetDetailsActivity"
             android:exported="true" />
         <activity
