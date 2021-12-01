@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.databinding.ActivityKeycloakBinding
+import com.djumabaevs.gochipapp.login.details.DetailsKeycloakActivity
 
 class KeycloakActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
@@ -36,7 +37,7 @@ class KeycloakActivity : AppCompatActivity() {
                     binding.textView.text = response.body()?.accessToken.toString()
                     if(response.isSuccessful) {
                         LocalStorage.setToken(this, response?.body()?.accessToken!!)
-                        val intent = Intent(this, DetailsActivity::class.java)
+                        val intent = Intent(this, DetailsKeycloakActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         startActivity(intent)
                     }

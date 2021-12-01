@@ -1,5 +1,6 @@
 package com.djumabaevs.gochipapp.login.newLogin
 
+import com.djumabaevs.gochipapp.login.newLogin.Util.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

@@ -32,6 +32,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".login.details.DetailsKeycloakActivity"
+            android:exported="true" />
+        <activity
             android:name=".login.newLogin.KeycloakActivity"
             android:exported="true" />
         <activity
