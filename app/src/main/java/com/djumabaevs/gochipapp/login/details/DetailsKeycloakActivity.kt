@@ -47,9 +47,22 @@ class DetailsKeycloakActivity : AppCompatActivity() {
                     return@launchWhenResumed
                 }
 
+                // TODO: Если запрос прошел и есть интернет то смапить в PetData и сохранить в базу данных
+                // Если запрос не прошел по причине отсутствия интернета то считать данные с базы и заполнить адаптер
+
+                // TODO: SAVING TO DATABASE
+
                 binding.progressBar.visibility = View.GONE
 
-                val petData = response.data?.pets
+                val petData = response.data?.pets ?: listOf()
+
+                val list: List<PetData> = petData.map {
+                    PetData(
+                        0,
+                        it.pet_name ?: ""
+                    )
+                }
+
                 petData?.let {
                     adapter.submitData(it)
                 }
