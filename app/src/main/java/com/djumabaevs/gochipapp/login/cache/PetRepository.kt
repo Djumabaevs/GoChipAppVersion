@@ -5,23 +5,23 @@ import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class RestaurantRepository @Inject constructor(
-    private val api: RestaurantApi,
-    private val db: RestaurantDatabase
+    private val api: PetApi,
+    private val db: PetDatabase
 ) {
-    private val restaurantDao = db.restaurantDao()
+    private val petDao = db.petDao()
 
-    fun getRestaurants() = networkBoundResource(
+    fun getPets() = networkBoundResource(
         query = {
-            restaurantDao.getAllRestaurants()
+            petDao.getAllPets()
         },
         fetch = {
             delay(2000)
-            api.getRestaurants()
+            api.getPets()
         },
-        saveFetchResult = { restaurants ->
+        saveFetchResult = { pets ->
             db.withTransaction {
-                restaurantDao.deleteAllRestaurants()
-                restaurantDao.insertRestaurants(restaurants)
+                petDao.deleteAllPets()
+                petDao.insertPets(pets)
             }
         }
     )

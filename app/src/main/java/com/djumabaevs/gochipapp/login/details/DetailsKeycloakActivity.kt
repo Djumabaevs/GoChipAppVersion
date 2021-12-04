@@ -10,6 +10,7 @@ import com.apollographql.apollo.exception.ApolloException
 import com.djumabaevs.gochipapp.MyQuery
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.databinding.ActivityDetailsKeycloakBinding
+import com.djumabaevs.gochipapp.login.cache.Pet
 import com.djumabaevs.gochipapp.login.newLogin.apolloClient2
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -56,10 +57,11 @@ class DetailsKeycloakActivity : AppCompatActivity() {
 
                 val petData = response.data?.pets ?: listOf()
 
-                val list: List<PetData> = petData.map {
-                    PetData(
-                        0,
-                        it.pet_name ?: ""
+                val list: List<Pet> = petData.map {
+                    Pet(
+
+                        it.pet_name ?: "",
+                        it.__typename
                     )
                 }
 
