@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.Flow
 interface PetDao {
 
     @Query("SELECT * FROM pets")
-    fun getAllRestaurants(): Flow<List<Pet>>
+    fun getAllPets(): Flow<List<Pet>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPets(restaurants: List<Pet>)
+    suspend fun insertPets(pets: List<Pet>)
 
     @Query("DELETE FROM pets")
-    suspend fun deleteAllRestaurants()
+    suspend fun deleteAllPets()
 }
