@@ -14,22 +14,22 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Provides
-    @Singleton
-    fun provideRetrofit(): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(RestaurantApi.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+//    @Provides
+//    @Singleton
+//    fun provideRetrofit(): Retrofit =
+//        Retrofit.Builder()
+//            .baseUrl(PetApi.BASE_URL)
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//
+//    @Provides
+//    @Singleton
+//    fun providePetApi(retrofit: Retrofit): PetApi =
+//        retrofit.create(PetApi::class.java)
 
     @Provides
     @Singleton
-    fun provideRestaurantApi(retrofit: Retrofit): RestaurantApi =
-        retrofit.create(RestaurantApi::class.java)
-
-    @Provides
-    @Singleton
-    fun provideDatabase(app: Application) : RestaurantDatabase =
-        Room.databaseBuilder(app, RestaurantDatabase::class.java, "restaurant_database")
+    fun provideDatabase(app: Application) : PetDatabase =
+        Room.databaseBuilder(app, PetDatabase::class.java, "pet_database")
             .build()
 }
