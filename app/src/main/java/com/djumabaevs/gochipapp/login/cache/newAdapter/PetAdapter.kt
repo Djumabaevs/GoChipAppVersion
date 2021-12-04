@@ -6,44 +6,45 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.djumabaevs.gochipapp.databinding.PetItemNewBinding
+import com.djumabaevs.gochipapp.login.cache.Pet
 
 class PetAdapter :
     ListAdapter<Pet, PetAdapter.PetViewHolder>(PetComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PetViewHolder {
         val binding =
-            RestaurantItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RestaurantViewHolder(binding)
+            PetItemNewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return PetViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PetViewHolder, position: Int) {
         val currentItem = getItem(position)
         if (currentItem != null) {
             holder.bind(currentItem)
         }
     }
 
-    class RestaurantViewHolder(private val binding: RestaurantItemBinding) :
+    class PetViewHolder(private val binding: PetItemNewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(restaurant: Restaurant) {
+        fun bind(pet: Pet) {
             binding.apply {
-                Glide.with(itemView)
-                    .load(restaurant.logo)
-                    .into(imageViewLogo)
+//                Glide.with(itemView)
+//                    .load(pet.logo)
+//                    .into(imageViewLogo)
 
-                textViewName.text = restaurant.name
-                textViewType.text = restaurant.type
-                textViewAddress.text = restaurant.address
+                textViewName.text = pet.name
+                textViewType.text = pet.type
             }
         }
     }
 
-    class RestaurantComparator : DiffUtil.ItemCallback<Restaurant>() {
-        override fun areItemsTheSame(oldItem: Restaurant, newItem: Restaurant) =
+    class PetComparator : DiffUtil.ItemCallback<Pet>() {
+        override fun areItemsTheSame(oldItem: Pet, newItem: Pet) =
             oldItem.name == newItem.name
 
-        override fun areContentsTheSame(oldItem: Restaurant, newItem: Restaurant) =
+        override fun areContentsTheSame(oldItem: Pet, newItem: Pet) =
             oldItem == newItem
     }
 }

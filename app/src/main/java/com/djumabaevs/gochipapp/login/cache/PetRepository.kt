@@ -4,7 +4,7 @@ import androidx.room.withTransaction
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
-class RestaurantRepository @Inject constructor(
+class PetRepository @Inject constructor(
     private val api: PetApi,
     private val db: PetDatabase
 ) {

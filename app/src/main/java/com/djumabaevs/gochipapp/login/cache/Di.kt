@@ -14,18 +14,18 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-//    @Provides
-//    @Singleton
-//    fun provideRetrofit(): Retrofit =
-//        Retrofit.Builder()
-//            .baseUrl(PetApi.BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//
-//    @Provides
-//    @Singleton
-//    fun providePetApi(retrofit: Retrofit): PetApi =
-//        retrofit.create(PetApi::class.java)
+    @Provides
+    @Singleton
+    fun provideRetrofit(): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(PetApi.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+    @Provides
+    @Singleton
+    fun providePetApi(retrofit: Retrofit): PetApi =
+        retrofit.create(PetApi::class.java)
 
     @Provides
     @Singleton

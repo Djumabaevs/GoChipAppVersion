@@ -5,31 +5,30 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.codinginflow.simplecachingexample.R
-import com.codinginflow.simplecachingexample.databinding.ActivityRestaurantBinding
-import com.codinginflow.simplecachingexample.util.Resource
+import com.djumabaevs.gochipapp.databinding.ActivityPetNewBinding
+import com.djumabaevs.gochipapp.login.cache.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RestaurantActivity : AppCompatActivity() {
+class PetActivityNew : AppCompatActivity() {
 
-    private val viewModel: RestaurantViewModel by viewModels()
+    private val viewModel: PetViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityRestaurantBinding.inflate(layoutInflater)
+        val binding = ActivityPetNewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val restaurantAdapter = RestaurantAdapter()
+        val petAdapter = PetAdapter()
 
         binding.apply {
             recyclerView.apply {
-                adapter = restaurantAdapter
-                layoutManager = LinearLayoutManager(this@RestaurantActivity)
+                adapter = petAdapter
+                layoutManager = LinearLayoutManager(this@PetActivityNew)
             }
 
-            viewModel.restaurants.observe(this@RestaurantActivity) { result ->
-                restaurantAdapter.submitList(result.data)
+            viewModel.pets.observe(this@PetActivityNew) { result ->
+                petAdapter.submitList(result.data)
 
                 progressBar.isVisible = result is Resource.Loading && result.data.isNullOrEmpty()
                 textViewError.isVisible = result is Resource.Error && result.data.isNullOrEmpty()

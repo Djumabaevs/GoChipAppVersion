@@ -5,6 +5,7 @@ plugins {
     id 'com.apollographql.apollo' version '2.5.9'
     id 'kotlin-android-extensions'
     id 'com.google.gms.google-services'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
