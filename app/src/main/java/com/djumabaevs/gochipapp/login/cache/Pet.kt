@@ -1,4 +1,4 @@
-package com.djumabaevs.gochipapp.login.details
+package com.djumabaevs.gochipapp.login.cache
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
