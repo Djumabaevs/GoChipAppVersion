@@ -2,8 +2,6 @@ package com.djumabaevs.gochipapp.login.cache
 
 import android.app.Application
 import androidx.room.Room
-import com.codinginflow.simplecachingexample.api.RestaurantApi
-import com.codinginflow.simplecachingexample.data.RestaurantDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
