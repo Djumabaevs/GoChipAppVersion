@@ -48,12 +48,12 @@ class DetailsKeycloakActivity  : AppCompatActivity() {
 //            channel.trySend(Unit)
 //        }
 
-        viewmodel.pets.observe(this@DetailsKeycloakActivity) { resource ->
-            if (resource != null) {
-                resource.data?.let { pets ->
+        viewmodel.pets.observe(this@DetailsKeycloakActivity) { pets ->
+//            if (resource != null) {
+                pets?.let { pets ->
                     adapter.submitList(pets);
                 }
-            }
+//            }
         }
 
         lifecycleScope.launchWhenResumed {

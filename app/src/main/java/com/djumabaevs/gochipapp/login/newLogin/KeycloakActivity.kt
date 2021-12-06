@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.databinding.ActivityKeycloakBinding
 import com.djumabaevs.gochipapp.login.details.DetailsKeycloakActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class KeycloakActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var binding: ActivityKeycloakBinding
