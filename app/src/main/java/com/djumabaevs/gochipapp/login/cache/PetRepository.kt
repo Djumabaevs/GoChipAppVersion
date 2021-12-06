@@ -25,4 +25,9 @@ class PetRepository @Inject constructor(
             }
         }
     )
+
+    suspend fun savePets(pets: List<Pet>) {
+        db.petDao().deleteAllPets()
+        db.petDao().insertPets(pets)
+    }
 }

@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.databinding.ActivityChooseLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChooseLoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChooseLoginBinding

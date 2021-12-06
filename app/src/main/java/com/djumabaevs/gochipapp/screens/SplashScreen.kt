@@ -11,8 +11,9 @@ import com.djumabaevs.gochipapp.R
 import com.djumabaevs.gochipapp.login.LoginActivity
 import com.djumabaevs.gochipapp.login.newLogin.ChooseLoginActivity
 import com.djumabaevs.gochipapp.login.newLogin.NewLoginActivity
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 @Suppress("DEPRECATION")
 class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
