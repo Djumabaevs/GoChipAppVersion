@@ -1,5 +1,8 @@
 package com.djumabaevs.session_manager.interactors
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+
 class CheckPreviousAuthUser(
     private val accountDao: AccountDao,
     private val authTokenDao: AuthTokenDao,
