@@ -1,4 +1,4 @@
-package com.djumabaevs.session_manager
+package com.djumabaevs.session_manager.session
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
