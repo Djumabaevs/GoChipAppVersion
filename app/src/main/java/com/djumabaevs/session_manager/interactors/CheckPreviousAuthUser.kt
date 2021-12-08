@@ -27,9 +27,7 @@ class CheckPreviousAuthUser(
         emit(returnNoPreviousAuthUser())
     }
 
-    /**
-     * If no user was previously authenticated then emit this error. The UI is waiting for it.
-     */
+
     private fun returnNoPreviousAuthUser(): DataState<AuthToken> {
         return DataState.error<AuthToken>(
             response = Response(
